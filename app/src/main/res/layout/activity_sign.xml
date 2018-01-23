@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.startActivities.SignViewModel"/>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/bg"
+        android:paddingLeft="@dimen/f60"
+        android:paddingRight="@dimen/f60"
+        tools:context=".view.startActivities.SignUpActivity">
+
+        <ImageView
+            android:contentDescription="@string/logo"
+            android:layout_width="@dimen/f212"
+            android:layout_height="@dimen/f120"
+            android:layout_marginTop="@dimen/f108"
+            android:src="@drawable/logo_top_alpha"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.isUp ? View.VISIBLE : View.GONE}">
+            <fragment
+                android:id="@+id/signUpFrag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.timeofpoetry.timeofpoetry.timeofpoetry.view.startActivities.SignUpFragment"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{!viewModel.isUp ? View.VISIBLE : View.GONE}">
+
+            <fragment
+                android:id="@+id/signInFrag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.timeofpoetry.timeofpoetry.timeofpoetry.view.startActivities.SignInFragment"/>
+
+        </FrameLayout>
+
+
+
+        <RelativeLayout
+            android:contentDescription="@string/sign_kakao_btn"
+            android:id="@+id/kakaoLogin"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f180"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:background="@drawable/kakao_bg"
+            android:layout_marginTop="@dimen/f453"
+            android:paddingStart="@dimen/f82"
+            android:paddingEnd="0dp"
+            android:paddingTop="@dimen/f30"
+            android:paddingBottom="@dimen/f30">
+            <ImageView
+                android:contentDescription="@string/kakao_ic"
+                android:layout_width="@dimen/f119"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo_kakao"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/sign_kakao"
+                android:gravity="center"
+                android:textColor="#3b1e1e"
+                android:textSize="15.5sp"
+                android:layout_centerInParent="true"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:contentDescription="@string/sign_fb_btn"
+            android:id="@+id/facebookLogin"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f180"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:background="@drawable/facebook_bg"
+            android:layout_marginTop="@dimen/f40"
+            android:paddingStart="@dimen/f82"
+            android:paddingEnd="0dp"
+            android:paddingTop="@dimen/f30"
+            android:paddingBottom="@dimen/f30">
+            <ImageView
+                android:contentDescription="@string/fb_ic"
+                android:layout_width="@dimen/f119"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo_facebook"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/sign_fb"
+                android:gravity="center"
+                android:textColor="@color/color1"
+                android:textSize="15.5sp"
+                android:layout_centerInParent="true"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <Button
+            android:visibility="@{viewModel.isUp? View.GONE : View.VISIBLE}"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{() -> viewModel.toSignUp()}"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f180"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/f40"
+            android:background="@drawable/color2btn"
+            android:text="@string/sign_up" />
+
+        <com.kakao.usermgmt.LoginButton
+            android:id="@+id/kakaoBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebookBtn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f180"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+</layout>

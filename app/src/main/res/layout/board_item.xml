@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="item"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.BoardIdItem"/>
+        <variable
+            name="viewModel"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviViews.BoardActivityViewModel"/>
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/upper"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/f120"
+            android:layout_marginEnd="@dimen/f120"
+            android:layout_marginTop="@dimen/f68"
+            android:layout_marginBottom="@dimen/f66">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentStart="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/f28"
+                    android:textSize="17.5sp"
+                    android:textColor="@color/color8"
+                    android:text="@{item.title}"/>
+
+                <TextView
+                    android:layout_marginTop="@dimen/f28"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="12.5dp"
+                    android:textColor="@color/color7"
+                    android:text="@{item.date}"/>
+            </LinearLayout>
+
+            <ImageView
+                android:contentDescription="@string/board_item_open"
+                android:id="@+id/item_btn"
+                android:layout_width="@dimen/f94"
+                android:layout_height="match_parent"
+                android:src="@drawable/pulldown_open"
+                android:layout_alignParentEnd="true"
+                android:onClick="@{(view) -> viewModel.getBody(view, item.id, item)}"/>
+
+        </RelativeLayout>
+
+        <com.github.aakira.expandablelayout.ExpandableLinearLayout
+            android:id="@+id/expand"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:ael_expanded="false"
+            app:ael_duration="500"
+            app:ael_interpolator="decelerate"
+            app:ael_orientation="vertical"
+            android:orientation="vertical"
+            android:background="@color/color3">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/f120"
+                    android:paddingEnd="@dimen/f120"
+                    android:paddingTop="@dimen/f100"
+                    android:paddingBottom="@dimen/f100"
+                    app:expandableChildText="@{item.displayContent}"/>
+
+        </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+    </LinearLayout>
+
+</layout>

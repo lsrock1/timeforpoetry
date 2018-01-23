@@ -1,0 +1,91 @@
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="poem"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.Poem"/>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.footer.LyricsFragment"
+        android:background="@android:color/transparent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:contentDescription="@string/close"
+                android:id="@+id/lyrics_frag_close"
+                android:layout_width="@dimen/f114"
+                android:layout_height="@dimen/f100"
+                android:layout_marginTop="@dimen/f40"
+                android:layout_marginEnd="@dimen/f40"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_close"/>
+        </RelativeLayout>
+
+        <TextView
+            android:text="@{poem.poem}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/f120"
+            android:layout_marginEnd="@dimen/f40"
+            android:textSize="20sp"
+            android:textColor="@color/color8"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:text="@{poem.poet}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/f120"
+            android:layout_marginEnd="@dimen/f40"
+            android:layout_marginTop="@dimen/f45"
+            android:textSize="13sp"
+            android:textColor="@color/color8"/>
+
+        <View
+            android:layout_marginTop="@dimen/f46"
+            android:layout_width="250dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="@dimen/f120"
+            android:layout_marginEnd="@dimen/f40"
+            android:background="@color/color5"/>
+        <RelativeLayout
+            android:id="@+id/loading"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                style="@style/SpinKitView.Circle"
+                app:SpinKit_Color="@color/black"/>
+
+        </RelativeLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/f102"
+            android:layout_marginStart="@dimen/f120"
+            android:layout_marginEnd="@dimen/f40"
+            android:scrollbarSize="3.5dp">
+
+            <TextView
+                android:id="@+id/lyrics_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:lineSpacingExtra="5sp"
+                android:textColor="@color/color8"/>
+        </ScrollView>
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="isLogin"
+            type="boolean"/>
+        <variable
+            name="isZeroQueue"
+            type="boolean"/>
+        <variable
+            name="viewModel"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.MyPoetryViewModel"/>
+    </data>
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{isLogin &amp;&amp; !isZeroQueue ? View.VISIBLE : View.GONE}"
+            android:orientation="vertical">
+
+            <ImageView
+                android:contentDescription="@string/my_poetry_top"
+                android:id="@+id/my_poetry_img"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/f300"
+                android:src="@drawable/title_mylist"/>
+
+            <LinearLayout
+                android:id="@+id/my_poetry_controller"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/f120"
+                android:layout_marginTop="@dimen/f90"
+                android:layout_marginStart="@dimen/f60"
+                android:layout_marginEnd="@dimen/f60"
+                style="?android:attr/buttonBarStyle"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/my_poetry_edit"
+                    android:padding="0dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/f15"
+                    android:background="@{viewModel.isEditMode ? @drawable/color2btn : @drawable/edit_bg}"
+                    android:onClick="@{() -> viewModel.toggleEditMode()}"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:textColor="@color/color8"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:text="@string/edit"/>
+
+                <Button
+                    android:id="@+id/my_poetry_select_all"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_bg"
+                    android:layout_marginStart="@dimen/f15"
+                    android:layout_marginEnd="@dimen/f15"
+                    android:textColor="@color/color8"
+                    android:text="@string/select_all"
+                    android:foreground="?attr/selectableItemBackground"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:onClick="@{() -> viewModel.allSelect()}"
+                    android:visibility="@{viewModel.isEditMode ? View.VISIBLE : View.INVISIBLE}"/>
+
+                <Button
+                    android:id="@+id/my_poetry_listen"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_bg"
+                    android:layout_marginStart="@dimen/f15"
+                    android:layout_marginEnd="@dimen/f15"
+                    android:textColor="@color/color8"
+                    android:text="@string/listen"
+                    android:foreground="?attr/selectableItemBackground"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:onClick="@{() -> viewModel.multiAdd()}"
+                    android:visibility="@{viewModel.isEditMode ? View.VISIBLE : View.INVISIBLE}"/>
+
+                <Button
+                    android:id="@+id/my_poetry_extract"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_bg"
+                    android:layout_marginStart="@dimen/f15"
+                    android:textColor="@color/color8"
+                    android:text="@string/remove"
+                    android:foreground="?attr/selectableItemBackground"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:onClick="@{() -> viewModel.multiRemove()}"
+                    android:visibility="@{viewModel.isEditMode ? View.VISIBLE : View.INVISIBLE}"/>
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/f60"
+                android:layout_marginEnd="@dimen/f60"
+                android:layout_marginTop="@dimen/f70"
+                app:layoutManager="LinearLayoutManager"
+                android:focusable="false"
+                tools:listitem="@layout/fragment_poem" />
+        </LinearLayout>
+
+        <include
+            tools:visibility="gone"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            layout="@layout/my_poetry_empty_bg"
+            app:isVisible="@{isZeroQueue &amp;&amp; isLogin}"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{!isLogin ? View.VISIBLE : View.GONE}">
+            <fragment
+                android:id="@+id/notLogin"
+                android:name="com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainViewPager.RequireLoginFragment"
+                tools:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+    </FrameLayout>
+</layout>

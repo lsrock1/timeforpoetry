@@ -1,0 +1,55 @@
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.startActivities.SignInViewModel"/>
+    </data>
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.timeofpoetry.timeofpoetry.timeofpoetry.view.startActivities.SignInFragment">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f180"
+            android:layout_marginTop="@dimen/f226"
+            android:background="@drawable/text_view_bg"
+            android:paddingStart="@dimen/f130"
+            android:paddingEnd="@dimen/f130"
+            android:textColorHint="@color/color8"
+            android:textSize="@dimen/f62"
+            android:inputType="textEmailAddress"
+            android:hint="이메일"
+            android:text="@={viewModel.id}"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f180"
+            android:hint="비밀번호"
+            android:background="@drawable/text_view_bg"
+            android:layout_marginTop="@dimen/f40"
+            android:paddingStart="@dimen/f130"
+            android:paddingEnd="@dimen/f130"
+            android:textColorHint="@color/color8"
+            android:textSize="@dimen/f62"
+            android:imeOptions="actionDone"
+            android:text="@={viewModel.pwd}"
+            app:onEditorActionSignIn="@{viewModel}"
+            android:inputType="textPassword"/>
+
+        <Button
+            android:id="@+id/signInBtn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f180"
+            android:layout_marginTop="@dimen/f100"
+            android:background="@drawable/color2btn"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{() -> viewModel.onSignInBtn()}"
+            android:text="@string/login" />
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews.OpenSourceActivity">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f240"
+            android:background="@drawable/bottom_border_2">
+            <ImageView
+                android:contentDescription="@string/top_back_btn"
+                android:id="@+id/board_back_btn"
+                android:layout_width="28.5dp"
+                android:layout_height="25dp"
+                android:src="@drawable/topmenu_back"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="7.5dp"
+                android:layout_marginTop="17.5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginTop="17.5dp"
+                android:text="@string/open_source_title"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:paddingStart="@dimen/f120"
+                android:paddingEnd="@dimen/f120"
+                android:paddingTop="@dimen/f68"
+                android:paddingBottom="@dimen/f66"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/open_source_top"
+                android:background="@drawable/bottom_border_trans"/>
+
+            <include
+                android:layout_marginTop="@dimen/f100"
+                app:copyright="@{@string/open_source_kakao}"
+                app:license="@{@string/open_source_apache2}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/open_source_row"/>
+
+            <include
+                app:copyright="@{@string/open_source_fb_title}"
+                app:license="@{@string/open_source_fb_content}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/open_source_row"/>
+
+            <include
+                app:copyright="@{@string/open_source_expandable}"
+                app:license="@{@string/open_source_apache2}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/open_source_row"/>
+
+            <include
+                app:copyright="@{@string/open_source_retrofit}"
+                app:license="@{@string/open_source_apache2}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/open_source_row"/>
+
+            <include
+                app:copyright="@{@string/open_source_glide}"
+                app:license="@{@string/open_source_glide_content}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/open_source_row"/>
+
+            <include
+                app:copyright="@{@string/open_source_glide_tr}"
+                app:license="@{@string/open_source_apache2}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/open_source_row"/>
+
+            <include
+                app:copyright="@{@string/open_source_spinkit}"
+                app:license="@{@string/open_source_mit}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/open_source_row"/>
+
+            <include
+                app:copyright="@{@string/open_source_typekit}"
+                app:license="@{@string/open_source_apache2}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/open_source_row"/>
+
+            <include
+                app:copyright="@{@string/open_source_dagger}"
+                app:license="@{@string/open_source_apache2}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/open_source_row"/>
+        </LinearLayout>
+    </ScrollView>
+
+    </LinearLayout>
+</layout>

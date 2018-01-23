@@ -1,0 +1,88 @@
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.startActivities.SignUpViewModel"/>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        tools:context="com.timeofpoetry.timeofpoetry.timeofpoetry.view.startActivities.SignUpFragment">
+
+        <EditText
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f180"
+            android:background="@drawable/text_view_bg"
+            android:layout_marginTop="@dimen/f226"
+            android:paddingStart="@dimen/f130"
+            android:paddingEnd="@dimen/f130"
+            android:textColorHint="@color/color8"
+            android:textSize="@dimen/f62"
+            android:text="@={viewModel.id}"
+            android:hint="이메일"/>
+
+        <EditText
+            android:inputType="textPassword"
+            android:digits="abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ*@#$%_-^.&amp;&lt;&gt;()~`!+=|{}[]/\\:;?,'&quot;"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f180"
+            android:background="@drawable/text_view_bg"
+            android:layout_marginTop="@dimen/f40"
+            android:paddingStart="@dimen/f130"
+            android:paddingEnd="@dimen/f130"
+            android:textColorHint="@color/color8"
+            android:textSize="@dimen/f62"
+            android:text="@={viewModel.pwd}"
+            app:onEditorActionSignUp="@{viewModel}"
+            android:imeOptions="actionDone"
+            android:hint="비밀번호"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/f40"
+            android:textSize="@dimen/f54"
+            android:textColor="@color/color7"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="@{() -> viewModel.toggleShow()}"
+            android:text="약관 자세히 보기"/>
+
+        <ScrollView
+            android:id="@+id/sign_up_contract"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f320"
+            tools:visibility="gone"
+            android:visibility="@{viewModel.isShowContract? View.VISIBLE : View.GONE}">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/contract"/>
+        </ScrollView>
+
+        <CheckBox
+            android:text="@string/sign_up_check_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/f42"
+            android:checked="@={viewModel.checked}"
+            android:gravity="center"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f180"
+            android:background="@drawable/color2btn"
+            android:layout_marginTop="@dimen/f40"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{() -> viewModel.onSignUpBtn()}"
+            android:text="@string/sign_up"/>
+
+    </LinearLayout>
+</layout>

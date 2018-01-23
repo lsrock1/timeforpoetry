@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MainActivityViewModel"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="186dp"
+        android:background="@android:color/transparent"
+        android:gravity="top"
+        android:paddingBottom="32.5dp"
+        android:orientation="vertical"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <ImageView
+            android:id="@+id/nav_login_img"
+            android:layout_width="30.75dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="38.5dp"
+            android:layout_gravity="center"
+            android:src="@{viewModel.login ? @drawable/ic_login : @drawable/ic_logout}"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/f78"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/color8"
+            android:textSize="@dimen/f48"
+            android:textStyle="bold"
+            android:text='@{viewModel.login ? viewModel.id : "로그인 해주세요"}'/>
+
+        <Button
+            android:id="@+id/nav_login_btn"
+            android:layout_width="75dp"
+            android:layout_height="@dimen/f120"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/f50"
+            android:background="@drawable/color2btn"
+            android:textColor="@color/color8"
+            android:foreground="?attr/selectableItemBackground"
+            android:text='@{viewModel.login ? "로그아웃": "로그인"}'/>
+
+    </LinearLayout>
+</layout>

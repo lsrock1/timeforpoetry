@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews.BoardActivity"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f240"
+            android:background="@drawable/bottom_border_2">
+            <ImageView
+                android:contentDescription="@string/top_back_btn"
+                android:id="@+id/board_back_btn"
+                android:layout_width="28.5dp"
+                android:layout_height="25dp"
+                android:src="@drawable/topmenu_back"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="7.5dp"
+                android:layout_marginTop="17.5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginTop="17.5dp"
+                android:text="@string/notice_title"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/board_recycler"
+            android:name="com.timeofpoetry.timeofpoetry.timeofpoetry.BoardActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layoutManager="LinearLayoutManager"
+            tools:context="com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews.BoardActivity"/>
+    </LinearLayout>
+</layout>

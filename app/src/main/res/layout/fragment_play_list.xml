@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.MyPlayListViewModel"/>
+        <variable
+            name="isZeroQueue"
+            type="boolean"/>
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <RelativeLayout
+            tools:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f240"
+            android:paddingTop="@dimen/f70"
+            android:paddingBottom="@dimen/f70"
+            android:background="@drawable/bottom_border_2">
+            <ImageView
+                android:contentDescription="@string/close"
+                android:id="@+id/music_frag_close"
+                android:layout_width="@dimen/f114"
+                android:layout_height="@dimen/f100"
+                android:src="@drawable/ic_close"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="7.5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/my_play_list_title"
+                android:textColor="@color/color8"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            tools:visibility="gone"
+            android:id="@+id/music_frag_controller"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f120"
+            android:layout_marginTop="@dimen/f90"
+            android:layout_marginBottom="@dimen/f70"
+            android:layout_marginStart="@dimen/f60"
+            android:layout_marginEnd="@dimen/f60"
+            style="?android:attr/buttonBarStyle"
+            android:orientation="horizontal"
+            android:visibility="@{isZeroQueue? View.GONE : View.VISIBLE}">
+
+            <Button
+                android:id="@+id/music_list_frag_edit"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/f15"
+                android:padding="0dp"
+                android:background="@{viewModel.isEditMode ? @drawable/color2btn : @drawable/edit_bg}"
+                android:foreground="?attr/selectableItemBackground"
+                android:onClick="@{() -> viewModel.toggleEditMode()}"
+                android:text="@string/edit"/>
+
+            <Button
+                android:id="@+id/music_list_frag_select_all"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/f15"
+                android:layout_marginEnd="@dimen/f15"
+                android:background="@drawable/edit_bg"
+                android:foreground="?attr/selectableItemBackground"
+                android:text="@string/select_all"
+                android:onClick="@{() -> viewModel.setAllSelected()}"
+                android:visibility="@{viewModel.isEditMode ? View.VISIBLE : View.INVISIBLE}"/>
+
+            <Button
+                android:id="@+id/music_list_frag_extract"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/f15"
+                android:layout_marginEnd="@dimen/f15"
+                android:background="@drawable/edit_bg"
+                android:foreground="?attr/selectableItemBackground"
+                android:text="@string/remove"
+                android:onClick="@{() -> viewModel.removeItems()}"
+                android:visibility="@{viewModel.isEditMode ? View.VISIBLE : View.INVISIBLE}"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/f15"
+                android:background="@drawable/edit_bg"
+                style="?android:attr/buttonBarButtonStyle"
+                android:visibility="invisible">
+
+            </Button>
+
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            tools:visibility="gone"
+            android:id="@+id/list"
+            android:visibility="@{isZeroQueue ? View.GONE : View.VISIBLE}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/f60"
+            android:layout_marginStart="@dimen/f60"
+            app:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/fragment_poem"
+            android:name="com.timeofpoetry.timeofpoetry.timeofpoetry.MusicFragment"
+            tools:context=".view.footer.MyPlayListFragment"/>
+
+        <include
+            tools:visibility="visible"
+            app:isVisible="@{isZeroQueue}"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            layout="@layout/playlist_empty_bg"/>
+    </LinearLayout>
+</layout>

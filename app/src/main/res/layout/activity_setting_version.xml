@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews.SettingVersionActivity"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/f240"
+        android:paddingTop="@dimen/f70"
+        android:paddingBottom="@dimen/f70"
+        android:background="@drawable/bottom_border_2">
+        <ImageView
+            android:contentDescription="@string/top_back_btn"
+            android:id="@+id/setting_version_back_btn"
+            android:layout_width="@dimen/f114"
+            android:layout_height="@dimen/f100"
+            android:src="@drawable/topmenu_back"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="7.5dp" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:gravity="center"
+            android:text="@string/version_setting_title"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/f60"
+            android:layout_marginEnd="@dimen/f60">
+
+            <LinearLayout
+                android:id="@+id/setting_version_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/f110"
+                    android:textSize="15.5sp"
+                    android:textColor="@color/color8"
+                    android:text="@string/activity_setting_login_info"/>
+
+                <TextView
+                    android:id="@+id/setting_version_my_id"
+                    android:layout_marginTop="@dimen/f46"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/f180" />
+
+                <Button
+                    android:id="@+id/setting_version_logOut"
+                    android:background="@drawable/color2btn"
+                    android:layout_marginTop="@dimen/f40"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/f180"
+                    android:text="@string/logout"/>
+
+                <TextView
+                    android:text="@string/activity_setting_user_info"
+                    android:textSize="15.5sp"
+                    android:textColor="@color/color8"
+                    android:layout_marginTop="@dimen/f130"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:layout_marginTop="@dimen/f46"
+                    android:id="@+id/setting_version_poet"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/f180"
+                    android:background="@drawable/text_view_bg"
+                    android:paddingStart="@dimen/f130"
+                    android:paddingEnd="0dp"
+                    android:textColorHint="@color/color8"
+                    android:textSize="15.5sp"
+                    android:inputType="text"
+                    android:hint="@string/activity_setting_poet"/>
+
+                <EditText
+                    android:layout_marginTop="@dimen/f40"
+                    android:id="@+id/setting_version_poem"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/f180"
+                    android:background="@drawable/text_view_bg"
+                    android:paddingStart="@dimen/f130"
+                    android:paddingEnd="0dp"
+                    android:textColorHint="@color/color8"
+                    android:textSize="15.5sp"
+                    android:inputType="text"
+                    android:hint="@string/activity_setting_poetry"/>
+
+                <EditText
+                    android:layout_marginTop="@dimen/f40"
+                    android:id="@+id/setting_version_season"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/f180"
+                    android:background="@drawable/text_view_bg"
+                    android:paddingStart="@dimen/f130"
+                    android:paddingEnd="0dp"
+                    android:textColorHint="@color/color8"
+                    android:textSize="15.5sp"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:hint="@string/activity_setting_season"/>
+
+                <TextView
+                    android:layout_marginTop="@dimen/f56"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/f54"/>
+
+                <Button
+                    android:layout_marginTop="@dimen/f84"
+                    android:id="@+id/setting_version_update"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/f180"
+                    android:background="@drawable/color2btn"
+                    android:text="@string/activity_setting_user_info_update"/>
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/f110"
+                android:paddingBottom="@dimen/f70"
+                android:background="@drawable/bottom_border">
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:textSize="15.5sp"
+                    android:textColor="@color/color7"
+                    android:textStyle="bold"
+                    android:text="@string/activity_setting_version_title"/>
+
+                <TextView
+                    android:layout_marginEnd="@dimen/f120"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/color8"
+                    android:textSize="17.5sp"
+                    android:text="@string/activity_setting_version"/>
+                
+            </RelativeLayout>
+            <TextView
+                android:layout_marginTop="@dimen/f70"
+                android:layout_marginBottom="@dimen/f60"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15.5sp"
+                android:textColor="@color/color7"
+                android:textStyle="bold"
+                android:text="@string/activity_setting_info_title"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="15.5sp"
+                android:lineSpacingExtra="@dimen/f50"
+                android:layout_marginBottom="@dimen/f800"
+                android:textColor="@color/color7"
+                android:text="@string/activity_setting_info"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

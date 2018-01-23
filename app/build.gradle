@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.firebase.firebase-perf'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.2'
+    defaultConfig {
+        applicationId "com.timeforpoetry.timeforpoetry.timeforpoetry"
+        minSdkVersion 23
+        targetSdkVersion 27
+        versionCode 26
+        versionName "1.01"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    dexOptions {
+        jumboMode true
+        javaMaxHeapSize "4g"
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-crash:11.8.0'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.google.firebase:firebase-perf:11.8.0'
+    compile group: 'com.kakao.sdk', name: 'usermgmt', version: project.KAKAO_SDK_VERSION
+    compile 'com.google.firebase:firebase-core:11.8.0'
+    compile 'com.facebook.android:facebook-login:4.29.0'
+    compile 'com.github.aakira:expandable-layout:1.6.0@aar'
+    compile 'com.android.support:appcompat-v7:27.0.2'
+    compile 'com.android.support:design:27.0.2'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:support-v4:27.0.2'
+    compile 'com.android.support:recyclerview-v7:27.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.github.bumptech.glide:glide:4.5.0'
+    compile 'jp.wasabeef:glide-transformations:3.0.1'
+    compile 'com.github.ybq:Android-SpinKit:1.1.0'
+    compile 'com.github.katoro:typekit:1.0.1'
+    compile 'com.google.dagger:dagger:2.13'
+    compile 'com.google.dagger:dagger-android:2.13'
+    compile 'com.google.dagger:dagger-android-support:2.13'
+    annotationProcessor "com.google.dagger:dagger-compiler:2.13"
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.13'
+    implementation 'android.arch.lifecycle:extensions:1.0.0'
+    implementation 'android.arch.lifecycle:runtime:1.0.3'
+    testCompile 'junit:junit:4.12'
+    implementation "android.arch.lifecycle:common-java8:1.0.0"
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
+}
+apply plugin: 'com.google.gms.google-services'

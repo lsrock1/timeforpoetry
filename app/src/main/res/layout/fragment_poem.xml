@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="poem"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.Poem"/>
+        <variable
+            name="displayOption"
+            type="android.databinding.ObservableInt"/>
+        <variable
+            name="viewModel"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.MyPlayListViewModel"/>
+    </data>
+    <LinearLayout
+        android:baselineAligned="false"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/f300"
+        android:paddingBottom="@dimen/f50"
+        android:paddingTop="@dimen/f50"
+        android:paddingStart="@dimen/f60"
+        android:paddingEnd="@dimen/f60"
+        android:orientation="horizontal"
+        android:background="@{poem.isSelected ? @color/colorAlpha : @color/white}"
+        android:onClick="@{() -> viewModel.rowSelect(poem)}">
+
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:contentDescription="@string/artwork"
+                android:id="@+id/poemIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:setFilter="@{displayOption >= 1}"
+                app:loadImage="@{poem.artworkUrl}"/>
+
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:layout_centerInParent="true"
+                android:id="@+id/playSpin"
+                style="@style/SpinKitView.Small.ThreeBounce"
+                android:layout_width="@dimen/f200"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/f35"
+                android:layout_marginBottom="@dimen/f35"
+                app:SpinKit_Color="@color/color11"
+                android:layout_marginStart="@dimen/f60"
+                android:visibility="@{displayOption >= 2 ? View.VISIBLE : View.GONE}"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/f60"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/poemTitleTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textSize="@dimen/f62"
+                android:textColor="@{displayOption >= 1 ? @color/color11 : @color/color8}"
+                android:textStyle="bold"
+                android:gravity="bottom"
+                android:layout_marginBottom="@dimen/f19"
+                android:text="@{poem.poem}"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/f19"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:contentDescription="@string/content_main_pencil_ic"
+                    android:layout_width="@dimen/f34"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_autuor"/>
+
+                <TextView
+                    android:id="@+id/poetTxt"
+                    android:layout_marginStart="@dimen/f36"
+                    android:layout_width="@dimen/f200"
+                    android:layout_height="match_parent"
+                    android:textColor="@{displayOption >= 1 ? @color/color11 : @color/color8}"
+                    android:gravity="center_vertical|start"
+                    android:textSize="12sp"
+                    android:text="@{poem.poet}"/>
+
+                <ImageView
+                    android:contentDescription="@string/mic_ic"
+                    android:layout_width="@dimen/f34"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_speaker"/>
+
+                <TextView
+                    android:id="@+id/voiceTxt"
+                    android:layout_marginStart="@dimen/f36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|start"
+                    android:textColor="@{displayOption >= 1 ? @color/color11 : @color/color8}"
+                    android:textSize="12sp"
+                    android:text="@{poem.voice}"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

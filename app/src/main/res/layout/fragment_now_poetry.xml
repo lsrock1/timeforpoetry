@@ -1,0 +1,260 @@
+<layout>
+    <data>
+        <import type="java.util.ArrayList"/>
+        <variable
+            name="bannerUrl"
+            type="String"/>
+        <variable
+            name="poetry"
+            type="ArrayList&lt;com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.Poem&gt;"/>
+        <variable
+            name="viewModel"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.NowPoetryViewModel"/>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:background="@color/white"
+        tools:context=".view.mainViewPager.NowPoetry">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+    
+                <LinearLayout
+                    android:id="@+id/now_poetry_lin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/f60"
+                    android:layout_marginEnd="@dimen/f60"
+                    android:layout_marginTop="@dimen/f120">
+    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/f30"
+                        android:orientation="vertical">
+                        
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/f400">
+                            <ImageView
+                                android:id="@+id/first_cover"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/logo"
+                                app:loadSquareImage="@{poetry.get(0).getArtworkUrl()}"
+                                android:foreground="?attr/selectableItemBackground"
+                                android:focusable="true"
+                                android:clickable="true"
+                                android:onClick="@{() -> viewModel.addPlaylistFromRecommend(0)}"/>
+                            
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/f256"
+                                android:layout_marginTop="@dimen/f256"
+                                android:src="@drawable/ic_play_list"/>
+                        </RelativeLayout>
+                        
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/f50"
+                            app:setStartIcon="@{@drawable/ic_title}"
+                            android:drawablePadding="@dimen/f20"
+                            android:singleLine="true"
+                            android:text="@{poetry.get(0).getPoem()}"
+                            android:textSize="@dimen/f60"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/f28"
+                            app:setStartIcon="@{@drawable/ic_autuor}"
+                            android:drawablePadding="@dimen/f20"
+                            android:singleLine="true"
+                            android:text="@{poetry.get(0).getPoet()}"
+                            android:textSize="@dimen/f60"/>
+
+                        <TextView
+                            android:id="@+id/firstVoice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/f28"
+                            app:setStartIcon="@{@drawable/ic_speaker}"
+                            android:drawablePadding="@dimen/f20"
+                            android:singleLine="true"
+                            android:text="@{poetry.get(0).getVoice()}"
+                            android:textSize="@dimen/f60"/>
+                    </LinearLayout>
+    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/f30"
+                        android:layout_marginEnd="@dimen/f30"
+                        android:orientation="vertical">
+    
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/f400">
+                            <ImageView
+                                android:id="@+id/second_cover"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/logo"
+                                android:foreground="?attr/selectableItemBackground"
+                                android:focusable="true"
+                                android:clickable="true"
+                                app:loadSquareImage="@{poetry.get(1).getArtworkUrl()}"
+                                android:onClick="@{() -> viewModel.addPlaylistFromRecommend(1)}"/>
+    
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/f256"
+                                android:layout_marginTop="@dimen/f256"
+                                android:src="@drawable/ic_play_list"/>
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/f50"
+                            app:setStartIcon="@{@drawable/ic_title}"
+                            android:drawablePadding="@dimen/f20"
+                            android:singleLine="true"
+                            android:text="@{poetry.get(1).getPoem()}"
+                            android:textSize="@dimen/f60"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/f38"
+                            app:setStartIcon="@{@drawable/ic_autuor}"
+                            android:drawablePadding="@dimen/f20"
+                            android:singleLine="true"
+                            android:text="@{poetry.get(1).getPoet()}"
+                            android:textSize="@dimen/f60"/>
+
+                        <TextView
+                            android:id="@+id/secondVoice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/f38"
+                            app:setStartIcon="@{@drawable/ic_speaker}"
+                            android:drawablePadding="@dimen/f20"
+                            android:singleLine="true"
+                            android:text="@{poetry.get(1).getVoice()}"
+                            android:textSize="@dimen/f60"/>
+                    </LinearLayout>
+    
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="@dimen/f30"
+                        android:orientation="vertical">
+    
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/f400">
+                            <ImageView
+                                android:id="@+id/third_cover"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/logo"
+                                android:foreground="?attr/selectableItemBackground"
+                                android:focusable="true"
+                                android:clickable="true"
+                                app:loadSquareImage="@{poetry.get(2).getArtworkUrl()}"
+                                android:onClick="@{() -> viewModel.addPlaylistFromRecommend(2)}"/>
+    
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/f256"
+                                android:layout_marginTop="@dimen/f256"
+                                android:src="@drawable/ic_play_list"/>
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/f50"
+                            app:setStartIcon="@{@drawable/ic_title}"
+                            android:drawablePadding="@dimen/f20"
+                            android:singleLine="true"
+                            android:text="@{poetry.get(2).getPoem()}"
+                            android:textSize="@dimen/f60"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/f38"
+                            app:setStartIcon="@{@drawable/ic_autuor}"
+                            android:drawablePadding="@dimen/f20"
+                            android:singleLine="true"
+                            android:text="@{poetry.get(2).getPoet()}"
+                            android:textSize="@dimen/f60"/>
+
+                        <TextView
+                            android:id="@+id/thirdVoice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/f38"
+                            app:setStartIcon="@{@drawable/ic_speaker}"
+                            android:drawablePadding="@dimen/f20"
+                            android:singleLine="true"
+                            android:text="@{poetry.get(2).getVoice()}"
+                            android:textSize="@dimen/f60"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+    
+                <ImageView
+                    android:id="@+id/banner"
+                    app:loadSquareImage="@{bannerUrl}"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/f320"
+                    android:layout_marginTop="@dimen/f50"
+                    android:src="@drawable/banner_main"/>
+    
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/f72"
+                    android:layout_marginTop="@dimen/f96"
+                    android:layout_marginStart="@dimen/f60"
+                    android:textStyle="bold"
+                    android:text="실시간 단풍책갈피"/>
+    
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/f80"
+                    android:nestedScrollingEnabled="false"
+                    android:focusable="false"
+                    app:layoutManager="LinearLayoutManager"
+                    tools:listitem="@layout/fragment_poem"/>
+    
+            </LinearLayout>
+    
+        </android.support.v4.widget.NestedScrollView>
+    
+    
+    </LinearLayout>
+</layout>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/bg_regist"
+        android:paddingStart="@dimen/f60"
+        android:paddingEnd="@dimen/f60">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/f1780"
+            android:textColor="@color/color1"
+            android:textSize="20.5sp"
+            android:textStyle="bold"
+            android:text="@string/authority_main"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/f90"
+            android:layout_gravity="center">
+            <Button
+                android:id="@+id/toSignInBtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/f200"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/f20"
+                android:background="@drawable/color2btn"
+                android:textSize="15.5sp"
+                android:textStyle="bold"
+                android:textColor="@color/color8"
+                style="?android:attr/buttonBarButtonStyle"
+                android:foreground="?attr/selectableItemBackground"
+                android:text="@string/login" />
+
+            <Button
+                android:id="@+id/toSignUpBtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/f200"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/f20"
+                style="?android:attr/buttonBarButtonStyle"
+                android:textColor="@color/color1"
+                android:background="@drawable/color5alpha50btn"
+                android:textSize="15.5sp"
+                android:textStyle="bold"
+                android:foreground="?attr/selectableItemBackground"
+                android:text="@string/sign_up" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/passBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/f116"
+            android:textColor="@color/color1"
+            android:textSize="15.5sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:text="@string/skip"/>
+
+    </LinearLayout>
+</layout>

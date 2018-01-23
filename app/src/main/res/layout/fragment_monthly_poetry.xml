@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.MonthlyPoetryViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+        <ImageView
+            android:contentDescription="@string/monthly_top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/f300"
+            android:src="@drawable/title_monthlylist"/>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/f120"
+                    android:layout_marginTop="@dimen/f90"
+                    android:layout_marginBottom="@dimen/f70"
+                    android:layout_marginStart="@dimen/f60"
+                    android:layout_marginEnd="@dimen/f60"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/editBtn"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/f15"
+                        android:padding="0dp"
+                        android:background="@{viewModel.isEditMode ? @drawable/color2btn : @drawable/edit_bg}"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:onClick="@{() -> viewModel.toggleEditMode()}"
+                        android:text="@string/edit"/>
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/f15"
+                        android:layout_marginEnd="@dimen/f15"
+                        android:visibility="invisible"/>
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/f15"
+                        android:layout_marginEnd="@dimen/f15"
+                        android:visibility="invisible"/>
+
+                    <Button
+                        android:id="@+id/selectedItemsListen"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/f15"
+                        android:background="@drawable/edit_bg"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:text="@string/listen"
+                        android:onClick="@{() -> viewModel.multiAdd()}"
+                        android:visibility="@{viewModel.isEditMode ? View.VISIBLE : View.INVISIBLE}"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:contentDescription="@string/monthly_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/f300"
+                    android:src="@drawable/banner_main"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/poemFraglist"
+                    android:name="com.timeofpoetry.timeofpoetry.timeofpoetry.mainThreeFragment.MonthlyPoetry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/f60"
+                    android:layout_marginRight="@dimen/f60"
+                    android:focusable="false"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="LinearLayoutManager"
+                    tools:context=".view.mainViewPager.MonthlyPoetry"
+                    tools:listitem="@layout/fragment_poem" />
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+</layout>

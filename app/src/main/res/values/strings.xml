@@ -1,0 +1,366 @@
+<resources>
+    <string name="login">로그인</string>
+    <string name="sign_up">회원가입</string>
+    <string name="skip">건너뛰기</string>
+    <string name="logout">로그아웃</string>
+    <string name="logo">로고</string>
+    <string name="close">닫기</string>
+    <string name="edit">편집</string>
+    <string name="listen">감상</string>
+    <string name="select_all">전체선택</string>
+    <string name="remove">빼기</string>
+    <string name="artwork">아트워크</string>
+    <string name="mic_ic">성우</string>
+    <string name="composer">작곡가</string>
+
+    <string name="share">공유하기</string>
+    <string name="maple">좋아요 버튼</string>
+    <string name="bookmark">나의시집 추가 버튼</string>
+    <string name="player_lyric_open">가사보기</string>
+
+    <string name="my_play_list_title">감상목록</string>
+
+    <string name="my_poetry_top">나만의 시집을 만들어보세요</string>
+
+    <string name="monthly_top">매월 새로 나온 시 낭독 음원을 만나보세요</string>
+    <string name="monthly_banner">광고</string>
+
+    <string name="board_item_open">내용 펼치기 버튼</string>
+
+    <string name="splash_ment">시와 시 사이,</string>
+
+    <string name="sign_kakao_btn">카카오톡으로 로그인하기 버튼</string>
+    <string name="sign_kakao">카카오톡으로 로그인</string>
+    <string name="kakao_ic">카카오 아이콘</string>
+    <string name="sign_fb_btn">페이스북으로 로그인하기 버튼</string>
+    <string name="sign_fb">페이스북으로 로그인</string>
+    <string name="fb_ic">페이스북 아이</string>
+
+    <string name="authority_main">로그인 해 주세요</string>
+
+    <string name="activity_setting_user_info">회원정보</string>
+    <string name="activity_setting_login_info">로그인 정보</string>
+    <string name="activity_setting_poet">좋아하는 시인이 있나요?</string>
+    <string name="activity_setting_poetry">좋아하는 작품이 있나요?</string>
+    <string name="activity_setting_season">좋아하는 계절이 있나요?</string>
+    <string name="activity_setting_user_info_update">회원 정보 업데이트</string>
+    <string name="activity_setting_version_title">버전정보</string>
+    <string name="activity_setting_version">1.01</string>
+    <string name="activity_setting_info_title">사업자 정보</string>
+    <string name="activity_setting_info">·대표: 강지수\n·사업자등록번호: 686&#8211;19&#8211;00693\n·통신판매업신고번호:\n©시와 시 사이 시간\n문의 E-MAIL:\ntimeforpoetry.cc@gmail.com</string>
+
+    <string name="main_nav_banner">네비게이션 메뉴 광고</string>
+
+
+    <string name="content_main_playlist_btn">플레이리스트 버튼</string>
+    <string name="content_main_pencil_ic">펜촉 아이콘</string>
+    <string name="content_main_rewind">되감기</string>
+    <string name="content_main_play">감상</string>
+    <string name="content_main_pause">멈춤</string>
+    <string name="content_main_forward">다음 시 듣기</string>
+    <string name="content_main_repeat">반복재생 설정</string>
+
+    <string name="app_name">시간</string>
+    <string name="pause">pause</string>
+    <string name="UserInfos">UserInfos</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="top_back_btn">뒤로가기</string>
+    <string name="title_activity_player">PlayerActivity</string>
+    <string name="edit_btn_width">75dp</string>
+    <string name="btn_text_edit">편집</string>
+    <string name="btn_text_select_all">전체선택</string>
+    <string name="btn_text_extract">빼기</string>
+    <string name="open_source_title">오픈소스라이선스</string>
+
+    <string name="empty_my_poem">나의 시집이 비어 있습니다</string>
+    <string name="facebook_app_id">257128334694006</string>
+    <string name="fb_login_protocol_scheme">fb257128334694006</string>
+    <string name="sign_up_check_text">이용약관과 개인정보취급방침에 동의합니다</string>
+    <string name="version_setting_title">설정 및 버전 정보</string>
+    <string name="notice_title">공지사항</string>
+    <string name="contract">
+        개인정보취급(처리)방침
+        \n시간은 고객의 개인정보보호를 소중하게 생각하고, 고객의 개인정보를 보호하기 위하여 항상 최선을 다해 노력하고 있습니다. 시간은 「정보통신망 이용촉진 및 정보보호 등에 관한 법률」을 비롯한 모든 개인정보보호 관련 법률규정 및 정보통신부가 제정한 「이동통신서비스제공자의 개인정보 보호지침」을 준수하고 있습니다.
+\n수집하는 개인정보의 항목 및 수집방법
+\n개인정보 수집에 대한 동의
+\n고객님께서 개인정보취급방침 또는 이용약관의 내용에 대해 「동의합니다」 체크할 수 있는 절차를 마련하고 있으며, 확인 박스를 체크하면 개인정보 수집에 대해 동의한 것으로 봅니다.
+\n
+\n"시간"이 서비스 이용과 관련하여 수집하는 개인정보의 범위는 아래와 같습니다.
+\n[필수입력사항]
+\n➀ 이메일주소
+\n➁ 비밀번호(회원의 경우)
+\n[선택입력사항]
+\n➀ 좋아하는 시인
+\n➁ 좋아하는 작품
+\n➂ 좋아하는 계절
+\n➃ 자주 사용하는 단어
+\n
+\n개인정보의 수집 및 이용목적
+\n"시간"은 본조 제 1항의 수집 정보를 다음과 같은 목적을 위하여 사용합니다.
+\n➀ 서비스 이용에 따른 가입의사 확인, 서비스 이용
+\n➁ 고지사항 전달, 불만처리 의사소통 경로 확보
+\n➂ 서비스 관련 각종 소식 및 고지 사항 전달, 본인 의사 확인
+\n➃ 마케팅 활동에 필요한 인구 통계학적 분석.
+\n
+\n개인정보의 목적 외 사용 및 제3자에 대한 제공 및 공유
+\n"시간"은 회원의 개인정보를 \'개인정보의 수집항목 및 수집방법\', \'개인정보의 이용\' 에서 고지한 범위 내에서 사용하며, 동 범위를 초과하여 이용하거나 타인 또는 타기업/기관에 제공하지 않습니다.
+\n다만, 다음은 예외로 합니다.
+\n1) 회원이 사전에 동의한 경우
+\n회원의 개인정보를 제3자에게 제공하기 이전에 다음의 모든 사항을 회원에게 알리고 동의를 받습니다.
+\n➀ 개인정보를 제공받는 자
+\n➁ 개인정보를 제공받는자의 개인정보 이용 목적
+\n➂ 제공하는 개인정보의 항목
+\n➃ 개인정보를 제공받는 자의 개인정보 보유 및 이용 기간
+\n
+\n2) 관계법률의 규정에 의거하거나, 수사목적으로 관계법률에서 정한 절차와 방법에 따라 수사기관이 개인정보 제공을 요구하는 경우
+\n
+\n개인정보의 보유 및 이용기간
+\n"시간"이 회원님의 개인정보를 수집하는 경우 그 보유기간은 회원가입 하신 후 해지 (탈퇴신청, 직권탈퇴 포함)시까지 입니다. 또한 해지 시 회원님의 개인정보를 즉시 파기하며 개인정보가 제3자에게 제공된 경우에는 제3자에게도 파기하도록 지시합니다. 단, 다음의 정보에 대해서는 아래의 이유로 명시한 기간 동안 보존합니다.
+\n➀ 보존 항목 : 고객 정보, 서비스 이용기록, 결제기록, 접속 IP 정보
+\n➁ 보존 근거 : 고객님의 탈퇴기록 및 수사기관 협조 등에 이용하기 위하여 보존함
+\n➂ 보존 기간 : 3개월
+\n
+\n관계법령의 규정에 의하여 보존할 필요가 있는 경우 아래와 같이 관계법령에서 정한 일정한 기간 동안 회원정보를 보관합니다.
+\n➀ 계약 또는 청약철회 등에 관한 기록 : 5년 (전자상거래등에서의 소비자보호에 관한 법률)
+\n➁ 소비자의 불만 또는 분쟁처리에 관한 기록 : 3년 (전자상거래등에서의 소비자보호에 관한 법률)
+\n➂ 방문에 관한 기록 : 6개월 (통신비밀보호법)
+\n
+\n개인정보의 파기 절차 및 방법
+\n개인 정보의 수집 목적 또는 제공받은 목적을 달성한 때에는 아래와 같은 방법과 절차로 당해 개인 정보를 지체 없이 파기 및 삭제합니다.
+\n회원가입정보의 경우 : 회원탈퇴 하거나 회원에서 제명된 때
+\n
+\n개인정보의 파기 절차 및 방법
+\n"시간"은 아래와 같은 방법과 절차로 당해 개인 정보를 지체 없이 파기 및 삭제합니다.
+\n회원가입정보의 경우 : 회원탈퇴 하거나 회원에서 제명된 때
+\n설문조사, 이벤트 등 일시적 목적을 위하여 수집한 경우 : 당해 설문조사, 이벤트 등이 종료한 때
+\n➀ 파기절차
+\n"이용자"가 회원가입 등을 위해 입력한 정보는 목적이 달성된 후 별도의 DB로 옮겨져 (종이의 경우 별도의 서류함) 내부 방침 및 기타 관련 법령에 의한 정보보호 사유에 따라 (보유 및 이용기간 참조) 일정 기간 저장된 후 파기되어집니다. 별도 DB로 옮겨진 개인정보는 법률에 의한 경우가 아니고서는 보유되어지는 이외의 다른 목적으로 이용되지 않습니다.
+\n➁ 파기방법
+\n전자적 파일형태로 저장된 개인정보는 기록을 재생할 수 없는 기술적 방법을 사용하여 삭제합니다. 종이에 출력된 개인정보는 분쇄기로 분쇄하거나 소각을 통하여 파기합니다.
+\n
+\n개인정보의 자동 수집 장치의 설치/운영 및 그 거부에 관한 사항
+\n상기 개인 정보 외에 "서비스"는 쿠키(Cookie)와 픽셀 태그(Pixel Tag)를 통해 접속자를 인식하며 아래의 목적으로 쿠키를 사용합니다. (쿠키는 웹 사이트 또는 웹 사이트의 서비스 제공자가 "이용자"의 컴퓨터내의 웹 브라우저로 전송하는 작은 텍스트 파일을 말하며, 이 파일들은 웹 사이트 또는 서비스 제공자의 시스템이 "이용자"의 웹 브라우저를 인식하고 특정 정보를 저장하고 기억하도록 합니다. 픽셀 태그는 "이용자"에게 전자우편을 보냈을 때 정형화된 포맷으로 전달하며 "이용자"가 언제 읽었는지 알려주는 작은 그래픽 이미지입니다.)
+\n➀ "이용자"의 과거 "서비스" 방문 시 이용한 컨텐츠를 기억하여 다음 방문 시 "이용자"에게 향상된 "서비스" 환경 제공.
+\n➁ "서비스"의 방문 traffic의 분석 및 "서비스"의 이용 행태 파악.
+\n➂ 필요에 따라 제3자와의 계약을 통해 "서비스" 방문 traffic 분석에 활용. "이용자"는 본인이 이용하는 컴퓨터의 웹 브라우저에서 쿠키 수집 시 경고 창이 뜨도록 하거나, 쿠키 기능을 중지할 수 있습니다. (자세한 사항은 웹 브라우저의 \'도움말\'이나 \'Help\' 기능을 참조하십시오) 만약 쿠키를 중지시킬 경우 이 기능을 통해 이용 가능했던 "서비스" 내의 여러 컨텐츠나 기능을 이용할 수 없으며 "서비스"가 제대로 구동하지 않을 수 있습니다.
+\n
+\n개인정보 관리 책임자"서비스"의 개인 정보는 다음의 담당자가 책임을 맡고 있습니다.
+\n
+\n담당자 성명: 최지훈
+\nE-Mail: korjan20@gmail.com
+\n
+\n고지의 의무
+\n현 개인정보 취급(처리)방침은 2017년 6월 8일부터 적용됩니다. 내용의 추가, 삭제 및 수정이 있을 시에는 개정 최소 7일전(중요한 사항이 변경되는 경우는 최소 30일전)부터 공지사항을 통하여 고지할 것입니다. 만일, 개인정보의 수집 및 활용, 제3자 제공 등이 변경되어 동의가 필요한 경우에는, 별도 동의 절차를 마련하여 진행할 것입니다. 또한 개인정보보호정책에 버전번호 및 개정일자 등을 부여하여 개정여부를 쉽게 알 수 있도록 하고 있습니다.
+\n
+\n개인정보취급(처리)방침 버전 번호 : v1.0
+\n개인정보취급(처리)방침 시행일자 : 2017-06-08
+\n
+\n
+\n
+\n
+\n
+\n
+\n
+\n
+\n이용약관
+\n제1장
+\n제1조 목적
+\n“시간”이 제공하는 서비스를 이용해 주셔서 감사합니다. 본 약관은 여러분이 서비스를 이용하는 데 필요한 권리, 의무 및 책임사항, 이용조건 및 절차 등 기본적인 사항을 규정하고 있으므로 조금만 시간을 내서 주의 깊게 읽어주시기 바랍니다.
+\n
+\n제2조 약관의 명시, 효력 및 변경
+\n1.
+\n본 약관의 내용은 회사가 제공하는 개별 서비스 또는 서비스 초기 화면에 게시하거나 기타의 방법으로 공지하고, 본 약관에 동의한 여러분 모두에게 그 효력이 발생합니다.
+\n2.
+\n회사는 필요한 경우 관련법령을 위배하지 않는 범위 내에서 본 약관을 변경할 수 있습니다. 본 약관이 변경되는 경우 회사는 변경 사항을 시행일자 7일 전부터 여러분에게 공지 또는 통지하는 것을 원칙으로 하며 사용하는 이메일 주소로 이메일을 발송하거나, 뉴스피드를 띄우는 등 합리적으로 가능한 방법으로 변경사항을 공지 또는 통지하겠습니다.
+\n3.
+\n전 항에 따라 공지 또는 통지를 하면서 공지 또는 통지일로부터 개정약관 시행일 7일 후까지 거부의사를 표시하지 아니하면 승인한 것으로 본다는 뜻을 명확하게 고지하였음에도 여러분의 의사표시가 없는 경우에는 변경된 약관을 승인한 것으로 봅니다.
+\n제2장 계정 연결 및 생성 관리
+\n제3조 카카오 또는 페이스북 계정 연결 및 생성
+\n1.
+\n계정은 서비스에서 본인을 식별하기 이메일 입력과 등록한 문자, 특수문자, 숫자 등의 조합으로, 여러분이 본 약관에 동의하고 여러분의 계정과 비밀번호를 등록하면 생성됩니다.
+\n제4조 계정 관리
+\n1.
+\n계정은 여러분 본인만 이용할 수 있으며, 다른 사람이 여러분의 계정을 이용하도록 허락할 수 없습니다. 그리고 여러분은 다른 사람이 여러분의 계정을 무단으로 사용할 수 없도록 직접 비밀번호를 관리하여야 합니다. 만약 무단 사용이 발견된다면, 문의하기를 통하여 알려주시기 바라며, 무단 사용을 막기 위한 방법을 여러분에게 안내하도록 하겠습니다.
+\n2.
+\n여러분은 서비스 내 설정 화면을 통하여 여러분의 정보를 열람할 수 있습니다. 다만, 서비스의 제공 및 관리를 위해 필요한 계정, 단말기 식별번호 등 일부 정보는 수정이 불가능할 수 있습니다. 여러분이 서비스 이용 신청 시 알려주신 내용에 변동이 있을 때, 문의하기를 통하여 알려 주시기 바랍니다.
+\n3.
+\n여러분이 서비스 내 정보를 수정하지 않아 발생하는 손해에 대하여 책임을 부담하지 아니합니다.
+\n제3장 서비스의 이용
+\n제5조 다양한 서비스 제공 및 변경 등
+\n1.
+\nSNS, 온라인 콘텐츠 제공 서비스, 위치기반서비스 등 여러분이 인터넷과 모바일로 즐길 수 있는 다양한 서비스를 제공합니다. 여러분은 스마트폰의 어플리케이션 스토어 등에서 서비스를 다운받아 설치하거나 직접 PC에 설치 혹은 웹페이지에 접속하여 서비스를 이용할 수 있습니다.
+\n2.
+\n더 나은 서비스를 위하여 서비스에 필요한 소프트웨어의 업데이트 버전을 제공할 수 있습니다. 소프트웨어의 업데이트에는 중요한 기능의 추가 또는 불필요한 기능의 제거 등이 포함되어 있습니다. 여러분들도 서비스를 즐겁게 이용할 수 있도록 꾸준히 업데이트를 하여 주시기 바랍니다.
+\n3.
+\n더 나은 서비스의 제공을 위하여 여러분에게 서비스의 이용과 관련된 각종 고지, 관리 메시지 및 기타 광고를 비롯한 다양한 정보를 서비스에 표시하거나 여러분의 메일 계정으로 직접 발송할 수 있습니다.
+\n4.
+\n서비스 이용 중 시스템 오류 등 문제점을 발견하신다면 언제든지 문의하기로 알려주시기 바랍니다.
+\n5.
+\n여러분이 서비스를 이용하는 과정에서 Wi-Fi 무선인터넷을 사용하지 않고, 가입하신 이동통신사의 무선인터넷에 연결하여 이용하는 경우 이동통신사로부터 여러분에게 별도의 데이터 통신요금이 부과되는 점을 유의하여 주시기 바랍니다. 서비스 이용 과정에서 발생하는 데이터 통신요금은 여러분이 여러분의 비용과 책임 하에 이동통신사에 납부하셔야 합니다. 데이터 통신요금에 대한 자세한 안내는 여러분이 가입하신 이동통신사에 문의하시기 바랍니다.
+\n제6조 서비스 이용 방법 및 주의점
+\n1.
+\n여러분은 서비스를 자유롭게 이용할 수 있으나, 아래와 같이 서비스를 잘못된 방법으로 이용할 수 없다는 점을 잊지 말아주셨으면 합니다.
+\no	• 여러분은 잘못된 방법으로 서비스의 제공을 방해하거나 회사가 안내하는 방법 이외의 다른 방법을 사용하여 서비스에 접근할 수 없습니다.
+\no	• 다른 서비스 이용자의 정보를 무단으로 수집, 이용하거나 다른 사람들에게 제공하는 행위도, 서비스를 영리 목적으로 이용하는 것도, 음란 정보나 저작권 침해 정보 등 공서양속 및 법령에 위반되는 내용의 정보 등을 발송하거나 게시하는 행위도 금지됩니다.
+\no	• 시간의 동의 없이 서비스 또는 이에 포함된 소프트웨어의 일부를 복사, 수정, 배포, 판매, 양도, 대여, 담보제공하거나 타인에게 그 이용을 허락하는 행위와 소프트웨어를 역설계하거나 소스 코드의 추출을 시도하는 등 서비스를 복제, 분해 또는 모방하거나 기타 변형하는 행위도 금지됩니다.
+\n2.
+\n여러분은 서비스의 이용권한, 기타 이용 계약상 지위를 타인에게 양도•증여할 수 없으며, 담보로 제공할 수 없습니다.
+\n3.
+\n혹시라도 여러분이 관련 법령, 회사의 모든 약관 또는 정책을 준수하지 않는다면, 여러분의 위반행위 등을 조사하거나 여러분의 서비스 이용을 잠시 또는 계속하여 중단하거나, 재가입에 제한을 둘 수도 있습니다.
+\n4.
+\n법령에서 정하는 기간 동안 여러분이 서비스를 이용하기 위해 로그인 혹은 접속한 기록이 없는 경우 여러분이 등록한 전자우편, SMS 등 기타 유효한 수단으로 통지 후 여러분의 정보를 파기하거나 분리 보관할 수 있으며, 이로 인해 서비스 이용을 위한 필수적인 정보가 부족할 경우 이용계약이 해지될 수도 있습니다.
+\n제7조 권리의 귀속 및 저작물의 이용
+\n1.
+\n게시물에 대한 저작권을 포함한 지적재산권은 권리자가 계속하여 보유합니다.
+\n2.
+\n여러분이 서비스에 게시물을 게시하는 경우, 해당 게시물이 서비스 모두에 노출될 수 있고 이에 필요한 범위 내에서 사용, 저장, 수정, 복제, 공중송신, 전시, 배포 등의 방식으로 이용할 수 있도록 사용을 허락하는 전 세계적이고 영구적인 라이선스를 회사에게 제공하게 됩니다. 본 라이선스는 여러분이 서비스의 사용을 중단하거나 탈퇴한 후에도 존속하게 됩니다. 본 라이선스에서 여러분이 부여하는 권리는 서비스를 운영, 개선, 홍보하고 새로운 서비스를 개발하기 위한 범위 내에서 사용됩니다. 일부 서비스에서는 여러분이 제공한 콘텐츠에 접근하거나 이를 삭제하는 방법을 제공할 수 있습니다. 또한 일부 서비스에서는 제공된 콘텐츠에 대한 사용 범위를 제한하는 설정이 있습니다.
+\n3.
+\n여러분은 제공한 콘텐츠에 대해 라이선스를 부여하기 위해 필요한 권리를 보유해야 합니다. 이러한 권리를 보유하지 않아 발생하는 모든 문제에 대해서는 게시자가 책임을 부담하게 됩니다. 또한, 여러분은 음란하거나 폭력적이거나 기타 공서양속 및 법령에 위반하는 콘텐츠를 공개 또는 게시할 수 없습니다.
+\n4.
+\n회사는 여러분의 콘텐츠가 법령 및 서비스 정책에 위반된다고 판단할 경우, 이를 삭제하거나 게시를 거부할 수 있습니다. 다만 회사가 모든 콘텐츠를 검토할 의무가 있는 것은 아닙니다. 누군가 여러분의 권리를 침해하였다면, 문의하기를 통해 게시중단요청에 대한 도움을 받으실 수 있습니다.
+\n제 8조 위치기반서비스 제공
+\n1.
+\n여러분의 실생활에 더욱 보탬이 되는 유용한 서비스를 제공하기 위하여 서비스에 위치기반서비스를 포함시킬 수 있습니다.
+\n2.
+\n위치기반서비스는 여러분의 단말기기의 위치정보를 수집하는 위치정보사업자로부터 위치정보를 전달받아 제공하는 무료서비스이며, 구체적으로는 아래와 같습니다.
+\no	• 여러분의 현재 위치 또는 특정 위치를 이용한 날씨 정보 제공(정보제공서비스)
+\n
+\n3.
+\n위치기반서비스와 관련하여 여러분의 권리를 침해당했거나 권리행사가 필요한 경우 문의하기를 통해 도움을 받으실 수 있으며, 위치정보의 보호 및 이용 등에 관한 법률 제 28조 제2항 및 개인정보보호법 제43조의 규정에 따라 개인정보 분쟁조정위원회에 조정을 신청할 수 있습니다.
+\n이용약관 버전 번호 : v1.0
+\n이용약관 시행일자 : 2017-06-08
+</string>
+    <string name="email">timeforpoetry.cc@gmail.com</string>
+
+    <string name="open_source_top">Copyright ©시와 시 사이 시간. All Rights Reserved.\nThis product contains the following Open Source Software with licenses and notices below.\nFor any questions, please contact to timeforpoetry.cc@gmail.com</string>
+    <string name="open_source_kakao">KAKAO SDK\nhttps://developers.kakao.com/docs/sdk\nCopyright © 2017 Kakao Corp.\nApache License 2.0</string>
+    <string name="open_source_apache2">
+        Apache License
+Version 2.0, January 2004
+http://www.apache.org/licenses/
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+1. Definitions.
+
+"License" shall mean the terms and conditions for use, reproduction, and distribution as defined by Sections 1 through 9 of this document.
+
+"Licensor" shall mean the copyright owner or entity authorized by the copyright owner that is granting the License.
+
+"Legal Entity" shall mean the union of the acting entity and all other entities that control, are controlled by, or are under common control with that entity. For the purposes of this definition, "control" means (i) the power, direct or indirect, to cause the direction or management of such entity, whether by contract or otherwise, or (ii) ownership of fifty percent (50%) or more of the outstanding shares, or (iii) beneficial ownership of such entity.
+
+"You" (or "Your") shall mean an individual or Legal Entity exercising permissions granted by this License.
+
+"Source" form shall mean the preferred form for making modifications, including but not limited to software source code, documentation source, and configuration files.
+
+"Object" form shall mean any form resulting from mechanical transformation or translation of a Source form, including but not limited to compiled object code, generated documentation, and conversions to other media types.
+
+"Work" shall mean the work of authorship, whether in Source or Object form, made available under the License, as indicated by a copyright notice that is included in or attached to the work (an example is provided in the Appendix below).
+
+"Derivative Works" shall mean any work, whether in Source or Object form, that is based on (or derived from) the Work and for which the editorial revisions, annotations, elaborations, or other modifications represent, as a whole, an original work of authorship. For the purposes of this License, Derivative Works shall not include works that remain separable from, or merely link (or bind by name) to the interfaces of, the Work and Derivative Works thereof.
+
+"Contribution" shall mean any work of authorship, including the original version of the Work and any modifications or additions to that Work or Derivative Works thereof, that is intentionally submitted to Licensor for inclusion in the Work by the copyright owner or by an individual or Legal Entity authorized to submit on behalf of the copyright owner. For the purposes of this definition, "submitted" means any form of electronic, verbal, or written communication sent to the Licensor or its representatives, including but not limited to communication on electronic mailing lists, source code control systems, and issue tracking systems that are managed by, or on behalf of, the Licensor for the purpose of discussing and improving the Work, but excluding communication that is conspicuously marked or otherwise designated in writing by the copyright owner as "Not a Contribution."
+
+"Contributor" shall mean Licensor and any individual or Legal Entity on behalf of whom a Contribution has been received by Licensor and subsequently incorporated within the Work.
+
+2. Grant of Copyright License. Subject to the terms and conditions of this License, each Contributor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license to reproduce, prepare Derivative Works of, publicly display, publicly perform, sublicense, and distribute the Work and such Derivative Works in Source or Object form.
+
+3. Grant of Patent License. Subject to the terms and conditions of this License, each Contributor hereby grants to You a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable (except as stated in this section) patent license to make, have made, use, offer to sell, sell, import, and otherwise transfer the Work, where such license applies only to those patent claims licensable by such Contributor that are necessarily infringed by their Contribution(s) alone or by combination of their Contribution(s) with the Work to which such Contribution(s) was submitted. If You institute patent litigation against any entity (including a cross-claim or counterclaim in a lawsuit) alleging that the Work or a Contribution incorporated within the Work constitutes direct or contributory patent infringement, then any patent licenses granted to You under this License for that Work shall terminate as of the date such litigation is filed.
+
+4. Redistribution. You may reproduce and distribute copies of the Work or Derivative Works thereof in any medium, with or without modifications, and in Source or Object form, provided that You meet the following conditions:
+
+     (a) You must give any other recipients of the Work or Derivative Works a copy of this License; and
+
+     (b) You must cause any modified files to carry prominent notices stating that You changed the files; and
+
+     (c) You must retain, in the Source form of any Derivative Works that You distribute, all copyright, patent, trademark, and attribution notices from the Source form of the Work, excluding those notices that do not pertain to any part of the Derivative Works; and
+
+     (d) If the Work includes a "NOTICE" text file as part of its distribution, then any Derivative Works that You distribute must include a readable copy of the attribution notices contained within such NOTICE file, excluding those notices that do not pertain to any part of the Derivative Works, in at least one of the following places: within a NOTICE text file distributed as part of the Derivative Works; within the Source form or documentation, if provided along with the Derivative Works; or, within a display generated by the Derivative Works, if and wherever such third-party notices normally appear. The contents of the NOTICE file are for informational purposes only and do not modify the License. You may add Your own attribution notices within Derivative Works that You distribute, alongside or as an addendum to the NOTICE text from the Work, provided that such additional attribution notices cannot be construed as modifying the License.
+
+     You may add Your own copyright statement to Your modifications and may provide additional or different license terms and conditions for use, reproduction, or distribution of Your modifications, or for any such Derivative Works as a whole, provided Your use, reproduction, and distribution of the Work otherwise complies with the conditions stated in this License.
+
+5. Submission of Contributions. Unless You explicitly state otherwise, any Contribution intentionally submitted for inclusion in the Work by You to the Licensor shall be under the terms and conditions of this License, without any additional terms or conditions. Notwithstanding the above, nothing herein shall supersede or modify the terms of any separate license agreement you may have executed with Licensor regarding such Contributions.
+
+6. Trademarks. This License does not grant permission to use the trade names, trademarks, service marks, or product names of the Licensor, except as required for reasonable and customary use in describing the origin of the Work and reproducing the content of the NOTICE file.
+
+7. Disclaimer of Warranty. Unless required by applicable law or agreed to in writing, Licensor provides the Work (and each Contributor provides its Contributions) on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied, including, without limitation, any warranties or conditions of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A PARTICULAR PURPOSE. You are solely responsible for determining the appropriateness of using or redistributing the Work and assume any risks associated with Your exercise of permissions under this License.
+
+8. Limitation of Liability. In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any Contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as a result of this License or out of the use or inability to use the Work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such Contributor has been advised of the possibility of such damages.
+
+9. Accepting Warranty or Additional Liability. While redistributing the Work or Derivative Works thereof, You may choose to offer, and charge a fee for, acceptance of support, warranty, indemnity, or other liability obligations and/or rights consistent with this License. However, in accepting such obligations, You may act only on Your own behalf and on Your sole responsibility, not on behalf of any other Contributor, and only if You agree to indemnify, defend, and hold each Contributor harmless for any liability incurred by, or claims asserted against, such Contributor by reason of your accepting any such warranty or additional liability.
+
+END OF TERMS AND CONDITIONS
+
+APPENDIX: How to apply the Apache License to your work.
+
+To apply the Apache License to your work, attach the following boilerplate notice, with the fields enclosed by brackets "[]" replaced with your own identifying information. (Don't include the brackets!)  The text should be enclosed in the appropriate comment syntax for the file format. We also recommend that a file or class name and description of purpose be included on the same "printed page" as the copyright notice for easier identification within third-party archives.
+
+Copyright [yyyy] [name of copyright owner]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+    </string>
+    <string name="open_source_fb_title">FACEBOOK SDK\nhttps://github.com/facebook/facebook-android-sdk\nCopyright © 2014-present, Facebook, Inc. All rights reserved.</string>
+    <string name="open_source_fb_content">You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
+copy, modify, and distribute this software in source code or binary form for use
+in connection with the web services and APIs provided by Facebook.
+
+As with any software that integrates with the Facebook platform, your use of
+this software is subject to the Facebook Developer Principles and Policies
+[http://developers.facebook.com/policy/]. This copyright notice shall be
+included in all copies or substantial portions of the software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</string>
+    <string name="open_source_expandable">ExpandableLayout\nhttps://github.com/AAkira/ExpandableLayout\nCopyright © 2015 A.Akira\nApache License 2.0</string>
+    <string name="open_source_retrofit">Retrofit2\nhttp://square.github.io/retrofit/\nCopyright 2013 Square, Inc.\nApache License 2.0</string>
+    <string name="open_source_glide">Glide\nhttps://github.com/bumptech/glide\nCopyright 2014 Google, Inc. All rights reserved.\nBSD, part MIT and Apache 2.0</string>
+    <string name="open_source_glide_content">Redistribution and use in source and binary forms, with or without modification, are
+permitted provided that the following conditions are met:
+
+   1. Redistributions of source code must retain the above copyright notice, this list of
+         conditions and the following disclaimer.
+
+   2. Redistributions in binary form must reproduce the above copyright notice, this list
+         of conditions and the following disclaimer in the documentation and/or other materials
+         provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY GOOGLE, INC. ``AS IS\'\' AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL GOOGLE, INC. OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+The views and conclusions contained in the software and documentation are those of the
+authors and should not be interpreted as representing official policies, either expressed
+or implied, of Google, Inc.</string>
+    <string name="open_source_glide_tr">Glide-transformations\nhttps://github.com/wasabeef/glide-transformations\nCopyright 2017 Wasabeef\nApache License 2.0</string>
+    <string name="open_source_spinkit">SpinKit\nhttps://github.com/ybq/Android-SpinKit\nCopyright © 2016 ybq\nMIT License</string>
+    <string name="open_source_typekit">Typekit\nhttps://github.com/tsengvn/typekit\nCopyright © 2015 Hien Ngo\nApache License 2.0</string>
+    <string name="open_source_dagger">Dagger2\nhttps://github.com/google/dagger\nCopyright 2012 The Dagger Authors\nApache License 2.0</string>
+    <string name="open_source_mit">THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</string>
+</resources>

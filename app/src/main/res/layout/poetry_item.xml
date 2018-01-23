@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="poem"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.Poem"/>
+        <variable
+            name="viewModel"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.PlayListController"/>
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/f300"
+        android:paddingBottom="@dimen/f50"
+        android:paddingTop="@dimen/f50"
+        android:paddingStart="@dimen/f60"
+        android:paddingEnd="0dp"
+        android:orientation="horizontal"
+        android:background="@{poem.isSelected ? @color/colorAlpha : @color/white}"
+        android:onClick="@{() -> viewModel.multiSelect(poem)}">
+
+        <ImageView
+            android:contentDescription="@string/artwork"
+            android:id="@+id/poemIcon"
+            android:layout_width="@dimen/f200"
+            android:layout_height="match_parent"
+            app:loadImage="@{poem.artworkUrl}"/>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/f60"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/poemTitleTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textSize="@dimen/f62"
+                android:textStyle="bold"
+                android:gravity="bottom"
+                android:layout_marginBottom="@dimen/f19"
+                android:text="@{poem.poem}"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/f19"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:contentDescription="@string/content_main_pencil_ic"
+                    android:layout_width="@dimen/f34"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_autuor"/>
+
+                <TextView
+                    android:id="@+id/poetTxt"
+                    android:layout_marginStart="@dimen/f36"
+                    android:layout_width="@dimen/f200"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|start"
+                    android:textSize="12sp"
+                    android:text="@{poem.poet}"/>
+
+                <ImageView
+                    android:contentDescription="@string/mic_ic"
+                    android:layout_width="@dimen/f34"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_speaker"/>
+
+                <TextView
+                    android:id="@+id/voiceTxt"
+                    android:layout_marginStart="@dimen/f36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|start"
+                    android:textSize="12sp"
+                    android:text="@{poem.voice}"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:contentDescription="@string/listen"
+            android:layout_gravity="center_vertical|end"
+            android:layout_width="@dimen/f190"
+            android:layout_height="@dimen/f300"
+            android:paddingTop="@dimen/f100"
+            android:paddingBottom="@dimen/f100"
+            android:paddingStart="@dimen/f60"
+            android:paddingEnd="@dimen/f60"
+            android:src="@drawable/ic_play_list"
+            android:onClick="@{() -> viewModel.add(poem)}"/>
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="copyright"
+            type="String"/>
+        <variable
+            name="license"
+            type="String"/>
+    </data>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/bottom_border_trans"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/f120"
+            android:paddingEnd="@dimen/f120"
+            android:paddingTop="@dimen/f68"
+            android:paddingBottom="@dimen/f66"
+            android:text="@{copyright}"
+            app:expandableToggle="@{true}"/>
+    
+        <com.github.aakira.expandablelayout.ExpandableLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:ael_expanded="false"
+            app:ael_duration="500"
+            app:ael_interpolator="decelerate"
+            app:ael_orientation="vertical"
+            android:orientation="vertical">
+    
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/f120"
+                android:paddingEnd="@dimen/f120"
+                android:paddingTop="@dimen/f100"
+                android:paddingBottom="@dimen/f100"
+                android:text="@{license}"/>
+    
+        </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+    </LinearLayout>
+</layout>

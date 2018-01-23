@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MainActivityViewModel"/>
+        <variable
+            name="poem"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.Poem"/>
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="0dp"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@drawable/bottom_border"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <ImageView
+                    android:contentDescription="@string/logo"
+                    android:layout_width="@dimen/f212"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/logo_top_alpha"
+                    android:layout_gravity="center"/>
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <include
+            android:id="@+id/content_main"
+            layout="@layout/content_main"
+            app:poem="@{poem}"
+            app:viewModel="@{viewModel}"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>
