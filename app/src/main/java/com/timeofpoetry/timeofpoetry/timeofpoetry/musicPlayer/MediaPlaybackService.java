@@ -76,10 +76,8 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
 
             @Override
             public void onSeekTo(long pos) {
-                if(mPlayer.seekTo((int) pos) && mediaSystem.successfullyRetrievedAudioFocus()) {
-                    startService(new Intent(getApplicationContext(), MediaPlaybackService.class));
-                    mMediaSessionCompat.setActive(true);
-                    mediaSystem.play();
+                if(mPlayer.seekTo((int) pos)) {
+                    playProcess();
                 }
             }
 
