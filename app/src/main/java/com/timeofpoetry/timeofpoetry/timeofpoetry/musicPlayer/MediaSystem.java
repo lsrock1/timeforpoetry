@@ -72,8 +72,13 @@ public class MediaSystem {
 
     public void pause(){
         if(isRegistered) {
-            service.unregisterReceiver(mNoisyReceiver);
             isRegistered = false;
+            try {
+                service.unregisterReceiver(mNoisyReceiver);
+            }
+            catch (IllegalArgumentException e){
+
+            }
         }
         if (isLocked) {
             wifiLock.release();
@@ -85,8 +90,13 @@ public class MediaSystem {
         AudioManager am = (AudioManager) service.getSystemService(Context.AUDIO_SERVICE);
         am.abandonAudioFocus(afChangeListener);
         if(isRegistered) {
-            service.unregisterReceiver(mNoisyReceiver);
             isRegistered = false;
+            try {
+                service.unregisterReceiver(mNoisyReceiver);
+            }
+            catch (IllegalArgumentException e){
+
+            }
         }
         if (isLocked) {
             wifiLock.release();

@@ -8,24 +8,31 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.NetworkTasks;
  * Created by sangroklee on 2018. 1. 4..
  */
 
-public class TimeOutTask {
+class TimeOutTask {
 
     private Player player;
     private Task task;
+    private boolean isCancelled = false;
 
-    public TimeOutTask(Player player) {
+    TimeOutTask(Player player) {
         this.player = player;
     }
 
-    public void startTimeout(){
+    void startTimeout(){
+        isCancelled = false;
         if(task == null || task.isCancelled() || task.getStatus().equals(AsyncTask.Status.FINISHED)){
             task = new Task();
             task.execute(player);
         }
     }
 
-    public void cancel(){
+    void cancel(){
         task.cancel(true);
+        isCancelled = true;
+    }
+
+    public boolean isCancelled() {
+        return isCancelled;
     }
 
     static public class Task extends AsyncTask<Player, Integer, Integer> {
@@ -33,7 +40,7 @@ public class TimeOutTask {
         @Override
         protected Integer doInBackground(Player... sv) {
             try {
-                Thread.sleep(4000);
+                Thread.sleep(7000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
