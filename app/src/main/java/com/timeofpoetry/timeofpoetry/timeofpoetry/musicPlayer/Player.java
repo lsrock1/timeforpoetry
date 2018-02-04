@@ -155,12 +155,16 @@ public class Player implements MediaPlayer.OnSeekCompleteListener, MediaPlayer.O
     }
 
     boolean rewind(){
-        if(mMediaPlayer.getCurrentPosition() <= 2000){
-            return true;
+        try {
+            if (mMediaPlayer.getCurrentPosition() <= 2000) {
+                return true;
+            } else {
+                mMediaPlayer.seekTo(0);
+                return false;
+            }
         }
-        else{
-            mMediaPlayer.seekTo(0);
-            return false;
+        catch (IllegalStateException e){
+            return true;
         }
     }
 
