@@ -106,17 +106,19 @@ public class MyPlayListModel extends SQLiteOpenHelper{
         playList.setValue(poetryModelData);
     }
 
-    public void addItems(ArrayList<PoetryClass.Poem> items){
-        ArrayList<PoetryClass.Poem> data = new ArrayList<>(poetryModelData.getPoetry());
-        for(PoetryClass.Poem item : items){
-            item.setDatabaseId((int) addItem(item));
-            data.add(0, item);
-        }
+    public void addItems(ArrayList<PoetryClass.Poem> items) {
+        if (items.size() != 0) {
+            ArrayList<PoetryClass.Poem> data = new ArrayList<>(poetryModelData.getPoetry());
+            for (PoetryClass.Poem item : items) {
+                item.setDatabaseId((int) addItem(item));
+                data.add(0, item);
+            }
 
-        position.setValue(0);
-        poetryModelData.setNewArray(data, false);
-        autoSetCurrentPoem();
-        playList.setValue(poetryModelData);
+            position.setValue(0);
+            poetryModelData.setNewArray(data, false);
+            autoSetCurrentPoem();
+            playList.setValue(poetryModelData);
+        }
     }
 
     public void removeItems(){

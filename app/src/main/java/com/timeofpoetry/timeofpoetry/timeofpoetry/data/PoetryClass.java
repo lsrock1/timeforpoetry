@@ -84,6 +84,10 @@ public class PoetryClass {
         @Headers({"content-type: application/json"})
         @POST("/get_banner")
         Call<ArrayList<Banner>> getBanner();
+
+        @Headers({"content-type: application/json"})
+        @POST("/getaddedinfo")
+        Call<ArrayList<ArrayList<GetAddInfo>>> getAddInfo(@Body RequestAddInfo body);
     }
 
     //나의 시집 조회
@@ -221,7 +225,7 @@ public class PoetryClass {
         public AddInfo(String email, String pwd, String poet, String poem, String season){
             this.addedinfo.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
             this.addedinfo.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
-            this.addedinfo.add(new KeyValue("r_nickname", ""));
+            this.addedinfo.add(new KeyValue("r_nickname", email));
             this.addedinfo.add(new KeyValue("r_like_poet", poet));
             this.addedinfo.add(new KeyValue("r_like_poetry", poem));
             this.addedinfo.add(new KeyValue("r_like_season", season));
@@ -233,7 +237,7 @@ public class PoetryClass {
         ArrayList<KeyValue> notice_list_info = new ArrayList<>();
 
         public GetNoticeId(){
-            this.notice_list_info.add(new KeyValue("r_notice_date", "all"));
+            notice_list_info.add(new KeyValue("r_notice_date", "all"));
         }
     }
 
@@ -439,6 +443,34 @@ public class PoetryClass {
 
         public String getUri(){
             return uri;
+        }
+    }
+
+    public static class GetAddInfo{
+        @SerializedName("x_like_poet") String poet;
+        @SerializedName("x_like_poetry") String poetry;
+        @SerializedName("x_like_season") String season;
+
+        public String getPoet() {
+            return poet;
+        }
+
+        public String getPoetry() {
+            return poetry;
+        }
+
+        public String getSeason() {
+            return season;
+        }
+    }
+
+    public static class RequestAddInfo{
+        final String request = REQUEST_MEMBER;
+        ArrayList<KeyValue> addedinfo = new ArrayList<>();
+
+        public RequestAddInfo(String email, String pwd){
+            addedinfo.add(new KeyValue(E_MAIL_KEY, email));
+            addedinfo.add(new KeyValue(PASSWORD_KEY, pwd));
         }
     }
 

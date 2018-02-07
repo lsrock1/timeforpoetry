@@ -23,6 +23,7 @@ import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.LyricsLoad;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviViews.SettingVersionViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.startActivities.SignInViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.startActivities.SignUpViewModel;
 
@@ -35,7 +36,25 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  */
 
 public class Adapter {
-    @BindingAdapter({"onEditorActionSignIn"})
+
+    @BindingAdapter("onEditorActionUserInfoUpdate")
+    public static void onEditorActionUserInfoUpdate(EditText view, final SettingVersionViewModel viewModel){
+        view.setOnEditorActionListener(new TextView.OnEditorActionListener()
+        {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                if(actionId == EditorInfo.IME_ACTION_DONE)
+                {
+                    viewModel.userInfoUpdate();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    @BindingAdapter("onEditorActionSignIn")
     public static void onEditorAction(EditText view, final SignInViewModel viewModel){
         view.setOnEditorActionListener(new TextView.OnEditorActionListener()
         {
@@ -52,7 +71,7 @@ public class Adapter {
         });
     }
 
-    @BindingAdapter({"onEditorActionSignUp"})
+    @BindingAdapter("onEditorActionSignUp")
     public static void onEditorAction(EditText view, final SignUpViewModel viewModel){
         view.setOnEditorActionListener(new TextView.OnEditorActionListener()
         {
@@ -69,12 +88,12 @@ public class Adapter {
         });
     }
 
-    @BindingAdapter({"onSelected"})
+    @BindingAdapter("onSelected")
     public static void onSelected(View view, boolean s){
         view.setSelected(true);
     }
 
-    @BindingAdapter({"loadImage"})
+    @BindingAdapter("loadImage")
     public static void loadImage(ImageView view, String url){
         RequestOptions option = new RequestOptions().placeholder(R.drawable.logo).error(R.drawable.logo).transform(new CropCircleTransformation());
         Glide.with(view.getContext())

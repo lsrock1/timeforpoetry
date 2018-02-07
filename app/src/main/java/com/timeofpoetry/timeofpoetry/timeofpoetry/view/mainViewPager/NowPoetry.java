@@ -1,33 +1,21 @@
 package com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainViewPager;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.GlobalApplication;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentMainViewBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentNowPoetryBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragComponent;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragModule;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.NetworkTasks;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.NowPoetryViewModel;

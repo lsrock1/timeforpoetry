@@ -23,6 +23,8 @@
             android:src="@drawable/title_monthlylist"/>
 
         <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scroll"
+            android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

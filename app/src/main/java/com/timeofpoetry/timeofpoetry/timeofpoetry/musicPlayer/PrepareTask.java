@@ -1,9 +1,6 @@
 package com.timeofpoetry.timeofpoetry.timeofpoetry.musicPlayer;
 
 import android.os.AsyncTask;
-import android.util.Log;
-
-import com.timeofpoetry.timeofpoetry.timeofpoetry.NetworkTasks;
 
 /**
  * Created by sangroklee on 2018. 1. 4..

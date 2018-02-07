@@ -61,6 +61,7 @@ public class MonthlyPoetry extends Fragment {
         viewModel.getMonthlyPoetry().observe(this, new Observer<ArrayList<PoetryClass.Poem>>() {
             @Override
             public void onChanged(@Nullable ArrayList<PoetryClass.Poem> poems) {
+                if(poems != null && poems.size() > 0) binding.scroll.setVisibility(View.VISIBLE);
                 mAdapter.notifyDataSetChanged();
             }
         });

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.BannerModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.model.UserInfoModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.concerns.SharedPreferenceController;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.LikeModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.MonthlyPoetryModel;
@@ -17,6 +18,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.model.sign.SignCheckModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.sign.SignModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MainActivityViewModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviViews.SettingVersionViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.startActivities.SignViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.startActivities.SplashViewModel;
 
@@ -93,5 +95,17 @@ public class ActivityModule {
     @ActivityScope
     SplashViewModel.SplashViewModelFactory provideSplashViewModelFactory(SignCheckModel signCheckModel){
         return new SplashViewModel.SplashViewModelFactory(signCheckModel);
+    }
+
+    @Provides
+    @ActivityScope
+    SettingVersionViewModel.SettingVersionViewModelFactory provideSettingVersionViewModelFactory(UserInfoModel userInfoModel, SharedPreferenceController sharedPreferenceController){
+        return new SettingVersionViewModel.SettingVersionViewModelFactory(userInfoModel, sharedPreferenceController);
+    }
+
+    @Provides
+    @ActivityScope
+    UserInfoModel provideUserInfoModel(){
+        return new UserInfoModel();
     }
 }
