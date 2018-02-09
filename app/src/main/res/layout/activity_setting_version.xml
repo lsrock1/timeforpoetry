@@ -98,7 +98,7 @@
                         android:textColorHint="@color/color8"
                         android:textSize="15.5sp"
                         android:inputType="text"
-                        android:text="@{viewModel.likePoet}"
+                        android:text="@={viewModel.likePoet}"
                         android:hint="@string/activity_setting_poet"/>
 
                     <EditText
@@ -113,7 +113,7 @@
                         android:textColorHint="@color/color8"
                         android:textSize="15.5sp"
                         android:inputType="text"
-                        android:text="@{viewModel.likePoem}"
+                        android:text="@={viewModel.likePoem}"
                         android:hint="@string/activity_setting_poetry"/>
 
                     <EditText
@@ -130,7 +130,7 @@
                         android:inputType="text"
                         app:onEditorActionUserInfoUpdate="@{viewModel}"
                         android:imeOptions="actionDone"
-                        android:text="@{viewModel.likeSeason}"
+                        android:text="@={viewModel.likeSeason}"
                         android:hint="@string/activity_setting_season"/>
 
                     <TextView

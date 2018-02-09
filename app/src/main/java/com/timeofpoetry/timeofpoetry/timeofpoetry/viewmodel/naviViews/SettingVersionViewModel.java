@@ -56,7 +56,6 @@ public class SettingVersionViewModel extends ViewModel {
     }
 
     public void userInfoUpdate(){
-        Log.d("test", sharedPreferenceController.getUserPwd());
         userInfoModel.infoUpdate(sharedPreferenceController.getUserId(), sharedPreferenceController.getUserPwd(), likePoet.get(), likePoem.get(), likeSeason.get());
     }
 

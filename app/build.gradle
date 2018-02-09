@@ -6,9 +6,9 @@ android {
     buildToolsVersion '27.0.2'
     defaultConfig {
         applicationId "com.timeforpoetry.timeforpoetry.timeforpoetry"
-        minSdkVersion 23
+        minSdkVersion 19
         targetSdkVersion 27
-        versionCode 32
+        versionCode 33
         versionName "1.01"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -63,10 +63,10 @@ dependencies {
     compile 'com.google.dagger:dagger-android-support:2.13'
     annotationProcessor "com.google.dagger:dagger-compiler:2.13"
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.13'
-    implementation 'android.arch.lifecycle:extensions:1.0.0'
-    implementation 'android.arch.lifecycle:runtime:1.0.3'
+    implementation 'android.arch.lifecycle:extensions:1.1.0'
+    implementation 'android.arch.lifecycle:runtime:1.1.0'
     testCompile 'junit:junit:4.12'
-    implementation "android.arch.lifecycle:common-java8:1.0.0"
+    implementation "android.arch.lifecycle:common-java8:1.1.0"
     annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
 }
 apply plugin: 'com.google.gms.google-services'
