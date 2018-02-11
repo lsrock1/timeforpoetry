@@ -71,7 +71,6 @@ public class MyPlayListModel extends SQLiteOpenHelper{
     private SharedPreferenceController sharedPreferenceController;
     private MutableLiveData<Integer> mode = new MutableLiveData<>();
     private MutableLiveData<PoetryClass.Poem> currentPoem = new MutableLiveData<>();
-    private Context context;
     private MutableLiveData<Integer> position = new MutableLiveData<>();
     private PoetryModelData poetryModelData = new PoetryModelData(new ArrayList<PoetryClass.Poem>());
     private MutableLiveData<PoetryModelData> playList = new MutableLiveData<>();
@@ -80,11 +79,10 @@ public class MyPlayListModel extends SQLiteOpenHelper{
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.sharedPreferenceController = sharedPreferenceController;
         position.setValue(sharedPreferenceController.getLastPosition());
-        this.context = context;
         mode.setValue(sharedPreferenceController.getShuffleMode() ? MyPlayListModel.SHUFFLE : sharedPreferenceController.getRepeatMode());
         loadPlayList();
         currentPoem.setValue(PoetryClass.getNullPoem());
-        autoSetCurrentPoem();
+        autoSetCurrentPoem(false);
     }
 
     @Override
@@ -102,7 +100,7 @@ public class MyPlayListModel extends SQLiteOpenHelper{
         poem.setDatabaseId((int) addItem(poem));
         position.setValue(0);
         poetryModelData.addOnePoem(poem);
-        autoSetCurrentPoem();
+        autoSetCurrentPoem(false);
         playList.setValue(poetryModelData);
     }
 
@@ -116,7 +114,7 @@ public class MyPlayListModel extends SQLiteOpenHelper{
 
             position.setValue(0);
             poetryModelData.setNewArray(data, false);
-            autoSetCurrentPoem();
+            autoSetCurrentPoem(false);
             playList.setValue(poetryModelData);
         }
     }
@@ -146,7 +144,7 @@ public class MyPlayListModel extends SQLiteOpenHelper{
         }
 
         poetryModelData.setNewArray(data, false);
-        autoSetCurrentPoem();
+        autoSetCurrentPoem(true);
         playList.setValue(poetryModelData);
     }
 
@@ -263,7 +261,7 @@ public class MyPlayListModel extends SQLiteOpenHelper{
         playList.setValue(poetryModelData);
     }
 
-    private void autoSetCurrentPoem(){
+    private void autoSetCurrentPoem(boolean isRemoved){
         PoetryClass.Poem tmpPoem;
         if(poetryModelData.getPoetry().size() == 0){
             tmpPoem = PoetryClass.getNullPoem();
@@ -274,10 +272,7 @@ public class MyPlayListModel extends SQLiteOpenHelper{
         }
         else{
             tmpPoem = poetryModelData.getPoetry().get(position.getValue());
-            if(tmpPoem.getArtwork() == null){
-                getBitmap(tmpPoem);
-            }
-            else{
+            if(!isRemoved||currentPoem.getValue().getDatabaseId() != tmpPoem.getDatabaseId()){
                 currentPoem.setValue(tmpPoem);
             }
         }
@@ -303,32 +298,6 @@ public class MyPlayListModel extends SQLiteOpenHelper{
 
     public LiveData<PoetryClass.Poem> getCurrentPoem(){
         return currentPoem;
-    }
-
-    private void getBitmap(final PoetryClass.Poem tmpPoem){
-        try {
-            Glide.with(context).asBitmap().load(tmpPoem.getArtworkUrl()).listener(
-                    new RequestListener<Bitmap>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                            tmpPoem.setArtwork(resource);
-                            currentPoem.setValue(tmpPoem);
-                            return false;
-                        }
-                    })
-                    .submit(80, 80);
-        }
-        catch(Exception e){
-            BitmapDrawable drawable = (BitmapDrawable) ContextCompat.getDrawable(getApplicationContext(), R.drawable.logo);
-            Bitmap resource = drawable.getBitmap();
-            tmpPoem.setArtwork(resource);
-            currentPoem.setValue(tmpPoem);
-        }
     }
 
     public MutableLiveData<Integer> getPosition(){
@@ -361,7 +330,7 @@ public class MyPlayListModel extends SQLiteOpenHelper{
             return;
         }
         this.position.setValue(position);
-        autoSetCurrentPoem();
+        autoSetCurrentPoem(false);
     }
 
     public void forward(){
@@ -376,7 +345,7 @@ public class MyPlayListModel extends SQLiteOpenHelper{
                 setPosition(position.getValue() + 1);
             }
         }
-        autoSetCurrentPoem();
+        autoSetCurrentPoem(false);
     }
 
     public void backward(){
@@ -391,7 +360,7 @@ public class MyPlayListModel extends SQLiteOpenHelper{
                 setPosition(position.getValue() - 1);
             }
         }
-        autoSetCurrentPoem();
+        autoSetCurrentPoem(false);
     }
 
     public void setSelect(int index){
@@ -403,11 +372,5 @@ public class MyPlayListModel extends SQLiteOpenHelper{
         for(PoetryClass.Poem poem : poetryModelData.getPoetry()){
             poem.setIsSelect(bool);
         }
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-        context = null;
     }
 }

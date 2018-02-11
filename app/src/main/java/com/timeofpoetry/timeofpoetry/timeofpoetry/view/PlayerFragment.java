@@ -16,6 +16,7 @@ import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.support.v7.util.DiffUtil;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentPlayerBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityComponent;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragModule;
@@ -71,7 +73,7 @@ public class PlayerFragment extends Fragment {
                 }
                 else if(getActivity() instanceof PlayerActivity){
                     startActivity(new Intent(getActivity(), PlayListActivity.class));
-                    getActivity().overridePendingTransition(R.anim.slide_bottom_up, R.anim.slide_top_down);
+                    getActivity().overridePendingTransition(R.anim.fade_in, R.anim.hold);
                     getActivity().finish();
                 }
                 else{
@@ -86,7 +88,7 @@ public class PlayerFragment extends Fragment {
             public void onClick(View v) {
                 if(getActivity() instanceof PlayListActivity){
                     startActivity(new Intent(getActivity(), PlayerActivity.class));
-                    getActivity().overridePendingTransition(R.anim.slide_bottom_up, R.anim.slide_top_down);
+                    getActivity().overridePendingTransition(R.anim.fade_in, R.anim.hold);
                     getActivity().finish();
                 }
                 else if(getActivity() instanceof PlayerActivity){
@@ -137,6 +139,21 @@ public class PlayerFragment extends Fragment {
             public void onChanged(@Nullable PoetryClass.Poem poem) {
                 if(poem == null || binding.getPoem() != null && binding.getPoem().getDatabaseId() == poem.getDatabaseId()) return;
                 binding.setPoem(poem);
+            }
+        });
+
+        viewModel.getMyPlayList().observe(this, new Observer<PoetryModelData>() {
+            @Override
+            public void onChanged(@Nullable PoetryModelData poetryModelData) {
+                if(!poetryModelData.isAlert()){
+                    if(poetryModelData.getChange() > 0){
+                        Toast.makeText((Activity) mListener, Integer.toString(poetryModelData.getChange()) + "개의 시집을 감상목록에 담았습니다", Toast.LENGTH_SHORT).show();
+                    }
+                    else if(poetryModelData.getChange() < 0){
+                        Toast.makeText((Activity) mListener, Integer.toString(poetryModelData.getChange() * -1) + "개의 시집이 감상목록에서 삭제되었습니다", Toast.LENGTH_SHORT).show();
+                    }
+                    poetryModelData.setAlert(true);
+                }
             }
         });
 

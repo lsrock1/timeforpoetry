@@ -51,15 +51,6 @@ public class PlayListActivity extends AppCompatActivity implements com.timeofpoe
                 viewModel.listUpdate(poetryModelData.getChange());
                 DiffUtil.DiffResult result = DiffUtil.calculateDiff(poetryModelData.getCallback());
                 result.dispatchUpdatesTo(mAdapter);
-                if(!poetryModelData.isAlert()){
-                    if(poetryModelData.getChange() > 0){
-                        Toast.makeText(getApplicationContext(), Integer.toString(poetryModelData.getChange()) + "개의 시집을 감상목록에 담았습니다", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(poetryModelData.getChange() < 0){
-                        Toast.makeText(getApplicationContext(), Integer.toString(poetryModelData.getChange() * -1) + "개의 시집이 감상목록에서 삭제되었습니다", Toast.LENGTH_SHORT).show();
-                    }
-                    poetryModelData.setAlert(true);
-                }
                 binding.setIsZeroQueue(poetryModelData.getPoetry().size() == 0);
             }
         });

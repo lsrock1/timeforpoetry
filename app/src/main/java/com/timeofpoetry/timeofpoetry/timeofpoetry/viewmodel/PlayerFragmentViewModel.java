@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.media.session.PlaybackStateCompat;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
 
@@ -30,6 +31,10 @@ public class PlayerFragmentViewModel extends ViewModel {
         this.playBackStateModel = playBackStateModel;
 
         viewState.set(playBackStateModel.getState().getValue());
+    }
+
+    public LiveData<PoetryModelData> getMyPlayList(){
+        return myPlayListModel.getPlayList();
     }
 
     public void setIsWide(boolean isWide){

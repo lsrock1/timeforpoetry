@@ -5,10 +5,13 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaBrowserServiceCompat;
 import android.support.v4.media.session.MediaButtonReceiver;
@@ -18,6 +21,11 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.GlobalApplication;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
@@ -28,6 +36,8 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MediaServiceViewMode
 import java.util.List;
 
 import javax.inject.Inject;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class MediaPlaybackService extends MediaBrowserServiceCompat implements LifecycleOwner{
 
@@ -174,11 +184,39 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
     private void showNotification() {
         if(viewModel.getCurrentPoem().getValue() == null || viewModel.getCurrentPoem().getValue().getPoem() == null)
             return;
+        if(viewModel.getCurrentPoem().getValue().getArtwork() == null)
+            getBitmap(viewModel.getCurrentPoem().getValue());
         NotificationCompat.Builder builder = MediaStyleHelper.from(MediaPlaybackService.this, mMediaSessionCompat, viewModel);
         if( builder == null ) {
             return;
         }
         startForeground(NOTI_ID, builder.build());
+    }
+
+    private void getBitmap(final PoetryClass.Poem tmpPoem){
+        try {
+            Glide.with(getApplicationContext()).asBitmap().load(tmpPoem.getArtworkUrl()).listener(
+                    new RequestListener<Bitmap>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                            tmpPoem.setArtwork(resource);
+                            showNotification();
+                            return false;
+                        }
+                    })
+                    .submit(80, 80);
+        }
+        catch(Exception e){
+            BitmapDrawable drawable = (BitmapDrawable) ContextCompat.getDrawable(getApplicationContext(), R.drawable.logo);
+            Bitmap resource = drawable.getBitmap();
+            tmpPoem.setArtwork(resource);
+            showNotification();
+        }
     }
 
     public void pauseProcess(){
