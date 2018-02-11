@@ -7,8 +7,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
 
-    <dimen name="top_close_btn_width">28.5dp</dimen>
-    <dimen name="top_close_btn_height">25dp</dimen>
+    <dimen name="top_close_btn_width">38.5dp</dimen>
+    <dimen name="top_close_btn_height">35dp</dimen>
     <dimen name="top_close_btn_margin">10dp</dimen>
 
     <dimen name="f2">0.5dp</dimen>

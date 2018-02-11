@@ -50,7 +50,7 @@ public class MyPoetryModel {
                 public void onResponse(Call<ArrayList<ArrayList<PoetryClass.Poem>>> call,
                                        Response<ArrayList<ArrayList<PoetryClass.Poem>>> response) {
                     ArrayList<PoetryClass.Poem> mValues = response.body().get(0);
-                    
+
                     if (mValues.get(0).getVoice() != null || mValues.get(0).getPoet() != null) {
                         cache.setNewArray(mValues, true);
                         liveData.setValue(cache);

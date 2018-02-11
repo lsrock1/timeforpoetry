@@ -47,7 +47,7 @@ public class LyricsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final FragmentLyricsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lyrics, container, false);
-        component = ((MainActivity) getActivity())
+        component = ((PlayerActivity) getActivity())
                 .getComponent()
                 .plus(new FragModule());
         component.inject(this);
@@ -73,13 +73,6 @@ public class LyricsFragment extends Fragment {
                     binding.loading.setVisibility(View.GONE);
                     binding.scrollView.setVisibility(View.VISIBLE);
                 }
-            }
-        });
-
-        binding.lyricsFragClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().onBackPressed();
             }
         });
 

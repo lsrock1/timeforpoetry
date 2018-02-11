@@ -4,9 +4,6 @@
         <variable
             name="viewModel"
             type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MainActivityViewModel"/>
-        <variable
-            name="poem"
-            type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.Poem"/>
     </data>
     <android.support.v4.widget.DrawerLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -23,7 +20,6 @@
             layout="@layout/app_bar_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:poem="@{poem}"
             app:viewModel="@{viewModel}"/>
 
         <android.support.design.widget.NavigationView

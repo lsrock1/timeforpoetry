@@ -1,33 +1,23 @@
 package com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.util.ArrayMap;
-import android.util.Log;
 
-import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PlayListController;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MediaServiceViewModel;
-
-import java.util.ArrayList;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  * Created by sangroklee on 2017. 12. 21..
  */
 
-public class MyPlayListViewModel extends ViewModel{
+public class PlayListViewModel extends ViewModel{
 
     public ObservableBoolean isEditMode = new ObservableBoolean();
     private MyPlayListModel model;
@@ -38,7 +28,7 @@ public class MyPlayListViewModel extends ViewModel{
     private ArrayMap<Integer, ObservableInt> playHash = new ArrayMap<>();
     private int currentId = -1;
 
-    MyPlayListViewModel(MyPlayListModel model, PlayBackStateModel playModel) {
+    PlayListViewModel(MyPlayListModel model, PlayBackStateModel playModel) {
         this.model = model;
         playBackStateModel = playModel;
         myPlayList = model.getPlayList();
@@ -144,12 +134,12 @@ public class MyPlayListViewModel extends ViewModel{
         }
     }
 
-    public static class MyPlayListViewModelFactory implements ViewModelProvider.Factory{
+    public static class PlayListViewModelFactory implements ViewModelProvider.Factory{
 
         private MyPlayListModel myPlayListModel;
         private PlayBackStateModel playBackStateModel;
 
-        public MyPlayListViewModelFactory(MyPlayListModel model, PlayBackStateModel playModel) {
+        public PlayListViewModelFactory(MyPlayListModel model, PlayBackStateModel playModel) {
             myPlayListModel = model;
             playBackStateModel = playModel;
         }
@@ -157,7 +147,7 @@ public class MyPlayListViewModel extends ViewModel{
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new MyPlayListViewModel(myPlayListModel, playBackStateModel);
+            return (T) new PlayListViewModel(myPlayListModel, playBackStateModel);
         }
     }
 }

@@ -5,6 +5,7 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -43,7 +44,13 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
             @Override
             public void onPlay() {
                 super.onPlay();
-                playProcess();
+                if(viewModel.getIsLogIn().getValue()) {
+                    Toast.makeText(getApplicationContext(), "재생을 요청합니다", Toast.LENGTH_SHORT).show();
+                    playProcess();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "로그인해 주세요", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override

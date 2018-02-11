@@ -51,11 +51,11 @@
         <activity
             android:name=".view.MainActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.startActivities.AuthorityActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -75,19 +75,22 @@
         <activity
             android:name=".view.naviViews.SettingVersionActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.naviViews.BoardActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity android:name=".view.naviViews.AskActivity" />
         <activity
             android:name=".view.startActivities.SignActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.naviViews.OpenSourceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.naviViews.OpenSourceActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.footer.PlayListActivity" />
+        <activity android:name=".view.footer.PlayerActivity"></activity>
     </application>
 
 </manifest>

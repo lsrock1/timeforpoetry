@@ -10,7 +10,7 @@
             type="android.databinding.ObservableInt"/>
         <variable
             name="viewModel"
-            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.MyPlayListViewModel"/>
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.PlayListViewModel"/>
     </data>
     <LinearLayout
         android:baselineAligned="false"

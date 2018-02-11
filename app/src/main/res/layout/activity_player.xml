@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="poem"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.Poem"/>
+        <variable
+            name="viewModel"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.PlayerViewModel"/>
+        <variable
+            name="like"
+            type="String"/>
+    </data>
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg"
+        tools:context=".view.footer.PlayerFragment">
+        <ImageView
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/frame"
+            android:contentDescription="@string/close"
+            android:id="@+id/close"
+            android:layout_width="@dimen/top_close_btn_width"
+            android:layout_height="@dimen/top_close_btn_height"
+            android:paddingTop="@dimen/top_close_btn_margin"
+            android:paddingEnd="@dimen/top_close_btn_margin"
+            android:src="@drawable/ic_close"/>
+
+        <RelativeLayout
+            android:id="@+id/frame"
+            app:layout_constraintTop_toBottomOf="@+id/close"
+            app:layout_constraintBottom_toTopOf="@+id/player"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                tools:visibility="invisible"
+                android:id="@+id/player_display"
+                android:visibility="@{viewModel.lyricShow ? View.INVISIBLE : View.VISIBLE}"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.AppCompatSeekBar
+                    android:id="@+id/fragPlayerProgress"
+                    android:progress="@{viewModel.progress}"
+                    android:max="@{poem.playTime}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/f102"
+                    android:layout_marginStart="@dimen/f120"
+                    android:layout_marginEnd="@dimen/f120"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/f120"
+                    android:layout_marginEnd="@dimen/f120">
+                    <TextView
+                        app:progressText="@{viewModel.progress}"
+                        android:id="@+id/currentPosition"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:textSize="@dimen/f38"
+                        android:textColor="@color/color7"/>
+                    <TextView
+                        app:progressText="@{poem.playTime}"
+                        android:id="@+id/totalDuration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:textSize="9.5sp"
+                        android:textColor="@color/color7"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/f900"
+                    android:layout_marginTop="@dimen/f26"
+                    android:layout_marginStart="@dimen/f270"
+                    android:layout_marginEnd="@dimen/f270">
+                    <ImageView
+                        android:contentDescription="@string/artwork"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        app:loadImage="@{poem.artworkUrl}"/>
+
+                    <ImageView
+                        android:contentDescription="@string/player_lyric_open"
+                        android:layout_width="70dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:background="@color/color7alpha50"
+                        android:textColor="@color/color9"
+                        android:gravity="center"
+                        android:src="@drawable/bg_read_btn"/>
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/fragPlayerPoem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/f100"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/color8"
+                    android:layout_gravity="center"
+                    android:text="@{poem.poem}"/>
+
+                <TextView
+                    android:id="@+id/fragPlayerPoet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/f40"
+                    android:textSize="16.5sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/color8"
+                    android:text="@{poem.poet}"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/f64"
+                    android:gravity="center">
+                    <ImageView
+                        android:contentDescription="@string/mic_ic"
+                        android:layout_width="@dimen/f70"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_speaker_pl"/>
+
+                    <TextView
+                        android:id="@+id/fragPlayerVoiceText"
+                        android:layout_width="@dimen/f180"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:textColor="@color/color7"
+                        android:layout_marginStart="@dimen/f14"
+                        android:text="@{poem.voice}"/>
+                    <ImageView
+                        android:contentDescription="@string/composer"
+                        android:layout_width="@dimen/f70"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_bgm_pl"/>
+                    <TextView
+                        android:id="@+id/fragPlayerComposer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:textColor="@color/color7"
+                        android:text="@{poem.composer}"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/f190">
+                    <ImageView
+                        android:contentDescription="@string/bookmark"
+                        android:id="@+id/frag_player_bookmark"
+                        android:layout_width="@dimen/f190"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/f60"
+                        android:layout_marginEnd="@dimen/f70"
+                        android:src="@drawable/ic_bookmark"
+                        android:focusable="true"
+                        android:clickable="true"/>
+
+                    <ImageView
+                        android:contentDescription="@string/maple"
+                        android:id="@+id/maple"
+                        android:layout_width="@dimen/f150"
+                        android:layout_height="match_parent"
+                        android:paddingTop="@dimen/f60"
+                        android:paddingStart="@dimen/f60"
+                        android:paddingEnd="@dimen/f14"
+                        android:paddingBottom="@dimen/f60"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:src="@{viewModel.isLiked ? @drawable/ic_maple : @drawable/ic_unlike_maple}"/>
+
+                    <TextView
+                        android:id="@+id/frag_player_like_txt"
+                        android:layout_width="@dimen/f260"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/color7"
+                        android:textSize="13sp"
+                        android:gravity="center_vertical|start"
+                        android:text="@{like}"/>
+
+                    <ImageView
+                        android:contentDescription="@string/share"
+                        android:id="@+id/frag_player_share"
+                        android:layout_width="@dimen/f190"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_share"
+                        android:padding="@dimen/f60"
+                        android:focusable="true"
+                        android:clickable="true"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <FrameLayout
+                android:visibility="@{viewModel.lyricShow ? View.VISIBLE : View.GONE, default = gone}"
+                tools:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/player_display"
+                android:layout_alignBottom="@+id/player_display">
+                <fragment
+                    android:id="@+id/lyric"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:name="com.timeofpoetry.timeofpoetry.timeofpoetry.view.footer.LyricsFragment"/>
+            </FrameLayout>
+        </RelativeLayout>
+
+        <fragment
+            app:layout_constraintTop_toBottomOf="@+id/frame"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/player"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:name="com.timeofpoetry.timeofpoetry.timeofpoetry.view.PlayerFragment"/>
+    </android.support.constraint.ConstraintLayout>
+</layout>

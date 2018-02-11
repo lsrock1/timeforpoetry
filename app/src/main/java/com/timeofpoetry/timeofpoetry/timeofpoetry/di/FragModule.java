@@ -12,9 +12,9 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.RankModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.RecommendModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.sign.SignCheckModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.sign.SignModel;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MainActivityViewModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.PlayerFragmentViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.LyricsViewModel;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.MyPlayListViewModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.PlayListViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.PlayerViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.MonthlyPoetryViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.MyPoetryViewModel;
@@ -38,18 +38,6 @@ public class FragModule {
     @FragScope
     LyricsViewModel.LyricsViewModelFactory provideLyricsViewModelFactory(MyPlayListModel myPlayListModel, LyricsLoad lyricsLoad){
         return new LyricsViewModel.LyricsViewModelFactory(myPlayListModel, lyricsLoad);
-    }
-
-    @Provides
-    @FragScope
-    MyPlayListViewModel.MyPlayListViewModelFactory provideMyPlayListViewModelFactory(MyPlayListModel model, PlayBackStateModel playModel){
-        return new MyPlayListViewModel.MyPlayListViewModelFactory(model, playModel);
-    }
-
-    @Provides
-    @FragScope
-    PlayerViewModel.PlayerViewModelFactory providePlayerViewModelFactory(SeekModel seekModel, MyPlayListModel myPlayListModel, SignCheckModel signCheckModel, MyPoetryModel bookMarkModel, LikeModel likeModel){
-        return new PlayerViewModel.PlayerViewModelFactory(seekModel, myPlayListModel, signCheckModel, bookMarkModel, likeModel);
     }
 
     @Provides
@@ -80,5 +68,11 @@ public class FragModule {
     @FragScope
     SignUpViewModel.SignUpViewModelFactory provideSignUpViewModelFactory(SignModel signModel){
         return new SignUpViewModel.SignUpViewModelFactory(signModel);
+    }
+
+    @Provides
+    @FragScope
+    PlayerFragmentViewModel.PlayerFragmentViewModelFactory providePlayerFragmentViewModelFactory(MyPlayListModel myPlayListModel, PlayBackStateModel playBackStateModel){
+        return new PlayerFragmentViewModel.PlayerFragmentViewModelFactory(myPlayListModel, playBackStateModel);
     }
 }

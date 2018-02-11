@@ -7,24 +7,10 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".view.footer.LyricsFragment"
         android:background="@android:color/transparent"
         android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:contentDescription="@string/close"
-                android:id="@+id/lyrics_frag_close"
-                android:layout_width="@dimen/f114"
-                android:layout_height="@dimen/f100"
-                android:layout_marginTop="@dimen/f40"
-                android:layout_marginEnd="@dimen/f40"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_close"/>
-        </RelativeLayout>
 
         <TextView
             android:text="@{poem.poem}"
@@ -57,7 +43,7 @@
             android:id="@+id/loading"
             android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="@dimen/f1520">
 
             <com.github.ybq.android.spinkit.SpinKitView
                 android:layout_width="wrap_content"
@@ -72,7 +58,7 @@
             android:id="@+id/scrollView"
             android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/f1520"
             android:layout_marginTop="@dimen/f102"
             android:layout_marginStart="@dimen/f120"
             android:layout_marginEnd="@dimen/f40"

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.BannerModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.model.SeekModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.UserInfoModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.concerns.SharedPreferenceController;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.LikeModel;
@@ -18,6 +19,8 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.model.sign.SignCheckModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.sign.SignModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MainActivityViewModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.PlayListViewModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.PlayerViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviViews.SettingVersionViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.startActivities.SignViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.startActivities.SplashViewModel;
@@ -39,8 +42,8 @@ public class ActivityModule {
 
     @Provides
     @ActivityScope
-    MainActivityViewModel.MainActivityViewModelFactory provideMainActivityViewModelFactory(SignCheckModel model, MyPlayListModel myPlayListModel, PlayBackStateModel playModel){
-        return new MainActivityViewModel.MainActivityViewModelFactory(model, myPlayListModel, playModel);
+    MainActivityViewModel.MainActivityViewModelFactory provideMainActivityViewModelFactory(SignCheckModel model){
+        return new MainActivityViewModel.MainActivityViewModelFactory(model);
     }
 
     @Provides
@@ -105,7 +108,20 @@ public class ActivityModule {
 
     @Provides
     @ActivityScope
+    PlayListViewModel.PlayListViewModelFactory provideMyPlayListViewModelFactory(MyPlayListModel model, PlayBackStateModel playModel){
+        return new PlayListViewModel.PlayListViewModelFactory(model, playModel);
+    }
+
+    @Provides
+    @ActivityScope
     UserInfoModel provideUserInfoModel(){
         return new UserInfoModel();
     }
+
+    @Provides
+    @ActivityScope
+    PlayerViewModel.PlayerViewModelFactory providePlayerViewModelFactory(SeekModel seekModel, MyPlayListModel myPlayListModel, SignCheckModel signCheckModel, MyPoetryModel bookMarkModel, LikeModel likeModel){
+        return new PlayerViewModel.PlayerViewModelFactory(seekModel, myPlayListModel, signCheckModel, bookMarkModel, likeModel);
+    }
+
 }

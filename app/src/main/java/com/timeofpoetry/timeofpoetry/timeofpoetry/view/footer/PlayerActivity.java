@@ -1,51 +1,47 @@
 package com.timeofpoetry.timeofpoetry.timeofpoetry.view.footer;
 
-
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.GlobalApplication;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentPlayerBinding;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragComponent;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragModule;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.ActivityPlayerBinding;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityComponent;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityModule;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.MyPoetryModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.view.PlayerFragment;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.PlayerViewModel;
 
 import javax.inject.Inject;
 
+public class PlayerActivity extends AppCompatActivity implements PlayerFragment.OnFragmentInteractionListener{
 
-public class PlayerFragment extends Fragment {
-
-    FragComponent component;
+    private ActivityComponent component;
+    @Inject
+    PlayerViewModel.PlayerViewModelFactory viewModelFactory;
     private PlayerViewModel viewModel;
-    @Inject public PlayerViewModel.PlayerViewModelFactory viewModelFactory;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        final FragmentPlayerBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_player, container, false);
-        component = ((MainActivity) getActivity())
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        component = ((GlobalApplication) getApplication())
                 .getComponent()
-                .plus(new FragModule());
+                .plus(new ActivityModule());
         component.inject(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PlayerViewModel.class);
+        ActivityPlayerBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_player);
+
         binding.setViewModel(viewModel);
         viewModel.getSeek().observe(this, new Observer<Integer>() {
             @Override
@@ -55,30 +51,30 @@ public class PlayerFragment extends Fragment {
         });
 
         binding.fragPlayerProgress.setOnSeekBarChangeListener(
-            new SeekBar.OnSeekBarChangeListener(){
-                private int progressValue;
+                new SeekBar.OnSeekBarChangeListener(){
+                    private int progressValue;
 
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    viewModel.setSeek(progressValue);
-                    MediaControllerCompat.getMediaController(getActivity()).getTransportControls().seekTo(progressValue);
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                        viewModel.setSeek(progressValue);
+                        MediaControllerCompat.getMediaController(PlayerActivity.this).getTransportControls().seekTo(progressValue);
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+
+                    }
+
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                        progressValue = progress;
+                    }
                 }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    progressValue = progress;
-                }
-            }
         );
 
         binding.cover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(checkLogin())
-                    ((MainActivity) getActivity()).showLyrics();
+                    viewModel.lyricToggle();
             }
         });
 
@@ -87,14 +83,14 @@ public class PlayerFragment extends Fragment {
             public void onClick(View view) {
                 if(checkLogin()) {
                     if (viewModel.bookmarkStatus.getValue() == null || viewModel.bookmarkStatus.getValue() != MyPoetryModel.CONNECTING) {
-                        viewModel.bookMark().observe(PlayerFragment.this, new Observer<Integer>() {
+                        viewModel.bookMark().observe(PlayerActivity.this, new Observer<Integer>() {
                             @Override
                             public void onChanged(@Nullable Integer integer) {
                                 bookMarkStatus(integer);
                             }
                         });
                     } else {
-                        Toast.makeText(getContext(), "추가 중입니다", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "추가 중입니다", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -109,10 +105,11 @@ public class PlayerFragment extends Fragment {
             }
         });
 
-        binding.playerClose.setOnClickListener(new View.OnClickListener() {
+        binding.close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().onBackPressed();
+                finish();
+                overridePendingTransition(R.anim.hold, R.anim.slide_top_down);
             }
         });
 
@@ -123,7 +120,7 @@ public class PlayerFragment extends Fragment {
                     return;
                 }
                 binding.setPoem(poem);
-                viewModel.getLikeCount().observe(PlayerFragment.this, new Observer<Integer>() {
+                viewModel.getLikeCount().observe(PlayerActivity.this, new Observer<Integer>() {
                     @Override
                     public void onChanged(@Nullable Integer integer) {
                         binding.setLike(Integer.toString(integer));
@@ -131,22 +128,20 @@ public class PlayerFragment extends Fragment {
                 });
             }
         });
-
-        return binding.getRoot();
     }
 
     private void bookMarkStatus(int status){
         if(status == MyPoetryModel.ALREADY){
-            Toast.makeText(getContext(), "이미 추가된 시입니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "이미 추가된 시입니다", Toast.LENGTH_SHORT).show();
         }
         else if(status == MyPoetryModel.SUCCESS){
-            Toast.makeText(getContext(), "나의 시집에 추가했습니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "나의 시집에 추가했습니다", Toast.LENGTH_SHORT).show();
         }
         else if(status == MyPoetryModel.ERROR){
-            Toast.makeText(getContext(), "에러가 발생했습니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "에러가 발생했습니다", Toast.LENGTH_SHORT).show();
         }
         else if(status == MyPoetryModel.NETWORK_ERROR){
-            Toast.makeText(getContext(), "네트워크 연결이 불안정합니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "네트워크 연결이 불안정합니다", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -155,8 +150,20 @@ public class PlayerFragment extends Fragment {
             return true;
         }
         else{
-            Toast.makeText(getContext(), "로그인해 주세요", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "로그인해 주세요", Toast.LENGTH_SHORT).show();
             return false;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(!viewModel.onBackPressed()) {
+            super.onBackPressed();
+            overridePendingTransition(0, R.anim.slide_top_down);
+        }
+    }
+
+    public ActivityComponent getComponent(){
+        return component;
     }
 }

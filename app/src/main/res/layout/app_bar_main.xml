@@ -8,9 +8,6 @@
         <variable
             name="viewModel"
             type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MainActivityViewModel"/>
-        <variable
-            name="poem"
-            type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.Poem"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -45,7 +42,6 @@
         <include
             android:id="@+id/content_main"
             layout="@layout/content_main"
-            app:poem="@{poem}"
             app:viewModel="@{viewModel}"/>
 
     </android.support.design.widget.CoordinatorLayout>

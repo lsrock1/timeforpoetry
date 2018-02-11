@@ -25,34 +25,19 @@ import javax.inject.Singleton;
 public class MainActivityViewModel extends ViewModel {
 
     private SignCheckModel signCheckModel;
-    private MyPlayListModel myPlayListModel;
-    private PlayBackStateModel playBackStateModel;
 
-    private MutableLiveData<Boolean> isLogin;
-    private LiveData<PoetryClass.Poem> currentMedia;
     private ActionBar actionBar;
 
-    public ObservableInt currentMode = new ObservableInt(100);
     public ObservableBoolean login = new ObservableBoolean();
     public ObservableBoolean isMainShow = new ObservableBoolean(true);
     public ObservableBoolean isListFragShow = new ObservableBoolean(false);
     public ObservableBoolean isPlayerShow = new ObservableBoolean(false);
     public ObservableBoolean isLyricShow = new ObservableBoolean(false);
-    public ObservableInt viewState = new ObservableInt();
     public String id;
 
-    public MainActivityViewModel(SignCheckModel model, MyPlayListModel myPlayListModel, PlayBackStateModel playModel) {
+    public MainActivityViewModel(SignCheckModel model) {
         signCheckModel = model;
-        this.myPlayListModel = myPlayListModel;
-        playBackStateModel = playModel;
-        load();
-    }
-
-    private void load(){
-        isLogin = signCheckModel.getIsLogin();
-        currentMedia = myPlayListModel.getCurrentPoem();
-        viewState.set(playBackStateModel.getState().getValue());
-        login.set(isLogin.getValue());
+        login.set(signCheckModel.getIsLogin().getValue());
     }
 
     public void setActionBar(ActionBar actionBar){
@@ -65,27 +50,6 @@ public class MainActivityViewModel extends ViewModel {
 
     public LiveData<Boolean> getIsLogin(){
         return signCheckModel.getIsLogin();
-    }
-
-    public LiveData<PoetryClass.Poem> getCurrentMedia() {return currentMedia;}
-
-    public LiveData<Integer> getState(){return playBackStateModel.getState();}
-
-    public LiveData<Integer> getMode(){return myPlayListModel.getMode();}
-
-    public void setState(int state){
-        this.viewState.set(state);
-    }
-
-    public boolean setMode(int mode){
-        if(currentMode.get() == 100){
-            currentMode.set(mode);
-            return false;
-        }
-        else{
-            currentMode.set(mode);
-            return true;
-        }
     }
 
     public void setLogin(Boolean bool){
@@ -114,21 +78,6 @@ public class MainActivityViewModel extends ViewModel {
             return true;
         }
         return false;
-    }
-
-    public void onModeClick(){
-        if(currentMode.get() == MyPlayListModel.SHUFFLE){
-            myPlayListModel.setMode(PlaybackStateCompat.REPEAT_MODE_ALL);
-        }
-        else if(currentMode.get() == PlaybackStateCompat.REPEAT_MODE_ALL){
-            myPlayListModel.setMode(PlaybackStateCompat.REPEAT_MODE_ONE);
-        }
-        else if(currentMode.get() == PlaybackStateCompat.REPEAT_MODE_ONE){
-            myPlayListModel.setMode(PlaybackStateCompat.REPEAT_MODE_NONE);
-        }
-        else if(currentMode.get() == PlaybackStateCompat.REPEAT_MODE_NONE){
-            myPlayListModel.setMode(MyPlayListModel.SHUFFLE);
-        }
     }
 
     public void onListClick(){
@@ -174,19 +123,15 @@ public class MainActivityViewModel extends ViewModel {
     public static class MainActivityViewModelFactory implements ViewModelProvider.Factory{
 
         SignCheckModel signCheckModel;
-        MyPlayListModel myPlayListModel;
-        PlayBackStateModel playBackStateModel;
 
-        public MainActivityViewModelFactory(SignCheckModel model, MyPlayListModel myPlayListModel, PlayBackStateModel playModel) {
+        public MainActivityViewModelFactory(SignCheckModel model) {
             signCheckModel = model;
-            this.myPlayListModel = myPlayListModel;
-            playBackStateModel = playModel;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new MainActivityViewModel(signCheckModel, myPlayListModel, playBackStateModel);
+            return (T) new MainActivityViewModel(signCheckModel);
         }
     }
 }

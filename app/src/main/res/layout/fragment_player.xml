@@ -1,203 +1,228 @@
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
     <data>
+        <import type="android.view.ViewGroup.LayoutParams"/>
         <import type="android.view.View"/>
+        <import type="com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel"/>
+        <variable
+            name="viewModel"
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.PlayerFragmentViewModel"/>
         <variable
             name="poem"
             type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.Poem"/>
-        <variable
-            name="viewModel"
-            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.PlayerViewModel"/>
-        <variable
-            name="like"
-            type="String"/>
     </data>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context="com.timeofpoetry.timeofpoetry.timeofpoetry.view.PlayerFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragPlayer"
-        android:orientation="vertical"
-        android:background="@android:color/transparent"
-        tools:context=".view.footer.PlayerFragment">
+        android:layout_height="@{viewModel.isWide ? @dimen/f300 : @dimen/f270, default = @dimen/f270}"
+        android:background="@{viewModel.isWide ? @drawable/trans_bg : @drawable/footer_bg}"
+        android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
-            <ImageView
-                android:contentDescription="@string/close"
-                android:id="@+id/player_close"
-                android:layout_width="@dimen/top_close_btn_width"
-                android:layout_height="@dimen/top_close_btn_height"
-                android:layout_marginTop="@dimen/top_close_btn_margin"
-                android:layout_marginEnd="@dimen/top_close_btn_margin"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_close"/>
-        </RelativeLayout>
+        <ImageView
+            android:contentDescription="@string/content_main_playlist_btn"
+            android:id="@+id/playlistBtn"
+            android:layout_width="@{viewModel.isWide ? 0f : @dimen/f191, default = @dimen/f191}"
+            android:layout_weight="@{viewModel.isWide ? 1 : 0}"
+            android:layout_height="match_parent"
+            android:paddingStart="@{viewModel.isWide ? 0f : @dimen/f60, default = @dimen/f60}"
+            android:paddingEnd="@{viewModel.isWide ? 0f : @dimen/f20, default = @dimen/f20}"
+            android:paddingTop="@{viewModel.isWide ? 0f : @dimen/f85, default = @dimen/f85}"
+            android:paddingBottom="@{viewModel.isWide ? 0f : @dimen/f85, default = @dimen/f85}"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@{viewModel.isWide ? @drawable/player_list_off : @drawable/footer_list_off}" />
 
-        <android.support.v7.widget.AppCompatSeekBar
-            android:id="@+id/fragPlayerProgress"
-            android:progress="@{viewModel.progress}"
-            android:max="@{poem.playTime}"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/f102"
-            android:layout_marginStart="@dimen/f120"
-            android:layout_marginEnd="@dimen/f120"/>
+        <LinearLayout
+            android:id="@+id/playInfo"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/f20"
+            android:paddingEnd="0dp"
+            android:visibility="@{viewModel.isWide ? View.GONE : View.VISIBLE}">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/f120"
-            android:layout_marginEnd="@dimen/f120">
-            <TextView
-                app:progressText="@{viewModel.progress}"
-                android:id="@+id/currentPosition"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:textSize="@dimen/f38"
-                android:textColor="@color/color7"/>
-            <TextView
-                app:progressText="@{poem.playTime}"
-                android:id="@+id/totalDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:textSize="9.5sp"
-                android:textColor="@color/color7"/>
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/cover"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/f900"
-            android:layout_marginTop="@dimen/f26"
-            android:layout_marginStart="@dimen/f270"
-            android:layout_marginEnd="@dimen/f270">
             <ImageView
                 android:contentDescription="@string/artwork"
+                android:paddingTop="@dimen/f50"
+                android:paddingBottom="@dimen/f50"
+                android:layout_width="@dimen/f140"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
                 app:loadImage="@{poem.artworkUrl}"/>
 
-            <ImageView
-                android:contentDescription="@string/player_lyric_open"
-                android:layout_width="70dp"
-                android:layout_height="30dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:background="@color/color7alpha50"
-                android:textColor="@color/color9"
-                android:gravity="center"
-                android:src="@drawable/bg_read_btn"/>
-        </RelativeLayout>
-
-
-        <TextView
-            android:id="@+id/fragPlayerPoem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/f100"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/color8"
-            android:layout_gravity="center"
-            android:text="@{poem.poem}"/>
-
-        <TextView
-            android:id="@+id/fragPlayerPoet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/f40"
-            android:textSize="16.5sp"
-            android:textStyle="bold"
-            android:textColor="@color/color8"
-            android:text="@{poem.poet}"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/f64"
-            android:gravity="center">
-            <ImageView
-                android:contentDescription="@string/mic_ic"
-                android:layout_width="@dimen/f70"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_speaker_pl"/>
+                android:orientation="vertical"
+                android:paddingTop="@dimen/f50"
+                android:paddingBottom="@dimen/f50"
+                android:paddingStart="@dimen/f52"
+                android:paddingEnd="13dp">
 
-            <TextView
-                android:id="@+id/fragPlayerVoiceText"
-                android:layout_width="@dimen/f180"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:textColor="@color/color7"
-                android:layout_marginStart="@dimen/f14"
-                android:text="@{poem.voice}"/>
-            <ImageView
-                android:contentDescription="@string/composer"
-                android:layout_width="@dimen/f70"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_bgm_pl"/>
-            <TextView
-                android:id="@+id/fragPlayerComposer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:textColor="@color/color7"
-                android:text="@{poem.composer}"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="@{poem.poem}"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/color8"
+                    android:layout_marginBottom="@dimen/f12"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    app:onSelected="@{true}"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/f12"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:contentDescription="@string/content_main_pencil_ic"
+                        android:layout_width="@dimen/f34"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/f14"
+                        android:src="@drawable/ic_autuor"/>
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="@dimen/f180"
+                        android:text="@{poem.poet}"
+                        android:singleLine="true"
+                        android:textColor="@color/color8"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:gravity="center_vertical|start"
+                        android:textSize="12sp"/>
+                    <ImageView
+                        android:contentDescription="@string/mic_ic"
+                        android:layout_width="@dimen/f34"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_speaker"/>
+                    <TextView
+                        android:id="@+id/txt_voice"
+                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_marginStart="@dimen/f14"
+                        android:text="@{poem.voice}"
+                        android:gravity="center_vertical|start"
+                        android:singleLine="true"
+                        android:textColor="@color/color7"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:textSize="12sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
 
-
         <LinearLayout
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/f190">
-            <ImageView
-                android:contentDescription="@string/bookmark"
-                android:id="@+id/frag_player_bookmark"
-                android:layout_width="@dimen/f190"
-                android:layout_height="match_parent"
-                android:padding="@dimen/f60"
-                android:layout_marginEnd="@dimen/f70"
-                android:src="@drawable/ic_bookmark"
-                android:focusable="true"
-                android:clickable="true"/>
+            android:id="@+id/play_control"
+            android:layout_width="@{viewModel.isWide ? 0 : LayoutParams.WRAP_CONTENT, default = wrap_content}"
+            android:layout_height="match_parent"
+            android:layout_weight="@{viewModel.isWide ? 4 : 0}"
+            android:orientation="horizontal">
 
             <ImageView
-                android:contentDescription="@string/maple"
-                android:id="@+id/maple"
-                android:layout_width="@dimen/f150"
+                android:contentDescription="@string/content_main_rewind"
+                android:id="@+id/rewind"
+                android:layout_width="@{viewModel.isWide ? 0f : @dimen/f167, default = @dimen/f167}"
                 android:layout_height="match_parent"
-                android:paddingTop="@dimen/f60"
-                android:paddingStart="@dimen/f60"
-                android:paddingEnd="@dimen/f14"
-                android:paddingBottom="@dimen/f60"
+                android:layout_weight="@{viewModel.isWide ? 1 : 0}"
+                android:src="@{viewModel.isWide ? @drawable/player_prev_off : @drawable/footer_prev_off}"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@{viewModel.isLiked ? @drawable/ic_maple : @drawable/ic_unlike_maple}"/>
-
-            <TextView
-                android:id="@+id/frag_player_like_txt"
-                android:layout_width="@dimen/f260"
-                android:layout_height="match_parent"
-                android:textColor="@color/color7"
-                android:textSize="13sp"
-                android:gravity="center_vertical|start"
-                android:text="@{like}"/>
+                android:paddingTop="@{viewModel.isWide ? 0f : @dimen/f85}"
+                android:paddingBottom="@{viewModel.isWide ? 0f : @dimen/f85}"
+                android:paddingStart="@{viewModel.isWide ? 0f : @dimen/f50}"
+                android:paddingEnd="@{viewModel.isWide ? 0f : @dimen/f50}"/>
 
             <ImageView
-                android:contentDescription="@string/share"
-                android:id="@+id/frag_player_share"
-                android:layout_width="@dimen/f190"
+                android:id="@+id/play"
+                android:contentDescription="@string/content_main_play"
+                android:layout_width="@{viewModel.isWide ? 0f : @dimen/f167, default = @dimen/f167}"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_share"
-                android:padding="@dimen/f60"
+                android:layout_weight="@{viewModel.isWide ? 1 : 0}"
+                android:src="@{viewModel.isWide ? @drawable/player_play_off : @drawable/footer_play_off}"
+                android:clickable="true"
                 android:focusable="true"
-                android:clickable="true"/>
-        </LinearLayout>
+                android:paddingTop="@{viewModel.isWide ? 0f : @dimen/f85}"
+                android:paddingBottom="@{viewModel.isWide ? 0f : @dimen/f85}"
+                android:paddingStart="@{viewModel.isWide ? 0f : @dimen/f50}"
+                android:paddingEnd="@{viewModel.isWide ? 0f : @dimen/f50}"
+                android:visibility="@{viewModel.viewState == PlayBackStateModel.PAUSE || viewModel.viewState == PlayBackStateModel.STOP ? View.VISIBLE : View.GONE}"/>
 
+            <ImageView
+                android:contentDescription="@string/content_main_pause"
+                tools:visibility="gone"
+                android:id="@+id/pause"
+                android:layout_width="@{viewModel.isWide ? 0f : @dimen/f167, default = @dimen/f167}"
+                android:layout_height="match_parent"
+                android:layout_weight="@{viewModel.isWide ? 1 : 0}"
+                android:src="@{viewModel.isWide ? @drawable/player_pause_off : @drawable/footer_pause_off}"
+                android:visibility="@{viewModel.viewState == PlayBackStateModel.PLAYING ? View.VISIBLE : View.GONE}"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingTop="@{viewModel.isWide ? 0f : @dimen/f85}"
+                android:paddingBottom="@{viewModel.isWide ? 0f : @dimen/f85}"
+                android:paddingStart="@{viewModel.isWide ? 0f : @dimen/f50}"
+                android:paddingEnd="@{viewModel.isWide ? 0f : @dimen/f50}" />
+
+            <RelativeLayout
+                android:layout_width="@{viewModel.isWide ? 0f : @dimen/f167, default = @dimen/f167}"
+                android:layout_weight="@{viewModel.isWide ? 1 : 0}"
+                android:layout_height="match_parent"
+                android:visibility="@{viewModel.viewState == PlayBackStateModel.BUFFERING ? View.VISIBLE : View.GONE}"
+                android:paddingTop="@dimen/f85"
+                android:paddingBottom="@dimen/f85"
+                android:paddingStart="@dimen/f50"
+                android:paddingEnd="@dimen/f50">
+                <com.github.ybq.android.spinkit.SpinKitView
+                    style="@style/SpinKitView.Small.Circle"
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:SpinKit_Color="@color/black" />
+            </RelativeLayout>
+
+            <ImageView
+                android:contentDescription="@string/content_main_forward"
+                android:id="@+id/forward"
+                android:layout_width="@{viewModel.isWide ? 0f : @dimen/f202, default = @dimen/f202}"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="@{viewModel.isWide ? 1 : 0}"
+                android:src="@{viewModel.isWide ? @drawable/player_next_off : @drawable/footer_next_off}"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingTop="@{viewModel.isWide ? 0f : @dimen/f85}"
+                android:paddingBottom="@{viewModel.isWide ? 0f : @dimen/f85}"
+                android:paddingStart="@{viewModel.isWide ? 0f : @dimen/f50}"
+                android:paddingEnd="@{viewModel.isWide ? 0f : @dimen/f85}"/>
+
+            <ImageView
+                android:contentDescription="@string/content_main_repeat"
+                tools:visibility="gone"
+                android:visibility="@{viewModel.isWide ? View.VISIBLE : View.GONE}"
+                android:onClick="@{() -> viewModel.onModeClick()}"
+                app:mode="@{viewModel.currentMode}"
+                android:id="@+id/repeatMode"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_repeat_all"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
     </LinearLayout>
 </layout>

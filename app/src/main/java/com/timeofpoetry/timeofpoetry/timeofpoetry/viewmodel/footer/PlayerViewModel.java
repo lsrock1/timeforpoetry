@@ -31,6 +31,7 @@ public class PlayerViewModel extends ViewModel {
     private SeekModel seekModel;
     public ObservableInt progress = new ObservableInt();
     public ObservableBoolean isLiked = new ObservableBoolean();
+    public ObservableBoolean lyricShow = new ObservableBoolean(false);
     public LiveData<Boolean> isLogin;
     public LiveData<Integer> bookmarkStatus = new MutableLiveData<>();
     public LiveData<PoetryClass.Poem> current;
@@ -47,6 +48,20 @@ public class PlayerViewModel extends ViewModel {
     private void load(){
         this.isLogin = signCheckModel.getIsLogin();
         this.current = myPlayListModel.getCurrentPoem();
+    }
+
+    public void lyricToggle(){
+        lyricShow.set(!lyricShow.get());
+    }
+
+    public boolean onBackPressed(){
+        if(lyricShow.get()){
+            lyricToggle();
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public LiveData<Integer> bookMark(){
@@ -86,10 +101,6 @@ public class PlayerViewModel extends ViewModel {
             likeModel.unlike(current.getValue());
         }
         return isLiked.get();
-    }
-
-    public void saveSeek(){
-        seekModel.saveSeek();
     }
 
     public static class PlayerViewModelFactory implements ViewModelProvider.Factory{

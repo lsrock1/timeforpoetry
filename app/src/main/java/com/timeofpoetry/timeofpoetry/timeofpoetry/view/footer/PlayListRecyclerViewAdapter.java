@@ -1,31 +1,21 @@
 package com.timeofpoetry.timeofpoetry.timeofpoetry.view.footer;
 
-import android.arch.lifecycle.Observer;
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.media.MediaDescriptionCompat;
-import android.support.v4.media.session.MediaSessionCompat;
-import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
+
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentPoemBinding;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.MyPlayListViewModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.PlayListViewModel;
 
-public class MyPlayListRecyclerViewAdapter extends RecyclerView.Adapter<MyPlayListRecyclerViewAdapter.ViewHolder> {
+public class PlayListRecyclerViewAdapter extends RecyclerView.Adapter<PlayListRecyclerViewAdapter.ViewHolder> {
 
-    private MyPlayListViewModel viewModel;
+    private PlayListViewModel viewModel;
 
-    MyPlayListRecyclerViewAdapter(MyPlayListFragment m, MyPlayListViewModel model) {
-        viewModel = model;
+    PlayListRecyclerViewAdapter(PlayListViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 
     @Override

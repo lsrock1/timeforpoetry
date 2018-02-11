@@ -11,10 +11,6 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.media.MediaBrowserCompat;
-import android.support.v4.media.session.MediaControllerCompat;
-import android.support.v4.media.session.MediaSessionCompat;
-import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -27,15 +23,12 @@ import android.widget.Toast;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews.BoardActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.GlobalApplication;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews.SettingVersionActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.ActivityMainBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.NavHeaderMainBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityComponent;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityModule;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.musicPlayer.MediaPlaybackService;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews.OpenSourceActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.startActivities.AuthorityActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MainActivityViewModel;
@@ -45,44 +38,13 @@ import com.tsengvn.typekit.TypekitContextWrapper;
 import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener, PlayerFragment.OnFragmentInteractionListener{
 
     ActivityComponent component;
     ActivityMainBinding binding;
     @Inject MainActivityViewModel.MainActivityViewModelFactory factory;
     MainActivityViewModel viewModel;
-    private MediaBrowserCompat mMediaBrowser;
     private BackPressCloseHandler mHandler;
-
-    private final MediaBrowserCompat.ConnectionCallback mConnectionCallbacks =
-            new MediaBrowserCompat.ConnectionCallback() {
-                @Override
-                public void onConnected() {
-                    super.onConnected();
-                    try {
-                        MediaSessionCompat.Token token = mMediaBrowser.getSessionToken();
-                        MediaControllerCompat mediaController = new MediaControllerCompat(MainActivity.this, token);
-                        MediaControllerCompat.setMediaController(MainActivity.this, mediaController);
-                        MediaControllerCompat.getMediaController(MainActivity.this).registerCallback(controllerCallback);
-                    } catch (RemoteException e) {
-                        //세션 토큰 초기화 시 발생하는 에러를 잡기 위함
-                    }
-                }
-
-                @Override
-                public void onConnectionSuspended() {
-                    super.onConnectionSuspended();
-                    //서비스가 크래쉬됐을 때 컨트롤러를 자동 재열결 시 까지 보이지 않게 만듭니다
-                }
-
-                @Override
-                public void onConnectionFailed() {
-                    super.onConnectionFailed();
-                    //서비스가 연결을 거부했을 때
-                }
-            };
-
-    private final MediaControllerCompat.Callback controllerCallback = new MediaControllerCompat.Callback(){};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,46 +58,7 @@ public class MainActivity extends AppCompatActivity
         viewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
         binding.setViewModel(viewModel);
 
-        mMediaBrowser = new MediaBrowserCompat(this,
-                new ComponentName(this, MediaPlaybackService.class),
-                mConnectionCallbacks,
-                null);
         mHandler = new BackPressCloseHandler(this);
-
-        viewModel.getCurrentMedia().observe(this, new Observer<PoetryClass.Poem>() {
-            @Override
-            public void onChanged(@Nullable PoetryClass.Poem poem) {
-                if(poem == null || binding.getPoem() != null && binding.getPoem().getDatabaseId() == poem.getDatabaseId()) return;
-                binding.setPoem(poem);
-            }
-        });
-
-        viewModel.getState().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer integer) {
-                viewModel.setState(integer);
-            }
-        });
-
-        viewModel.getMode().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer mode) {
-                if(viewModel.setMode(mode)){
-                    if(mode == MyPlayListModel.SHUFFLE){
-                        Toast.makeText(getApplicationContext(), "랜덤으로 재생합니다", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(mode == PlaybackStateCompat.REPEAT_MODE_ALL){
-                        Toast.makeText(getApplicationContext(), "전체 시를 반복합니다", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(mode == PlaybackStateCompat.REPEAT_MODE_ONE){
-                        Toast.makeText(getApplicationContext(), "시 하나를 반복합니다", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(mode == PlaybackStateCompat.REPEAT_MODE_NONE){
-                        Toast.makeText(getApplicationContext(), "반복을 사용하지 않습니다", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
 
         viewModel.getIsLogin().observe(this, new Observer<Boolean>() {
             @Override
@@ -146,24 +69,6 @@ public class MainActivity extends AppCompatActivity
 
         initNav();
         initHeader();
-        buildTransportControls();
-        mMediaBrowser.connect();
-        setVolumeControlStream(AudioManager.STREAM_MUSIC);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        mMediaBrowser.connect();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (MediaControllerCompat.getMediaController(this) != null) {
-            MediaControllerCompat.getMediaController(this).unregisterCallback(controllerCallback);
-        }
-        mMediaBrowser.disconnect();
     }
 
     @Override
@@ -248,43 +153,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
         toggle.syncState();
-    }
-
-    private void buildTransportControls()
-    {
-        binding.appBarMain.contentMain.play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (viewModel.getIsLogin().getValue()) {
-                    MediaControllerCompat.getMediaController(MainActivity.this).getTransportControls().play();
-                    Toast.makeText(getApplicationContext(), "재생을 요청합니다", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(getApplicationContext(), "로그인해 주세요", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        binding.appBarMain.contentMain.pause.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {MediaControllerCompat.getMediaController(MainActivity.this).getTransportControls().pause();}
-        });
-
-        binding.appBarMain.contentMain.rewind.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {MediaControllerCompat.getMediaController(MainActivity.this).getTransportControls().rewind();}
-        });
-
-        binding.appBarMain.contentMain.forward.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MediaControllerCompat.getMediaController(MainActivity.this).getTransportControls().fastForward();
-            }
-        });
-    };
-
-    public void showLyrics(){
-        viewModel.showLyrics();
     }
 
     public ActivityComponent getComponent(){
