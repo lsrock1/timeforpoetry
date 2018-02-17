@@ -16,10 +16,10 @@ import javax.inject.Singleton;
 
 public class PlayBackStateModel {
 
-    final public static int BUFFERING = -1;
-    final public static int PLAYING = 1;
-    final public static int STOP = 0;
-    final public static int PAUSE = 2;
+    final public static int BUFFERING = PlaybackStateCompat.STATE_BUFFERING;
+    final public static int PLAYING = PlaybackStateCompat.STATE_PLAYING;
+    final public static int STOP = PlaybackStateCompat.STATE_STOPPED;
+    final public static int PAUSE = PlaybackStateCompat.STATE_PAUSED;
 
     private MutableLiveData<Integer> state = new MutableLiveData<>();
 

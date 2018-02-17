@@ -149,4 +149,10 @@
     <dimen name="f2000">500dp</dimen>
     <dimen name="f2485">621.25dp</dimen>
     <dimen name="f2560">640dp</dimen>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
 </resources>

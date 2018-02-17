@@ -76,6 +76,8 @@ public class LyricsFragment extends Fragment {
             }
         });
 
+        viewModel.lyricsLoad();
+
         return binding.getRoot();
     }
 }

@@ -1,9 +1,11 @@
 package com.timeofpoetry.timeofpoetry.timeofpoetry.musicPlayer;
 
+import android.app.PendingIntent;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.Observer;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -19,6 +21,8 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -54,6 +58,7 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
             @Override
             public void onPlay() {
                 super.onPlay();
+                Log.d("test", "on play");
                 if(viewModel.getIsLogIn().getValue()) {
                     Toast.makeText(getApplicationContext(), "재생을 요청합니다", Toast.LENGTH_SHORT).show();
                     playProcess();
@@ -92,6 +97,28 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
                 if(mPlayer.rewind()){
                     viewModel.backward();
                 }
+            }
+
+            @Override
+            public boolean onMediaButtonEvent(Intent mediaButtonEvent) {
+                Log.d("test", mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT).toString());
+                if(((KeyEvent) mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)).getAction() == KeyEvent.ACTION_DOWN) return false;
+
+                if (((KeyEvent) mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)).getKeyCode() == KeyEvent.KEYCODE_HEADSETHOOK) {
+                    if(viewModel.getState().getValue() == PlayBackStateModel.PLAYING){
+                        Log.d("test", "stop");
+                        stopProcess();
+                    }
+                    else{
+                        Log.d("test", "play");
+                        playProcess();
+                    }
+                }
+                else {
+                    Log.d("test", "else");
+                    super.onMediaButtonEvent(mediaButtonEvent);
+                }
+                return true;
             }
         };
 
@@ -142,6 +169,9 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
             @Override
             public void onChanged(@Nullable Integer integer) {
                 showNotification();
+                PlaybackStateCompat.Builder mStateBuilder = new PlaybackStateCompat.Builder()
+                        .setState(integer, 0, 1);
+                mMediaSessionCompat.setPlaybackState(mStateBuilder.build());
                 if(integer == PlayBackStateModel.PLAYING){
                     progressTask.startProgress();
                 }
@@ -167,17 +197,20 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
     }
 
     private void initMediaSession(){
+        mMediaSessionCompat.setCallback(callback);
         mMediaSessionCompat.setFlags(
                 MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
-                MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS|
-                MediaSessionCompat.FLAG_HANDLES_QUEUE_COMMANDS);
-
+                MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
         PlaybackStateCompat.Builder mStateBuilder = new PlaybackStateCompat.Builder()
-            .setActions(PlaybackStateCompat.ACTION_PLAY | PlaybackStateCompat.ACTION_STOP | PlaybackStateCompat.ACTION_PLAY_FROM_MEDIA_ID
-            |PlaybackStateCompat.ACTION_SEEK_TO|PlaybackStateCompat.ACTION_FAST_FORWARD|PlaybackStateCompat.ACTION_REWIND
-            |PlaybackStateCompat.ACTION_SET_REPEAT_MODE | PlaybackStateCompat.ACTION_SET_SHUFFLE_MODE);
+            .setActions(PlaybackStateCompat.ACTION_PLAY | PlaybackStateCompat.ACTION_STOP
+            |PlaybackStateCompat.ACTION_SEEK_TO|PlaybackStateCompat.ACTION_FAST_FORWARD|PlaybackStateCompat.ACTION_REWIND)
+                .setState(PlaybackStateCompat.STATE_STOPPED, 0, 1);
         mMediaSessionCompat.setPlaybackState(mStateBuilder.build());
-        mMediaSessionCompat.setCallback(callback);
+
+        Intent mediaButtonIntent = new Intent(Intent.ACTION_MEDIA_BUTTON);
+        mediaButtonIntent.setClass(getApplicationContext(), MediaButtonReceiver.class);
+
+        mMediaSessionCompat.setMediaButtonReceiver(PendingIntent.getBroadcast(getApplicationContext(), 0, mediaButtonIntent, PendingIntent.FLAG_UPDATE_CURRENT));
         setSessionToken(mMediaSessionCompat.getSessionToken());
     }
 
@@ -238,6 +271,7 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
     }
 
     public void playProcess(){
+        Log.d("Test", "onplayprocess");
         if(mediaSystem.successfullyRetrievedAudioFocus()) {
             mPlayer.play();
             startService(new Intent(getApplicationContext(), MediaPlaybackService.class));
@@ -252,6 +286,7 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d("test", "on start command");
         MediaButtonReceiver.handleIntent(mMediaSessionCompat, intent);
         return super.onStartCommand(intent, flags, startId);
     }

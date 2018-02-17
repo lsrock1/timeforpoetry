@@ -102,7 +102,7 @@ public class Adapter {
                 .into(view);
     }
 
-    @BindingAdapter({"loadSquareImage"})
+    @BindingAdapter("loadSquareImage")
     public static void loadSquareImage(ImageView view, String url){
         RequestOptions option = new RequestOptions().placeholder(R.drawable.logo).error(R.drawable.logo);
 
@@ -112,7 +112,7 @@ public class Adapter {
                 .into(view);
     }
 
-    @BindingAdapter({"setLikeCount"})
+    @BindingAdapter("setLikeCount")
     public static void setLikeCount(TextView view, int count){
         view.setText(Integer.toString(count));
     }

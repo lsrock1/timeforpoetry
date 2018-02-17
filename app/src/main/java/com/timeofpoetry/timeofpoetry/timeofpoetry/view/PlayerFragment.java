@@ -18,6 +18,7 @@ import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.util.DiffUtil;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -181,7 +182,7 @@ public class PlayerFragment extends Fragment {
                     MediaSessionCompat.Token token = mMediaBrowser.getSessionToken();
                     MediaControllerCompat mediaController = new MediaControllerCompat(context, token);
                     MediaControllerCompat.setMediaController((Activity) context, mediaController);
-                    MediaControllerCompat.getMediaController((Activity) context).registerCallback(controllerCallback);
+                    mediaController.registerCallback(controllerCallback);
                 } catch (RemoteException e) {
                     //세션 토큰 초기화 시 발생하는 에러를 잡기 위함
                 }
@@ -260,5 +261,6 @@ public class PlayerFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         ActivityComponent getComponent();
+        boolean treatMediaButton(KeyEvent event);
     }
 }

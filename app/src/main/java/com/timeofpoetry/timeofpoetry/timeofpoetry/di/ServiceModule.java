@@ -1,7 +1,9 @@
 package com.timeofpoetry.timeofpoetry.timeofpoetry.di;
 
 import android.arch.lifecycle.LifecycleRegistry;
+import android.content.ComponentName;
 import android.content.Context;
+import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaSessionCompat;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
@@ -61,13 +63,19 @@ public class ServiceModule {
 
     @Provides
     @ActivityScope
-    MediaSessionCompat provideMediaSessionCompat(Context context){
-        return new MediaSessionCompat(context, "Time for Poetry");
+    MediaSessionCompat provideMediaSessionCompat(Context context, ComponentName mediaButtonReceiver){
+        return new MediaSessionCompat(context, "Time for Poetry", mediaButtonReceiver, null);
     }
 
     @Provides
     @ActivityScope
     LifecycleRegistry provideLifecycleRegistry(MediaPlaybackService service){
         return new LifecycleRegistry(service);
+    }
+
+    @Provides
+    @ActivityScope
+    ComponentName provideComponentName(Context context){
+        return new ComponentName(context, MediaButtonReceiver.class);
     }
 }

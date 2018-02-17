@@ -1,5 +1,6 @@
 package com.timeofpoetry.timeofpoetry.timeofpoetry.view;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
@@ -7,11 +8,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.media.session.MediaControllerCompat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -157,5 +161,24 @@ public class MainActivity extends AppCompatActivity
 
     public ActivityComponent getComponent(){
         return component;
+    }
+
+    @Override
+    public boolean treatMediaButton(KeyEvent event) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return true;
+        }
+        MediaControllerCompat.getMediaController(this).dispatchMediaButtonEvent(event);
+        return false;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (treatMediaButton(event)) {
+            return super.onKeyDown(keyCode, event);
+        }
+        else{
+            return true;
+        }
     }
 }

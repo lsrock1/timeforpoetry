@@ -3,12 +3,15 @@ package com.timeofpoetry.timeofpoetry.timeofpoetry.view.footer;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -85,5 +88,24 @@ public class PlayListActivity extends AppCompatActivity implements com.timeofpoe
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(0, R.anim.slide_top_down);
+    }
+
+    @Override
+    public boolean treatMediaButton(KeyEvent event) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return true;
+        }
+        MediaControllerCompat.getMediaController(this).dispatchMediaButtonEvent(event);
+        return false;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (treatMediaButton(event)) {
+            return super.onKeyDown(keyCode, event);
+        }
+        else{
+            return true;
+        }
     }
 }
