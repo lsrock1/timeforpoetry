@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
@@ -176,6 +177,7 @@ public class MyPlayListModel extends SQLiteOpenHelper{
         readDB.delete(TABLE_NAME, selection, selectionArgs);
     }
 
+    @NonNull
     private PoetryClass.Poem getPoem(int id){
         SQLiteDatabase db = getReadableDatabase();
         String sId = Integer.toString(id);
@@ -187,6 +189,7 @@ public class MyPlayListModel extends SQLiteOpenHelper{
         return new PoetryClass.Poem(c, id);
     }
 
+    @NonNull
     private int[] getPrevNextId(int id){
         SQLiteDatabase db = getReadableDatabase();
         String sId = Integer.toString(id);

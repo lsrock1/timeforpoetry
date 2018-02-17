@@ -33,8 +33,7 @@
         </activity>
 
         <service
-            android:name=".musicPlayer.MediaPlaybackService"
-            android:exported="false">
+            android:name=".musicPlayer.MediaPlaybackService">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
                 <action android:name="android.media.AUDIO_BECOMING_NOISY" />
@@ -89,10 +88,16 @@
             android:name=".view.naviViews.OpenSourceActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.footer.PlayListActivity" />
-        <activity android:name=".view.footer.PlayerActivity" />
+        <activity
+            android:name=".view.footer.PlayListActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.footer.PlayerActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
 
-        <receiver android:name=".AppWidget">
+        <receiver android:name=".widget.AppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

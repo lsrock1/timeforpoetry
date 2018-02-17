@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
@@ -248,19 +249,31 @@ public class PlayerFragment extends Fragment {
 
         binding.rewind.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {MediaControllerCompat.getMediaController((Activity) mListener).getTransportControls().rewind();}
+            public void onClick(View v) {MediaControllerCompat.getMediaController((Activity) mListener).getTransportControls().skipToPrevious();}
         });
 
         binding.forward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MediaControllerCompat.getMediaController((Activity) mListener).getTransportControls().fastForward();
+                MediaControllerCompat.getMediaController((Activity) mListener).getTransportControls().skipToNext();
             }
         });
     }
 
     public interface OnFragmentInteractionListener {
         ActivityComponent getComponent();
-        boolean treatMediaButton(KeyEvent event);
+        default  boolean treatMediaButton(Activity activity, KeyEvent event){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                return false;
+            }
+            else if(event.getKeyCode() == KeyEvent.KEYCODE_HEADSETHOOK || event.getKeyCode() == KeyEvent.KEYCODE_MEDIA_PLAY ||
+                    event.getKeyCode() == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE|| event.getKeyCode() == KeyEvent.KEYCODE_MEDIA_PAUSE ||
+                    event.getKeyCode() == KeyEvent.KEYCODE_MEDIA_STOP || event.getKeyCode() == KeyEvent.KEYCODE_MEDIA_NEXT ||
+                    event.getKeyCode() == KeyEvent.KEYCODE_MEDIA_PREVIOUS){
+                MediaControllerCompat.getMediaController(activity).dispatchMediaButtonEvent(event);
+                return true;
+            }
+            return false;
+        }
     }
 }

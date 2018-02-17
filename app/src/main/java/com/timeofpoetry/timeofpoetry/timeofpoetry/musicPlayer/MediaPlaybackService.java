@@ -1,6 +1,7 @@
 package com.timeofpoetry.timeofpoetry.timeofpoetry.musicPlayer;
 
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
@@ -23,6 +24,8 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -36,6 +39,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ServiceModule;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MediaServiceViewModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.widget.AppWidget;
 
 import java.util.List;
 
@@ -58,7 +62,6 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
             @Override
             public void onPlay() {
                 super.onPlay();
-                Log.d("test", "on play");
                 if(viewModel.getIsLogIn().getValue()) {
                     Toast.makeText(getApplicationContext(), "재생을 요청합니다", Toast.LENGTH_SHORT).show();
                     playProcess();
@@ -76,9 +79,17 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
             }
 
             @Override
-            public void onFastForward() {
-                super.onFastForward();
+            public void onSkipToNext() {
+                super.onSkipToNext();
                 viewModel.forward();
+            }
+
+            @Override
+            public void onSkipToPrevious() {
+                super.onSkipToPrevious();
+                if(mPlayer.rewind()){
+                    viewModel.backward();
+                }
             }
 
             @Override
@@ -92,31 +103,46 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
             }
 
             @Override
-            public void onRewind() {
-                super.onRewind();
-                if(mPlayer.rewind()){
-                    viewModel.backward();
-                }
-            }
-
-            @Override
             public boolean onMediaButtonEvent(Intent mediaButtonEvent) {
-                Log.d("test", mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT).toString());
-                if(((KeyEvent) mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)).getAction() == KeyEvent.ACTION_DOWN) return false;
+                KeyEvent keyEvent = mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
+                if(keyEvent.getAction() == KeyEvent.ACTION_UP) return false;
 
-                if (((KeyEvent) mediaButtonEvent.getParcelableExtra(Intent.EXTRA_KEY_EVENT)).getKeyCode() == KeyEvent.KEYCODE_HEADSETHOOK) {
+                if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_HEADSETHOOK) {
                     if(viewModel.getState().getValue() == PlayBackStateModel.PLAYING){
-                        Log.d("test", "stop");
                         stopProcess();
                     }
                     else{
-                        Log.d("test", "play");
                         playProcess();
                     }
                 }
                 else {
-                    Log.d("test", "else");
-                    super.onMediaButtonEvent(mediaButtonEvent);
+                    switch (keyEvent.getKeyCode()){
+                        case KeyEvent.KEYCODE_MEDIA_PLAY:
+                            onPlay();
+                            break;
+                        case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
+                            if(viewModel.getState().getValue() == PlayBackStateModel.PLAYING){
+                                stopProcess();
+                            }
+                            else{
+                                playProcess();
+                            }
+                            break;
+                        case KeyEvent.KEYCODE_MEDIA_PAUSE:
+                            onPause();
+                            break;
+                        case KeyEvent.KEYCODE_MEDIA_STOP:
+                            onStop();
+                            break;
+                        case KeyEvent.KEYCODE_MEDIA_NEXT:
+                            onSkipToNext();
+                            break;
+                        case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
+                            onSkipToPrevious();
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 return true;
             }
@@ -202,8 +228,9 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
                 MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
                 MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
         PlaybackStateCompat.Builder mStateBuilder = new PlaybackStateCompat.Builder()
-            .setActions(PlaybackStateCompat.ACTION_PLAY | PlaybackStateCompat.ACTION_STOP
-            |PlaybackStateCompat.ACTION_SEEK_TO|PlaybackStateCompat.ACTION_FAST_FORWARD|PlaybackStateCompat.ACTION_REWIND)
+            .setActions(PlaybackStateCompat.ACTION_PLAY | PlaybackStateCompat.ACTION_STOP |
+                    PlaybackStateCompat.ACTION_PAUSE |
+            PlaybackStateCompat.ACTION_SEEK_TO|PlaybackStateCompat.ACTION_SKIP_TO_NEXT|PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS)
                 .setState(PlaybackStateCompat.STATE_STOPPED, 0, 1);
         mMediaSessionCompat.setPlaybackState(mStateBuilder.build());
 
@@ -215,9 +242,13 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
     }
 
     private void showNotification() {
-        if(viewModel.getCurrentPoem().getValue() == null || viewModel.getCurrentPoem().getValue().getPoem() == null)
+        if(viewModel.getCurrentPoem().getValue() == null){
             return;
-        if(viewModel.getCurrentPoem().getValue().getArtwork() == null)
+        }
+        else if(viewModel.getCurrentPoem().getValue().getPoem() == null){
+            return;
+        }
+        else if(viewModel.getCurrentPoem().getValue().getArtwork() == null)
             getBitmap(viewModel.getCurrentPoem().getValue());
         NotificationCompat.Builder builder = MediaStyleHelper.from(MediaPlaybackService.this, mMediaSessionCompat, viewModel);
         if( builder == null ) {
@@ -271,7 +302,6 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
     }
 
     public void playProcess(){
-        Log.d("Test", "onplayprocess");
         if(mediaSystem.successfullyRetrievedAudioFocus()) {
             mPlayer.play();
             startService(new Intent(getApplicationContext(), MediaPlaybackService.class));
@@ -286,8 +316,40 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("test", "on start command");
         MediaButtonReceiver.handleIntent(mMediaSessionCompat, intent);
         return super.onStartCommand(intent, flags, startId);
     }
+
+//    private void updateWidget(){
+//        ComponentName thisWidget = new ComponentName(this, AppWidget.class);
+//        AppWidgetManager manager = AppWidgetManager.getInstance(this);
+//        manager.updateAppWidget(thisWidget, buildView());
+//    }
+//
+//    private RemoteViews buildView(){
+//        RemoteViews views = new RemoteViews(getApplicationContext().getPackageName(), R.layout.app_widget);
+//        PoetryClass.Poem poem = viewModel.getCurrentPoem().getValue();
+//        int state = viewModel.getState().getValue();
+//        views.setViewVisibility(R.id.play, state == PlayBackStateModel.PAUSE || state == PlayBackStateModel.STOP ? View.VISIBLE : View.GONE);
+//        views.setViewVisibility(R.id.pause, state == PlayBackStateModel.PLAYING ? View.GONE : View.VISIBLE);
+//        views.setViewVisibility(R.id.loading, state == PlayBackStateModel.BUFFERING ? View.INVISIBLE : View.GONE);
+//
+//        views.setOnClickPendingIntent(R.id.play,  MediaButtonReceiver.buildMediaButtonPendingIntent(getApplicationContext(), PlaybackStateCompat.ACTION_PLAY));
+//        views.setOnClickPendingIntent(R.id.pause,  MediaButtonReceiver.buildMediaButtonPendingIntent(getApplicationContext(), PlaybackStateCompat.ACTION_STOP));
+//        views.setOnClickPendingIntent(R.id.prev,  MediaButtonReceiver.buildMediaButtonPendingIntent(getApplicationContext(), PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS));
+//        views.setOnClickPendingIntent(R.id.next,  MediaButtonReceiver.buildMediaButtonPendingIntent(getApplicationContext(), PlaybackStateCompat.ACTION_SKIP_TO_NEXT));
+//
+//        if(poem.getPoem() == null){
+//            views.setImageViewResource(R.id.cover, R.drawable.logo);
+//            views.setTextViewText(R.id.title, "추가된 시가 없습니다");
+//            views.setTextViewText(R.id.poet, "");
+//        }
+//        else{
+//            views.setImageViewBitmap(R.id.cover, poem.getArtwork());
+//            views.setTextViewText(R.id.title, poem.getPoem());
+//            views.setTextViewText(R.id.poet, poem.getPoet());
+//        }
+//
+//        return views;
+//    }
 }
