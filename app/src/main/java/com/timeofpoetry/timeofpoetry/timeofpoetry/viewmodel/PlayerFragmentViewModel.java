@@ -10,8 +10,11 @@ import android.support.v4.media.session.PlaybackStateCompat;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
+
+import javax.inject.Inject;
 
 /**
  * Created by sangroklee on 2018. 2. 10..
@@ -77,11 +80,13 @@ public class PlayerFragmentViewModel extends ViewModel {
         }
     }
 
+    @FragScope
     public static class PlayerFragmentViewModelFactory implements ViewModelProvider.Factory{
 
         private MyPlayListModel myPlayListModel;
         private PlayBackStateModel playBackStateModel;
 
+        @Inject
         public PlayerFragmentViewModelFactory(MyPlayListModel myPlayListModel, PlayBackStateModel playBackStateModel) {
             this.myPlayListModel = myPlayListModel;
             this.playBackStateModel = playBackStateModel;

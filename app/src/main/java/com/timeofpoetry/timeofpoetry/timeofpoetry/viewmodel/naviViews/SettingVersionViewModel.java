@@ -9,9 +9,12 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.UserInfoModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.concerns.SharedPreferenceController;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.sign.SignCheckModel;
+
+import javax.inject.Inject;
 
 /**
  * Created by sangroklee on 2018. 2. 7..
@@ -59,11 +62,13 @@ public class SettingVersionViewModel extends ViewModel {
         userInfoModel.infoUpdate(sharedPreferenceController.getUserId(), sharedPreferenceController.getUserPwd(), likePoet.get(), likePoem.get(), likeSeason.get());
     }
 
+    @ActivityScope
     public static class SettingVersionViewModelFactory implements ViewModelProvider.Factory{
 
         private UserInfoModel userInfoModel;
         private SharedPreferenceController sharedPreferenceController;
 
+        @Inject
         public SettingVersionViewModelFactory(UserInfoModel userInfoModel, SharedPreferenceController sharedPreferenceController) {
             this.userInfoModel = userInfoModel;
             this.sharedPreferenceController = sharedPreferenceController;

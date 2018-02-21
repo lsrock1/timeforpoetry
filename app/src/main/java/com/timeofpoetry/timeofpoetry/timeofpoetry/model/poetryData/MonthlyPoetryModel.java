@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,11 +20,12 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
-
+@ActivityScope
 public class MonthlyPoetryModel {
 
     private ArrayList<PoetryClass.Poem> cache;
 
+    @Inject
     public MonthlyPoetryModel() {
     }
 

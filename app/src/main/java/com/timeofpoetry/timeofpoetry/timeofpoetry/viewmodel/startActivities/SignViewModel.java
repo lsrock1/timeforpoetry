@@ -30,6 +30,7 @@ import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.sign.SignModel;
 
 import org.json.JSONException;
@@ -221,10 +222,12 @@ public class SignViewModel extends ViewModel implements LifecycleObserver{
         }
     }
 
+    @ActivityScope
     public static class SignViewModelFactory implements ViewModelProvider.Factory{
 
         SignModel signModel;
 
+        @Inject
         public SignViewModelFactory(SignModel signModel) {
             this.signModel = signModel;
         }

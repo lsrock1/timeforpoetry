@@ -20,6 +20,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.ActivityPlayerBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityComponent;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityModule;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.OnPlayerFragmentInteractionListener;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.MyPoetryModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.PlayerFragment;
@@ -27,7 +28,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.PlayerViewMod
 
 import javax.inject.Inject;
 
-public class PlayerActivity extends AppCompatActivity implements PlayerFragment.OnFragmentInteractionListener{
+public class PlayerActivity extends AppCompatActivity implements OnPlayerFragmentInteractionListener{
 
     private ActivityComponent component;
     @Inject

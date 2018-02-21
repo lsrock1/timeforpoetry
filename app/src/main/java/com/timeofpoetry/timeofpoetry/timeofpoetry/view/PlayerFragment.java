@@ -31,6 +31,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentPlayerBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityComponent;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragModule;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.OnPlayerFragmentInteractionListener;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.musicPlayer.MediaPlaybackService;
@@ -50,7 +51,7 @@ public class PlayerFragment extends Fragment {
     private PlayerFragmentViewModel viewModel;
     private boolean isWide;
 
-    private OnFragmentInteractionListener mListener;
+    private OnPlayerFragmentInteractionListener mListener;
 
     public PlayerFragment() {
         // Required empty public constructor
@@ -167,8 +168,8 @@ public class PlayerFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnPlayerFragmentInteractionListener) {
+            mListener = (OnPlayerFragmentInteractionListener) context;
             isWide = context instanceof PlayerActivity;
         } else {
             throw new RuntimeException(context.toString()
@@ -258,22 +259,5 @@ public class PlayerFragment extends Fragment {
                 MediaControllerCompat.getMediaController((Activity) mListener).getTransportControls().skipToNext();
             }
         });
-    }
-
-    public interface OnFragmentInteractionListener {
-        ActivityComponent getComponent();
-        default  boolean treatMediaButton(Activity activity, KeyEvent event){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                return false;
-            }
-            else if(event.getKeyCode() == KeyEvent.KEYCODE_HEADSETHOOK || event.getKeyCode() == KeyEvent.KEYCODE_MEDIA_PLAY ||
-                    event.getKeyCode() == KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE|| event.getKeyCode() == KeyEvent.KEYCODE_MEDIA_PAUSE ||
-                    event.getKeyCode() == KeyEvent.KEYCODE_MEDIA_STOP || event.getKeyCode() == KeyEvent.KEYCODE_MEDIA_NEXT ||
-                    event.getKeyCode() == KeyEvent.KEYCODE_MEDIA_PREVIOUS){
-                MediaControllerCompat.getMediaController(activity).dispatchMediaButtonEvent(event);
-                return true;
-            }
-            return false;
-        }
     }
 }

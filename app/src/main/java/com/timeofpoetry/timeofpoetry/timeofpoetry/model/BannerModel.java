@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity;
 
 import java.util.ArrayList;
@@ -21,10 +22,12 @@ import retrofit2.Response;
 /**
  * Created by sangroklee on 2017. 12. 23..
  */
+@ActivityScope
 public class BannerModel {
 
     private PoetryClass.Banner cache;
 
+    @Inject
     public BannerModel() {
     }
 

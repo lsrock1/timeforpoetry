@@ -8,6 +8,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.sign.SignModel;
 
 import javax.inject.Inject;
@@ -31,10 +32,12 @@ public class SignInViewModel extends ViewModel {
         model.signIn(id.get(), pwd.get(), false, -1);
     }
 
+    @FragScope
     public static class SignInViewModelFactory implements ViewModelProvider.Factory{
 
         private SignModel signModel;
 
+        @Inject
         public SignInViewModelFactory(SignModel signModel) {
             this.signModel = signModel;
         }

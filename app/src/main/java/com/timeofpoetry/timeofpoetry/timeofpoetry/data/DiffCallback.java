@@ -15,14 +15,14 @@ public class DiffCallback extends DiffUtil.Callback {
     private final ArrayList<PoetryClass.Poem> mOldEmployeeList;
     private final ArrayList<PoetryClass.Poem> mNewEmployeeList;
 
-    public DiffCallback(ArrayList<PoetryClass.Poem> mOldEmployeeList, ArrayList<PoetryClass.Poem> mNewEmployeeList) {
+    DiffCallback(ArrayList<PoetryClass.Poem> mOldEmployeeList, ArrayList<PoetryClass.Poem> mNewEmployeeList) {
         this.mOldEmployeeList = mOldEmployeeList;
         this.mNewEmployeeList = mNewEmployeeList;
     }
 
     @Override
     public int getOldListSize() {
-        return mOldEmployeeList.size();
+        return mOldEmployeeList == null ? 0 : mOldEmployeeList.size();
     }
 
     @Override

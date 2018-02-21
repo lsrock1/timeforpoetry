@@ -33,46 +33,4 @@ public class FragModule {
 
     public FragModule() {
     }
-
-    @Provides
-    @FragScope
-    LyricsViewModel.LyricsViewModelFactory provideLyricsViewModelFactory(MyPlayListModel myPlayListModel, LyricsLoad lyricsLoad){
-        return new LyricsViewModel.LyricsViewModelFactory(myPlayListModel, lyricsLoad);
-    }
-
-    @Provides
-    @FragScope
-    MonthlyPoetryViewModel.MonthlyPoetryViewModelFactory provideMonthlyPoetryViewModelFactory(MyPlayListModel playListModel, MonthlyPoetryModel monthlyPoetryModel){
-        return new MonthlyPoetryViewModel.MonthlyPoetryViewModelFactory(playListModel, monthlyPoetryModel);
-    }
-
-    @Provides
-    @FragScope
-    MyPoetryViewModel.MyPoetryViewModelFactory provideMyPoetryViewModelFactory(SignCheckModel signCheckModel, MyPoetryModel myPoetryModel, MyPlayListModel myPlayListModel){
-        return new MyPoetryViewModel.MyPoetryViewModelFactory(signCheckModel, myPoetryModel, myPlayListModel);
-    }
-
-    @Provides
-    @FragScope
-    NowPoetryViewModel.NowPoetryViewModelFactory provideNowPoetryViewModelFactory(MyPlayListModel myPlayListModel, RankModel rankModel, RecommendModel recommendModel, BannerModel bannerModel){
-        return new NowPoetryViewModel.NowPoetryViewModelFactory(myPlayListModel, rankModel, recommendModel, bannerModel);
-    }
-
-    @Provides
-    @FragScope
-    SignInViewModel.SignInViewModelFactory provideSignInViewModelFactory(SignModel signModel){
-        return new SignInViewModel.SignInViewModelFactory(signModel);
-    }
-
-    @Provides
-    @FragScope
-    SignUpViewModel.SignUpViewModelFactory provideSignUpViewModelFactory(SignModel signModel){
-        return new SignUpViewModel.SignUpViewModelFactory(signModel);
-    }
-
-    @Provides
-    @FragScope
-    PlayerFragmentViewModel.PlayerFragmentViewModelFactory providePlayerFragmentViewModelFactory(MyPlayListModel myPlayListModel, PlayBackStateModel playBackStateModel){
-        return new PlayerFragmentViewModel.PlayerFragmentViewModelFactory(myPlayListModel, playBackStateModel);
-    }
 }

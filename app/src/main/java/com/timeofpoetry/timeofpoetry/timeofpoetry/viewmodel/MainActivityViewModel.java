@@ -11,6 +11,7 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.ActionBar;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.sign.SignCheckModel;
@@ -120,10 +121,12 @@ public class MainActivityViewModel extends ViewModel {
         isLyricShow.set(true);
     }
 
+    @ActivityScope
     public static class MainActivityViewModelFactory implements ViewModelProvider.Factory{
 
         SignCheckModel signCheckModel;
 
+        @Inject
         public MainActivityViewModelFactory(SignCheckModel model) {
             signCheckModel = model;
         }

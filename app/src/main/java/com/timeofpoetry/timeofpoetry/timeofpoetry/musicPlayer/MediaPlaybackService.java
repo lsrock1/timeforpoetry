@@ -63,6 +63,10 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
             public void onPlay() {
                 super.onPlay();
                 if(viewModel.getIsLogIn().getValue()) {
+                    if(viewModel.getCurrentPoem().getValue().getPoet().equals("")){
+                        Toast.makeText(getApplicationContext(), "재생목록에 시를 추가해 주세요", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     Toast.makeText(getApplicationContext(), "재생을 요청합니다", Toast.LENGTH_SHORT).show();
                     playProcess();
                 }
@@ -245,12 +249,16 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
         if(viewModel.getCurrentPoem().getValue() == null){
             return;
         }
-        else if(viewModel.getCurrentPoem().getValue().getPoem() == null){
+        else if(viewModel.getCurrentPoem().getValue().getPoet().equals("")){
+            sendBroadCast();
             return;
         }
-        else if(viewModel.getCurrentPoem().getValue().getArtwork() == null)
+        else if(viewModel.getCurrentPoem().getValue().getArtwork() == null) {
             getBitmap(viewModel.getCurrentPoem().getValue());
+            return;
+        }
         NotificationCompat.Builder builder = MediaStyleHelper.from(MediaPlaybackService.this, mMediaSessionCompat, viewModel);
+        sendBroadCast();
         if( builder == null ) {
             return;
         }
@@ -316,40 +324,18 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if(intent != null && intent.getAction() != null && intent.getAction().equals("android.media.browse.MediaBrowserService") && intent.getBooleanExtra("fromWidget", false)){
+            sendBroadCast();
+        }
         MediaButtonReceiver.handleIntent(mMediaSessionCompat, intent);
         return super.onStartCommand(intent, flags, startId);
     }
 
-//    private void updateWidget(){
-//        ComponentName thisWidget = new ComponentName(this, AppWidget.class);
-//        AppWidgetManager manager = AppWidgetManager.getInstance(this);
-//        manager.updateAppWidget(thisWidget, buildView());
-//    }
-//
-//    private RemoteViews buildView(){
-//        RemoteViews views = new RemoteViews(getApplicationContext().getPackageName(), R.layout.app_widget);
-//        PoetryClass.Poem poem = viewModel.getCurrentPoem().getValue();
-//        int state = viewModel.getState().getValue();
-//        views.setViewVisibility(R.id.play, state == PlayBackStateModel.PAUSE || state == PlayBackStateModel.STOP ? View.VISIBLE : View.GONE);
-//        views.setViewVisibility(R.id.pause, state == PlayBackStateModel.PLAYING ? View.GONE : View.VISIBLE);
-//        views.setViewVisibility(R.id.loading, state == PlayBackStateModel.BUFFERING ? View.INVISIBLE : View.GONE);
-//
-//        views.setOnClickPendingIntent(R.id.play,  MediaButtonReceiver.buildMediaButtonPendingIntent(getApplicationContext(), PlaybackStateCompat.ACTION_PLAY));
-//        views.setOnClickPendingIntent(R.id.pause,  MediaButtonReceiver.buildMediaButtonPendingIntent(getApplicationContext(), PlaybackStateCompat.ACTION_STOP));
-//        views.setOnClickPendingIntent(R.id.prev,  MediaButtonReceiver.buildMediaButtonPendingIntent(getApplicationContext(), PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS));
-//        views.setOnClickPendingIntent(R.id.next,  MediaButtonReceiver.buildMediaButtonPendingIntent(getApplicationContext(), PlaybackStateCompat.ACTION_SKIP_TO_NEXT));
-//
-//        if(poem.getPoem() == null){
-//            views.setImageViewResource(R.id.cover, R.drawable.logo);
-//            views.setTextViewText(R.id.title, "추가된 시가 없습니다");
-//            views.setTextViewText(R.id.poet, "");
-//        }
-//        else{
-//            views.setImageViewBitmap(R.id.cover, poem.getArtwork());
-//            views.setTextViewText(R.id.title, poem.getPoem());
-//            views.setTextViewText(R.id.poet, poem.getPoet());
-//        }
-//
-//        return views;
-//    }
+    private void sendBroadCast(){
+        Intent intent = new Intent();
+        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
+        intent.putExtra("state", viewModel.getState().getValue());
+        intent.putExtra("poem", viewModel.getCurrentPoem().getValue());
+        sendBroadcast(intent);
+    }
 }

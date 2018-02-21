@@ -13,11 +13,13 @@ import javax.inject.Singleton;
 /**
  * Created by sangroklee on 2018. 1. 3..
  */
+@Singleton
 public class SeekModel{
 
     private SharedPreferenceController sharedPreferenceController;
     private MutableLiveData<Integer> seek = new MutableLiveData<>();
 
+    @Inject
     public SeekModel(SharedPreferenceController sharedPreferenceController) {
         this.sharedPreferenceController = sharedPreferenceController;
         seek.setValue(sharedPreferenceController.getLastSeek());

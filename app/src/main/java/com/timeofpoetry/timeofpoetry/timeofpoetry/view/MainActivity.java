@@ -25,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.OnPlayerFragmentInteractionListener;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews.BoardActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.GlobalApplication;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
@@ -42,7 +43,7 @@ import com.tsengvn.typekit.TypekitContextWrapper;
 import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, PlayerFragment.OnFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener, OnPlayerFragmentInteractionListener{
 
     ActivityComponent component;
     ActivityMainBinding binding;

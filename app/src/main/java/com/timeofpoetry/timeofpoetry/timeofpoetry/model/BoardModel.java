@@ -7,8 +7,11 @@ import android.util.ArrayMap;
 
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,10 +20,14 @@ import retrofit2.Response;
 /**
  * Created by sangroklee on 2018. 1. 16..
  */
-
+@ActivityScope
 public class BoardModel {
 
     private ArrayMap<Integer, String> cache = new ArrayMap<>();
+
+    @Inject
+    public BoardModel() {
+    }
 
     public LiveData<ArrayList<PoetryClass.BoardIdItem>> getList(){
         final MutableLiveData<ArrayList<PoetryClass.BoardIdItem>> data = new MutableLiveData<>();

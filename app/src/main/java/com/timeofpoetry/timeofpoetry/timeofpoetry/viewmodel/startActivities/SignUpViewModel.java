@@ -10,6 +10,7 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.sign.SignModel;
 
 import java.util.regex.Matcher;
@@ -76,10 +77,12 @@ public class SignUpViewModel extends ViewModel {
         return matcher.matches();
     }
 
+    @FragScope
     public static class SignUpViewModelFactory implements ViewModelProvider.Factory{
 
         private SignModel signModel;
 
+        @Inject
         public SignUpViewModelFactory(SignModel signModel) {
             this.signModel = signModel;
         }

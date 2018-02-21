@@ -10,8 +10,11 @@ import android.util.ArrayMap;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
+
+import javax.inject.Inject;
 
 /**
  * Created by sangroklee on 2017. 12. 21..
@@ -134,11 +137,13 @@ public class PlayListViewModel extends ViewModel{
         }
     }
 
+    @ActivityScope
     public static class PlayListViewModelFactory implements ViewModelProvider.Factory{
 
         private MyPlayListModel myPlayListModel;
         private PlayBackStateModel playBackStateModel;
 
+        @Inject
         public PlayListViewModelFactory(MyPlayListModel model, PlayBackStateModel playModel) {
             myPlayListModel = model;
             playBackStateModel = playModel;

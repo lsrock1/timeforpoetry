@@ -1,28 +1,20 @@
 package com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PlayListController;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragScope;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.PlayListController;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.MyPoetryModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.sign.SignCheckModel;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MediaServiceViewModel;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  * 나의 시집 다중 선택, 플레이리스트에 추가, 사버 통신을 통해 나의 시집에서 삭제
@@ -108,12 +100,14 @@ public class MyPoetryViewModel extends ViewModel implements PlayListController {
         toggleEditMode();
     }
 
+    @FragScope
     public static class MyPoetryViewModelFactory implements ViewModelProvider.Factory{
 
         private SignCheckModel signCheckModel;
         private MyPoetryModel myPoetryModel;
         private MyPlayListModel myPlayListModel;
 
+        @Inject
         public MyPoetryViewModelFactory(SignCheckModel signCheckModel, MyPoetryModel myPoetryModel, MyPlayListModel myPlayListModel) {
             this.signCheckModel = signCheckModel;
             this.myPoetryModel = myPoetryModel;

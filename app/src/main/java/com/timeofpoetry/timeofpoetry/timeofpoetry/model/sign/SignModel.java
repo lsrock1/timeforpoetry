@@ -6,6 +6,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.concerns.SharedPreferenceController;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import retrofit2.http.POST;
 /**
  * Created by sangroklee on 2017. 11. 23..
  */
+@ActivityScope
 public class SignModel{
 
     private SharedPreferenceController sharedPreferenceController;
@@ -35,6 +37,7 @@ public class SignModel{
     private MutableLiveData<Integer> signIn = new MutableLiveData<>();
     private MutableLiveData<Integer> signUp = new MutableLiveData<>();
 
+    @Inject
     public SignModel(SharedPreferenceController sharedPreferenceController) {
         this.sharedPreferenceController = sharedPreferenceController;
         signIn.setValue(REQUEST_READY);

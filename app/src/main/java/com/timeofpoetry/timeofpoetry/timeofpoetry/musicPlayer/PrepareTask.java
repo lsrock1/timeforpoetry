@@ -18,12 +18,12 @@ public class PrepareTask {
     void startPrepare(){
         if(task == null){
             task = new Task();
-            task.execute(player);
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, player);
         }
         else if(task.getStatus().equals(AsyncTask.Status.FINISHED)){
             task.cancel(true);
             task = new Task();
-            task.execute(player);
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, player);
         }
         else if(task.getStatus().equals(AsyncTask.Status.RUNNING)){
             if(task.getPrepareCount() != 0) task.renew();

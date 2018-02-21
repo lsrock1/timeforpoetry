@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.MediaMetadataCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,18 +53,6 @@ public class LyricsFragment extends Fragment {
                 .plus(new FragModule());
         component.inject(this);
         LyricsViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(LyricsViewModel.class);
-        viewModel.getCurrent().observe(this, new Observer<PoetryClass.Poem>() {
-            @Override
-            public void onChanged(@Nullable PoetryClass.Poem poem) {
-                if(poem == null || binding.getPoem() != null && binding.getPoem().getDatabaseId() == poem.getDatabaseId()){
-                    return;
-                }
-                binding.setPoem(poem);
-                binding.loading.setVisibility(View.VISIBLE);
-                binding.scrollView.setVisibility(View.GONE);
-                viewModel.lyricsLoad();
-            }
-        });
 
         viewModel.getLyrics().observe(this, new Observer<String>() {
             @Override
@@ -76,7 +65,18 @@ public class LyricsFragment extends Fragment {
             }
         });
 
-        viewModel.lyricsLoad();
+        viewModel.getCurrent().observe(this, new Observer<PoetryClass.Poem>() {
+            @Override
+            public void onChanged(@Nullable PoetryClass.Poem poem) {
+                if(poem == null || binding.getPoem() != null && binding.getPoem().getDatabaseId() == poem.getDatabaseId()){
+                    return;
+                }
+                binding.setPoem(poem);
+                binding.loading.setVisibility(View.VISIBLE);
+                binding.scrollView.setVisibility(View.GONE);
+                viewModel.lyricsLoad();
+            }
+        });
 
         return binding.getRoot();
     }

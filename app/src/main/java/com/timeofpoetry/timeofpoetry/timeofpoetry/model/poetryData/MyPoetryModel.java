@@ -9,6 +9,7 @@ import android.util.Log;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.DiffCallback;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.concerns.SharedPreferenceController;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import retrofit2.Response;
 /**
  * Created by sangroklee on 2017. 12. 19..
  */
+@ActivityScope
 public class MyPoetryModel {
 
     private SharedPreferenceController sharedPreferenceController;
@@ -35,6 +37,7 @@ public class MyPoetryModel {
     private MutableLiveData<PoetryModelData> liveData = new MutableLiveData<>();
     private String userId;
 
+    @Inject
     public MyPoetryModel(SharedPreferenceController sharedPreferenceController) {
         this.sharedPreferenceController = sharedPreferenceController;
         liveData.setValue(cache);

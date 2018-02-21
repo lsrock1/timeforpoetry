@@ -20,7 +20,7 @@ class TimeOutTask {
         isCancelled = false;
         if(task == null || task.isCancelled() || task.getStatus().equals(AsyncTask.Status.FINISHED)){
             task = new Task();
-            task.execute(player);
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, player);
         }
     }
 

@@ -16,8 +16,8 @@ public class PoetryModelData {
     private boolean alert = false;
 
     public PoetryModelData(ArrayList<PoetryClass.Poem> newList) {
-        this.poetry = new ArrayList<>();
-        this.callback = new DiffCallback(poetry, newList);
+        this.poetry = newList;
+        this.callback = new DiffCallback(null, newList);
         this.change = 0;
     }
 

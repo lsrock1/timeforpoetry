@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.util.ArrayMap;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 
 import java.util.ArrayList;
 
@@ -18,10 +19,12 @@ import retrofit2.Response;
 /**
  * Created by sangroklee on 2017. 12. 23..
  */
+@ActivityScope
 public class LikeModel {
 
     private ArrayMap<String, Integer> cache = new ArrayMap<>();
 
+    @Inject
     public LikeModel() {
     }
 

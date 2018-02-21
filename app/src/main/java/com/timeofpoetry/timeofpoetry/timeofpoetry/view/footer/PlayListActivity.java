@@ -22,11 +22,12 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.ActivityPlayListBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityComponent;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityModule;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.OnPlayerFragmentInteractionListener;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.PlayListViewModel;
 
 import javax.inject.Inject;
 
-public class PlayListActivity extends AppCompatActivity implements com.timeofpoetry.timeofpoetry.timeofpoetry.view.PlayerFragment.OnFragmentInteractionListener{
+public class PlayListActivity extends AppCompatActivity implements OnPlayerFragmentInteractionListener{
 
     private ActivityComponent component;
     @Inject public PlayListViewModel.PlayListViewModelFactory viewModelFactory;

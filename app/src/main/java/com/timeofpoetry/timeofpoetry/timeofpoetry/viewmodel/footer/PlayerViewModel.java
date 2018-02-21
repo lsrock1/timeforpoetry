@@ -9,6 +9,7 @@ import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.SeekModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.LikeModel;
@@ -103,6 +104,7 @@ public class PlayerViewModel extends ViewModel {
         return isLiked.get();
     }
 
+    @ActivityScope
     public static class PlayerViewModelFactory implements ViewModelProvider.Factory{
 
         private SeekModel seekModel;
@@ -111,6 +113,7 @@ public class PlayerViewModel extends ViewModel {
         private MyPoetryModel myPoetryModel;
         private LikeModel likeModel;
 
+        @Inject
         public PlayerViewModelFactory(SeekModel seekModel, MyPlayListModel myPlayListModel, SignCheckModel signCheckModel, MyPoetryModel bookMarkModel, LikeModel likeModel) {
             this.seekModel = seekModel;
             this.myPlayListModel = myPlayListModel;

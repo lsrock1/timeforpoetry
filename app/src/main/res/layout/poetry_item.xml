@@ -7,7 +7,7 @@
             type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.Poem"/>
         <variable
             name="viewModel"
-            type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.PlayListController"/>
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.PlayListController"/>
     </data>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

@@ -2,6 +2,8 @@ package com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -32,10 +34,10 @@ public class LyricsLoad {
     public void startLyricsLoad(String url, MutableLiveData<String> data){
         if(task == null || task.isCancelled() || task.getStatus().equals(AsyncTask.Status.FINISHED)){
             task = new Task(data);
-            task.execute(url);
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
         }
         else if(task.getStatus().equals(AsyncTask.Status.PENDING)){
-            task.execute(url);
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
         }
         else if(task.getStatus().equals(AsyncTask.Status.RUNNING)){
             task.cancel(true);

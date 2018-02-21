@@ -3,6 +3,7 @@ package com.timeofpoetry.timeofpoetry.timeofpoetry.di;
 import android.app.Application;
 import android.content.Context;
 
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PlayListDB;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.SeekModel;
@@ -30,35 +31,5 @@ public class AppModule {
     @Singleton
     Context provideContext(){
         return this.mApp;
-    }
-
-    @Provides
-    @Singleton
-    SharedPreferenceController provideSharedPreferenceController(Context context){
-        return new SharedPreferenceController(context);
-    }
-
-    @Provides
-    @Singleton
-    MyPlayListModel provideMyPlayListModel(Context context, SharedPreferenceController sharedPreferenceController){
-        return new MyPlayListModel(context, sharedPreferenceController);
-    }
-
-    @Provides
-    @Singleton
-    PlayBackStateModel providePlayBackStateModel(){
-        return new PlayBackStateModel();
-    }
-
-    @Provides
-    @Singleton
-    SignCheckModel provideSignCheckModel(SharedPreferenceController sharedPreferenceController){
-        return new SignCheckModel(sharedPreferenceController);
-    }
-
-    @Provides
-    @Singleton
-    SeekModel provideSeekModel(SharedPreferenceController sharedPreferenceController){
-        return new SeekModel(sharedPreferenceController);
     }
 }

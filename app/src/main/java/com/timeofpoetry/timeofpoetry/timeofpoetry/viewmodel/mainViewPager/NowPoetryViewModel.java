@@ -3,21 +3,18 @@ package com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
-import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 
-import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PlayListController;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.BannerModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.RankModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.RecommendModel;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MediaServiceViewModel;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  * Created by sangroklee on 2017. 12. 20..
@@ -68,6 +65,7 @@ public class NowPoetryViewModel extends ViewModel {
         return rank.getValue().size();
     }
 
+    @FragScope
     public static class NowPoetryViewModelFactory implements ViewModelProvider.Factory{
 
         private MyPlayListModel myPlayListModel;
@@ -75,6 +73,7 @@ public class NowPoetryViewModel extends ViewModel {
         private RecommendModel recommendModel;
         private BannerModel bannerModel;
 
+        @Inject
         public NowPoetryViewModelFactory(MyPlayListModel myPlayListModel, RankModel rankModel, RecommendModel recommendModel, BannerModel bannerModel) {
             this.myPlayListModel = myPlayListModel;
             this.rankModel = rankModel;

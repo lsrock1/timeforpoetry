@@ -19,10 +19,10 @@ public class ProgressTask {
     void startProgress(){
         if(task == null || task.isCancelled()){
             task = new Task();
-            task.execute(player);
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, player);
         }
         else if(task.getStatus().equals(AsyncTask.Status.PENDING)){
-            task.execute(player);
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, player);
         }
     }
 

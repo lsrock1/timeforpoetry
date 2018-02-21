@@ -14,16 +14,4 @@ public class NaviActivityModule {
 
     public NaviActivityModule() {
     }
-
-    @Provides
-    @ActivityScope
-    BoardModel provideBoardModel(){
-        return new BoardModel();
-    }
-
-    @Provides
-    @ActivityScope
-    BoardActivityViewModel.BoardActivityViewModelFactory provideBoardActivityViewModelFactory(BoardModel boardModel){
-        return new BoardActivityViewModel.BoardActivityViewModelFactory(boardModel);
-    }
 }

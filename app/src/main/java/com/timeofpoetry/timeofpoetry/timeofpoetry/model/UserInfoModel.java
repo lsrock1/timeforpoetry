@@ -4,8 +4,11 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,7 +18,7 @@ import retrofit2.http.GET;
 /**
  * Created by sangroklee on 2018. 1. 17..
  */
-
+@ActivityScope
 public class UserInfoModel {
 
     public static final int SUCCESS = 1;
@@ -26,6 +29,7 @@ public class UserInfoModel {
 
     private MutableLiveData<Integer> data = new MutableLiveData<>();
 
+    @Inject
     public UserInfoModel() {
         data.setValue(READY);
     }

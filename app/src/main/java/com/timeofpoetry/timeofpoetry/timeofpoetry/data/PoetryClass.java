@@ -4,6 +4,10 @@ import android.database.Cursor;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.graphics.Bitmap;
+import android.os.BadParcelableException;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -16,14 +20,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
-import static com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel.COLUMN_NAME_ARTWORK;
-import static com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel.COLUMN_NAME_COMPOSER;
-import static com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel.COLUMN_NAME_DURATION;
-import static com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel.COLUMN_NAME_LYRICSURL;
-import static com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel.COLUMN_NAME_POEM;
-import static com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel.COLUMN_NAME_POET;
-import static com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel.COLUMN_NAME_SOUNDURL;
-import static com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel.COLUMN_NAME_VOICE;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PlayListDB;
 
 
 public class PoetryClass {
@@ -300,7 +297,7 @@ public class PoetryClass {
     }
 
     //시 클래스
-    public static class Poem{
+    public static class Poem implements Parcelable{
         @SerializedName("x_artworkURL") String artworkUrl;
         @SerializedName("x_authorID") String authorID;
         @SerializedName("x_authorName") String poet;
@@ -317,21 +314,54 @@ public class PoetryClass {
         int databaseId = -1;
         private ObservableBoolean isSelected = new ObservableBoolean(false);
         private Bitmap artwork;
+        private boolean flag = false;
 
         public Poem(){
 
         }
 
         public Poem(Cursor c, int id){
-            this.artworkUrl = c.getString(c.getColumnIndexOrThrow(COLUMN_NAME_ARTWORK));
-            this.poet = c.getString(c.getColumnIndexOrThrow(COLUMN_NAME_POET));
-            this.poetryTitle = c.getString(c.getColumnIndexOrThrow(COLUMN_NAME_POEM));
-            this.soundUrl = c.getString(c.getColumnIndexOrThrow(COLUMN_NAME_SOUNDURL));
-            this.textUrl = c.getString(c.getColumnIndexOrThrow(COLUMN_NAME_LYRICSURL));
-            this.voiceName = c.getString(c.getColumnIndexOrThrow(COLUMN_NAME_VOICE));
-            this.playTime = c.getInt(c.getColumnIndexOrThrow(COLUMN_NAME_DURATION));
-            this.databaseId = id;
-            this.composer = c.getString(c.getColumnIndexOrThrow(COLUMN_NAME_COMPOSER));
+            artworkUrl = c.getString(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_ARTWORK));
+            poet = c.getString(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_POET));
+            poetryTitle = c.getString(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_POEM));
+            soundUrl = c.getString(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_SOUNDURL));
+            textUrl = c.getString(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_LYRICSURL));
+            voiceName = c.getString(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_VOICE));
+            playTime = c.getInt(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_DURATION));
+            databaseId = id;
+            composer = c.getString(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_COMPOSER));
+        }
+
+        public Poem(Parcel src) {
+//            dest.writeString(artworkUrl);
+//            dest.writeString(authorID);
+//            dest.writeString(poet);
+//            dest.writeInt(likeCount);
+//            dest.writeString(poetryId);
+//            dest.writeString(poetryTitle);
+//            dest.writeString(soundUrl);
+//            dest.writeString(textUrl);
+//            dest.writeString(voiceId);
+//            dest.writeString(voiceName);
+//            dest.writeString(voiceSex);
+//            dest.writeInt(playTime);
+//            dest.writeString(composer);
+//            dest.writeInt(databaseId);
+//            if(artwork != null) dest.writeValue(artwork)
+            this.artworkUrl = src.readString();
+            this.authorID = src.readString();
+            this.poet = src.readString();
+            this.likeCount = src.readInt();
+            this.poetryId = src.readString();
+            this.poetryTitle = src.readString();
+            this.soundUrl = src.readString();
+            this.textUrl = src.readString();
+            this.voiceId = src.readString();
+            this.voiceName = src.readString();
+            this.voiceSex = src.readString();
+            this.playTime = src.readInt();
+            this.composer = src.readString();
+            this.databaseId = src.readInt();
         }
 
         public void setPlayTime(int time){
@@ -433,6 +463,40 @@ public class PoetryClass {
 
             return poem;
         }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(artworkUrl);
+            dest.writeString(authorID);
+            dest.writeString(poet);
+            dest.writeInt(likeCount);
+            dest.writeString(poetryId);
+            dest.writeString(poetryTitle);
+            dest.writeString(soundUrl);
+            dest.writeString(textUrl);
+            dest.writeString(voiceId);
+            dest.writeString(voiceName);
+            dest.writeString(voiceSex);
+            dest.writeInt(playTime);
+            dest.writeString(composer);
+            dest.writeInt(databaseId);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        public static final Creator CREATOR = new Creator<Poem>(){
+            public Poem createFromParcel(Parcel src){
+                return new Poem(src);
+            }
+
+            @Override
+            public Poem[] newArray(int size) {
+                return new Poem[0];
+            }
+        };
     }
 
     public static class Banner{
@@ -481,8 +545,7 @@ public class PoetryClass {
 
     public static boolean checkStatus(ArrayList<Response> responses){
         String status = responses.get(0).status.split("-")[0];
-        if (status.equals("200")) return true;
-        else return false;
+        return status.equals("200");
     }
 
     public static int checkRegister(ArrayList<Response> responses){
@@ -507,6 +570,7 @@ public class PoetryClass {
         newPoem.setLikeCount(0);
         newPoem.setPoetryTitle("시를 추가해 주세요");
         newPoem.setPlayTime(0);
+        newPoem.setArtwork(null);
 
         return newPoem;
     }

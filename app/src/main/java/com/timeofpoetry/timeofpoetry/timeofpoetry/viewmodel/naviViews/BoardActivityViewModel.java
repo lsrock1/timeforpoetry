@@ -12,9 +12,12 @@ import android.view.ViewGroup;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.BoardModel;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 /**
  * Created by sangroklee on 2018. 1. 16..
@@ -44,10 +47,12 @@ public class BoardActivityViewModel extends ViewModel {
         }
     }
 
+    @ActivityScope
     public static class BoardActivityViewModelFactory implements ViewModelProvider.Factory{
 
         private BoardModel boardModel;
 
+        @Inject
         public BoardActivityViewModelFactory(BoardModel boardModel) {
             this.boardModel = boardModel;
         }

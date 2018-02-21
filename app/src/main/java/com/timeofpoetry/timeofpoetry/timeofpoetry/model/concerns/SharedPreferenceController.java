@@ -8,14 +8,18 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Created by sangroklee on 2017. 10. 4..
  */
-
+@Singleton
 public class SharedPreferenceController {
 
     private SharedPreferences mSharedPreference;
 
+    @Inject
     public SharedPreferenceController(Context context){
         this.mSharedPreference = context.getSharedPreferences(context.getString(R.string.UserInfos), context.MODE_PRIVATE);
     }

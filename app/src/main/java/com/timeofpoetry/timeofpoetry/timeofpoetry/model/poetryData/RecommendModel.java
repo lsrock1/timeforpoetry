@@ -3,6 +3,7 @@ package com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 
 import java.util.ArrayList;
 
@@ -16,10 +17,12 @@ import retrofit2.Response;
 /**
  * Created by sangroklee on 2018. 1. 3..
  */
+@ActivityScope
 public class RecommendModel {
 
     private ArrayList<PoetryClass.Poem> recommendCache;
 
+    @Inject
     public RecommendModel() {
     }
 

@@ -18,11 +18,13 @@ import javax.inject.Singleton;
 /**
  * Created by sangroklee on 2017. 12. 11..
  */
+@Singleton
 public class SignCheckModel implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     private MutableLiveData<Boolean> isLogin = new MutableLiveData<>();
     private SharedPreferenceController sharedPreferenceController;
 
+    @Inject
     public SignCheckModel(SharedPreferenceController sharedPreferenceController) {
         this.sharedPreferenceController = sharedPreferenceController;
         this.sharedPreferenceController.setListener(this);

@@ -5,8 +5,10 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.LyricsLoad;
 
@@ -40,11 +42,13 @@ public class LyricsViewModel extends ViewModel {
         return lyrics;
     }
 
+    @FragScope
     public static class LyricsViewModelFactory implements ViewModelProvider.Factory {
 
         private MyPlayListModel myPlayListModel;
         private LyricsLoad lyricsLoad;
 
+        @Inject
         public LyricsViewModelFactory(MyPlayListModel myPlayListModel, LyricsLoad lyricsLoad) {
             this.myPlayListModel = myPlayListModel;
             this.lyricsLoad = lyricsLoad;

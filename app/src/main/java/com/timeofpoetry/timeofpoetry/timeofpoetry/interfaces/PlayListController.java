@@ -1,6 +1,8 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.data;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces;
 
 import android.databinding.ObservableInt;
+
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 
 /**
  * Created by sangroklee on 2018. 1. 4..

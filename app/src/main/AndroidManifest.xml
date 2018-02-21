@@ -33,6 +33,7 @@
         </activity>
 
         <service
+            android:exported="false"
             android:name=".musicPlayer.MediaPlaybackService">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />

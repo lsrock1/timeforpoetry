@@ -13,7 +13,7 @@ import javax.inject.Singleton;
 /**
  * Created by sangroklee on 2017. 12. 19..
  */
-
+@Singleton
 public class PlayBackStateModel {
 
     final public static int BUFFERING = PlaybackStateCompat.STATE_BUFFERING;
@@ -23,6 +23,7 @@ public class PlayBackStateModel {
 
     private MutableLiveData<Integer> state = new MutableLiveData<>();
 
+    @Inject
     public PlayBackStateModel() {
         state.setValue(STOP);
     }

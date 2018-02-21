@@ -1,26 +1,21 @@
 package com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 
-import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PlayListController;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragScope;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.PlayListController;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.MonthlyPoetryModel;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainViewPager.MonthlyPoetry;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MediaServiceViewModel;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 //서버에서 월간 몇시 받아오기, 다중 선택, 플레이리스트에 추가
 
@@ -84,11 +79,13 @@ public class MonthlyPoetryViewModel extends ViewModel implements PlayListControl
         monthlyPoetryModel.setSelectAll(false);
     }
 
+    @FragScope
     public static class MonthlyPoetryViewModelFactory implements ViewModelProvider.Factory{
 
         private MyPlayListModel myPlayListModel;
         private MonthlyPoetryModel monthlyPoetryModel;
 
+        @Inject
         public MonthlyPoetryViewModelFactory(MyPlayListModel playListModel, MonthlyPoetryModel monthlyPoetryModel) {
             myPlayListModel = playListModel;
             this.monthlyPoetryModel = monthlyPoetryModel;
