@@ -38,6 +38,7 @@ public class SplashActivity extends AppCompatActivity {
         Intent intent;
         if(viewModel.isLogin()) {
             intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         }
         else{
             intent = new Intent(this, AuthorityActivity.class);

@@ -27,7 +27,6 @@ public class MediaServiceViewModel extends ViewModel {
 
     private MyPlayListModel model;
     private PlayBackStateModel playBackStateModel;
-    private MutableLiveData<Integer> position;
     private LiveData<PoetryClass.Poem> currentPoem;
     private SignCheckModel signCheckModel;
     private SeekModel seekModel;
@@ -41,11 +40,8 @@ public class MediaServiceViewModel extends ViewModel {
     }
 
     private void load(){
-        position = model.getPosition();
         currentPoem = model.getCurrentPoem();
     }
-
-    public LiveData<Integer> getPosition(){return position;}
 
     public void state_stop(){
         playBackStateModel.setState(PlayBackStateModel.STOP);

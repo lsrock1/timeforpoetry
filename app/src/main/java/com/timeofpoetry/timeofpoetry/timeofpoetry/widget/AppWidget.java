@@ -1,5 +1,6 @@
 package com.timeofpoetry.timeofpoetry.timeofpoetry.widget;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
@@ -28,6 +29,8 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.musicPlayer.MediaPlaybackService;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.view.startActivities.SplashActivity;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -69,14 +72,17 @@ public class AppWidget extends AppWidgetProvider {
     private void buildView(PoetryClass.Poem poem, int state, Context context){
         RemoteViews views = new RemoteViews(getApplicationContext().getPackageName(), R.layout.app_widget);
         views.setViewVisibility(R.id.play, state == PlayBackStateModel.PAUSE || state == PlayBackStateModel.STOP ? View.VISIBLE : View.GONE);
-        views.setViewVisibility(R.id.stop, state == PlayBackStateModel.PLAYING ? View.VISIBLE : View.GONE);
-        views.setViewVisibility(R.id.loading, state == PlayBackStateModel.BUFFERING ? View.INVISIBLE : View.GONE);
+        views.setViewVisibility(R.id.stop, state == PlayBackStateModel.PLAYING || state == PlayBackStateModel.BUFFERING ? View.VISIBLE : View.GONE);
 
         views.setOnClickPendingIntent(R.id.play,  MediaButtonReceiver.buildMediaButtonPendingIntent(getApplicationContext(), PlaybackStateCompat.ACTION_PLAY));
         views.setOnClickPendingIntent(R.id.stop,  MediaButtonReceiver.buildMediaButtonPendingIntent(getApplicationContext(), PlaybackStateCompat.ACTION_STOP));
         views.setOnClickPendingIntent(R.id.prev,  MediaButtonReceiver.buildMediaButtonPendingIntent(getApplicationContext(), PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS));
         views.setOnClickPendingIntent(R.id.next,  MediaButtonReceiver.buildMediaButtonPendingIntent(getApplicationContext(), PlaybackStateCompat.ACTION_SKIP_TO_NEXT));
 
+        views.setOnClickPendingIntent(
+                R.id.cover,
+                PendingIntent.getActivity(context, 0, new Intent(context, SplashActivity.class),
+                        0));
         if(poem.getPoet().equals("")){
             views.setImageViewResource(R.id.cover, R.drawable.logo);
             views.setTextViewText(R.id.title, "추가된 시가 없습니다");

@@ -61,16 +61,16 @@ public class MediaStyleHelper {
 
                 .setSmallIcon(R.drawable.ic_logo_top)
                 .addAction(new NotificationCompat.Action(
-                        R.drawable.ic_prev, "rewind",
+                        R.drawable.footer_prev_off, "prev",
                         MediaButtonReceiver.buildMediaButtonPendingIntent(context, PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS)
                 ))
                 .addAction(new NotificationCompat.Action(
-                        viewModel.getState().getValue() == PlayBackStateModel.PLAYING || viewModel.getState().getValue() == PlayBackStateModel.BUFFERING ?  R.drawable.ic_pause : R.drawable.ic_play,
+                        viewModel.getState().getValue() == PlayBackStateModel.PLAYING || viewModel.getState().getValue() == PlayBackStateModel.BUFFERING ?  R.drawable.footer_pause_off : R.drawable.footer_play_off,
                         viewModel.getState().getValue() == PlayBackStateModel.PLAYING ? "pause" : "play",
                         MediaButtonReceiver.buildMediaButtonPendingIntent(context, viewModel.getState().getValue() == PlayBackStateModel.PLAYING ? PlaybackStateCompat.ACTION_STOP : PlaybackStateCompat.ACTION_PLAY)
                 ))
                 .addAction(new NotificationCompat.Action(
-                        R.drawable.ic_next, "forward",
+                        R.drawable.footer_next_off, "next",
                         MediaButtonReceiver.buildMediaButtonPendingIntent(context, PlaybackStateCompat.ACTION_SKIP_TO_NEXT)
                 ))
 

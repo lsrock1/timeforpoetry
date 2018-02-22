@@ -1,77 +1,100 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whitealpha50"
     android:padding="@dimen/widget_margin">
 
     <ImageView
         android:id="@+id/cover"
-        android:src="@drawable/logo"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:src="@drawable/logo" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/info"
-        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2">
+        android:layout_weight="2"
+        android:orientation="vertical">
+
         <LinearLayout
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/controller"
+            android:layout_gravity="center_vertical"
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:layout_gravity="center_vertical">
+            android:paddingTop="@dimen/f30"
+            android:paddingEnd="@dimen/f50"
+            android:paddingStart="@dimen/f50">
+
             <TextView
-                android:textSize="@dimen/f35"
                 android:id="@+id/title"
-                android:text="title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="정보 불러오는 중.."
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:focusableInTouchMode="true"
+                android:duplicateParentState="true">
+                <requestFocus android:focusable="true" android:focusableInTouchMode="true"
+                    android:duplicateParentState="true" />
+            </TextView>
+
             <TextView
-                android:textSize="@dimen/f30"
                 android:id="@+id/poet"
-                android:text="poet"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:textSize="12sp" />
         </LinearLayout>
+
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/controller"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:layout_gravity="center_horizontal">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingTop="@dimen/f30"
+            android:paddingBottom="@dimen/f50"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/prev"
-                android:src="@drawable/ic_prev"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_width="@dimen/f100"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/f60"
+                android:src="@drawable/footer_prev_off" />
 
             <ImageView
                 android:id="@+id/play"
-                android:src="@drawable/ic_play"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_width="@dimen/f100"
+                android:layout_height="match_parent"
+                android:src="@drawable/footer_play_off" />
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/stop"
-                android:src="@drawable/ic_pause"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-            <ProgressBar
-                android:id="@+id/loading"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_width="@dimen/f100"
+                android:layout_height="match_parent"
+                android:src="@drawable/footer_pause_off"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/next"
-                android:src="@drawable/ic_next"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_width="@dimen/f100"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/f60"
+                android:src="@drawable/footer_next_off" />
 
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

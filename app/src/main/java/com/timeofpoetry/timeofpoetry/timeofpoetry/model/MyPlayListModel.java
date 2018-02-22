@@ -45,7 +45,7 @@ public class MyPlayListModel{
 
     private MutableLiveData<Integer> mode = new MutableLiveData<>();
     private MutableLiveData<PoetryClass.Poem> currentPoem = new MutableLiveData<>();
-    private MutableLiveData<Integer> position = new MutableLiveData<>();
+    private int position;
     private PoetryModelData poetryModelData;
     private MutableLiveData<PoetryModelData> playList = new MutableLiveData<>();
 
@@ -53,7 +53,7 @@ public class MyPlayListModel{
     public MyPlayListModel(SharedPreferenceController sharedPreferenceController, PlayListDB playListDB) {
         this.sharedPreferenceController = sharedPreferenceController;
         this.playListDB = playListDB;
-        position.setValue(sharedPreferenceController.getLastPosition());
+        position = sharedPreferenceController.getLastPosition();
         mode.setValue(sharedPreferenceController.getShuffleMode() ? MyPlayListModel.SHUFFLE : sharedPreferenceController.getRepeatMode());
         poetryModelData = playListDB.getPoetryModelData();
         playList.setValue(poetryModelData);
@@ -63,7 +63,7 @@ public class MyPlayListModel{
 
     public void addItems(PoetryClass.Poem poem){
         poem.setDatabaseId((int) playListDB.addItem(poem));
-        position.setValue(0);
+        position = 0;
         poetryModelData.addOnePoem(poem);
         autoSetCurrentPoem(false);
         playList.setValue(poetryModelData);
@@ -77,7 +77,7 @@ public class MyPlayListModel{
                 data.add(0, item);
             }
 
-            position.setValue(0);
+            position = 0;
             poetryModelData.setNewArray(data, false);
             autoSetCurrentPoem(false);
             playList.setValue(poetryModelData);
@@ -86,7 +86,7 @@ public class MyPlayListModel{
 
     public void removeItems(){
         int start = 0;
-        int tmp = position.getValue();
+        int tmp = position;
         ArrayList<PoetryClass.Poem> data = new ArrayList<>(poetryModelData.getPoetry());
 
         while(start < data.size()){
@@ -101,7 +101,7 @@ public class MyPlayListModel{
                         tmp = 0;
                     }
                 }
-                position.setValue(tmp);
+                position = tmp;
             }
             else{
                 start++;
@@ -115,6 +115,7 @@ public class MyPlayListModel{
 
     private void autoSetCurrentPoem(boolean isRemoved){
         PoetryClass.Poem tmpPoem;
+        sharedPreferenceController.setLastPosition(position);
         if(poetryModelData.getPoetry().size() == 0){
             tmpPoem = PoetryClass.getNullPoem();
             BitmapDrawable drawable = (BitmapDrawable) ContextCompat.getDrawable(getApplicationContext(), R.drawable.logo);
@@ -123,7 +124,7 @@ public class MyPlayListModel{
             currentPoem.setValue(tmpPoem);
         }
         else{
-            tmpPoem = poetryModelData.getPoetry().get(position.getValue());
+            tmpPoem = poetryModelData.getPoetry().get(position);
             if(!isRemoved||currentPoem.getValue().getDatabaseId() != tmpPoem.getDatabaseId()){
                 currentPoem.setValue(tmpPoem);
             }
@@ -133,12 +134,12 @@ public class MyPlayListModel{
     private int getRand() {
         Random r = new Random();
         if (poetryModelData.getPoetry().size() == 1) {
-            return position.getValue();
+            return position;
         } else {
             int i;
             do {
                 i = r.nextInt(poetryModelData.getPoetry().size());
-            } while (i == position.getValue());
+            } while (i == position);
 
             return i;
         }
@@ -150,10 +151,6 @@ public class MyPlayListModel{
 
     public LiveData<PoetryClass.Poem> getCurrentPoem(){
         return currentPoem;
-    }
-
-    public MutableLiveData<Integer> getPosition(){
-        return position;
     }
 
     public MutableLiveData<Integer> getMode(){
@@ -181,7 +178,8 @@ public class MyPlayListModel{
         if(position >= poetryModelData.getPoetry().size() || position < 0){
             return;
         }
-        this.position.setValue(position);
+        this.position = position;
+        autoSetCurrentPoem(false);
     }
 
     public void forward(){
@@ -189,14 +187,13 @@ public class MyPlayListModel{
             setPosition(getRand());
         }
         else{
-            if(position.getValue() == poetryModelData.getPoetry().size() - 1){
+            if(position == poetryModelData.getPoetry().size() - 1){
                 setPosition(0);
             }
             else{
-                setPosition(position.getValue() + 1);
+                setPosition(position + 1);
             }
         }
-        autoSetCurrentPoem(false);
     }
 
     public void backward(){
@@ -204,14 +201,13 @@ public class MyPlayListModel{
             setPosition(getRand());
         }
         else{
-            if(position.getValue() == 0){
+            if(position == 0){
                 setPosition(poetryModelData.getPoetry().size() - 1);
             }
             else{
-                setPosition(position.getValue() - 1);
+                setPosition(position - 1);
             }
         }
-        autoSetCurrentPoem(false);
     }
 
     public void setSelect(int index){
