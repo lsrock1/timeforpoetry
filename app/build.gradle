@@ -8,8 +8,8 @@ android {
         applicationId "com.timeforpoetry.timeforpoetry.timeforpoetry"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 34
-        versionName "1.01"
+        versionCode 36
+        versionName "1.02"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
