@@ -26,7 +26,6 @@ import javax.inject.Inject;
 
 public class SignUpFragment extends Fragment {
 
-    private FragComponent component;
     @Inject
     SignUpViewModel.SignUpViewModelFactory viewModelFactory;
 
@@ -43,10 +42,10 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         FragmentSignUpBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_up, container, false);
-        component = ((SignActivity) getActivity())
+        ((SignActivity) getActivity())
                 .getComponent()
-                .plus(new FragModule());
-        component.inject(this);
+                .plus(new FragModule())
+                .inject(this);
         SignUpViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(SignUpViewModel.class);
         binding.setViewModel(viewModel);
         viewModel.getValidationStatus().observe(this, new Observer<Integer>() {

@@ -23,7 +23,6 @@ import javax.inject.Inject;
 
 public class SignInFragment extends Fragment {
 
-    private FragComponent component;
     @Inject
     SignInViewModel.SignInViewModelFactory viewModelFactory;
 
@@ -40,10 +39,10 @@ public class SignInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         FragmentSignInBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false);
-        component = ((SignActivity) getActivity())
+        ((SignActivity) getActivity())
                 .getComponent()
-                .plus(new FragModule());
-        component.inject(this);
+                .plus(new FragModule())
+                .inject(this);
         SignInViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(SignInViewModel.class);
         binding.setViewModel(viewModel);
         return binding.getRoot();

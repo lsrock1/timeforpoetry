@@ -28,7 +28,6 @@ import javax.inject.Inject;
 
 public class NowPoetry extends Fragment {
 
-    private FragComponent component;
     @Inject
     NowPoetryViewModel.NowPoetryViewModelFactory viewModelFactory;
 
@@ -36,10 +35,10 @@ public class NowPoetry extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final FragmentNowPoetryBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_now_poetry, container, false);
-        component = ((MainActivity) getActivity())
+        ((MainActivity) getActivity())
                 .getComponent()
-                .plus(new FragModule());
-        component.inject(this);
+                .plus(new FragModule())
+                .inject(this);
         final NowPoetryViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(NowPoetryViewModel.class);
         RecyclerView mRecycle = binding.recyclerView;
         final NowPoetryRecyclerViewAdapter mAdapter = new NowPoetryRecyclerViewAdapter(viewModel);

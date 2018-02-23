@@ -36,7 +36,6 @@ import javax.inject.Inject;
 
 public class LyricsFragment extends Fragment {
 
-    private FragComponent component;
     @Inject public LyricsViewModel.LyricsViewModelFactory viewModelFactory;
 
     public LyricsFragment() {
@@ -48,10 +47,10 @@ public class LyricsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final FragmentLyricsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lyrics, container, false);
-        component = ((PlayerActivity) getActivity())
+        ((PlayerActivity) getActivity())
                 .getComponent()
-                .plus(new FragModule());
-        component.inject(this);
+                .plus(new FragModule())
+                .inject(this);
         LyricsViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(LyricsViewModel.class);
 
         viewModel.getLyrics().observe(this, new Observer<String>() {

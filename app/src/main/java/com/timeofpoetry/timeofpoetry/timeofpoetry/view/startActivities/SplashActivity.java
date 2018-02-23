@@ -22,7 +22,6 @@ public class SplashActivity extends AppCompatActivity {
 
     private final int SPLASH_DISPLAY_LENGTH = 1000;
 
-    private ActivityComponent component;
     @Inject
     SplashViewModel.SplashViewModelFactory viewModelFactory;
 
@@ -30,10 +29,10 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivitySplashBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
-        component = ((GlobalApplication) getApplication())
+        ((GlobalApplication) getApplication())
                 .getComponent()
-                .plus(new ActivityModule());
-        component.inject(this);
+                .plus(new ActivityModule())
+                .inject(this);
         SplashViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(SplashViewModel.class);
         Intent intent;
         if(viewModel.isLogin()) {

@@ -34,7 +34,6 @@ import javax.inject.Inject;
 
 public class MyPoetryFragment extends Fragment {
 
-    private FragComponent component;
     @Inject
     MyPoetryViewModel.MyPoetryViewModelFactory viewModelFactory;
 
@@ -45,10 +44,10 @@ public class MyPoetryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final FragmentMyPoetryBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_poetry, container, false);
-        component = ((MainActivity) getActivity())
+        ((MainActivity) getActivity())
                 .getComponent()
-                .plus(new FragModule());
-        component.inject(this);
+                .plus(new FragModule())
+                .inject(this);
         final MyPoetryViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(MyPoetryViewModel.class);
         binding.setViewModel(viewModel);
         RecyclerView mRecycle = binding.list;

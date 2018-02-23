@@ -31,7 +31,6 @@ public class BoardActivity extends AppCompatActivity {
 
     @Inject
     BoardActivityViewModel.BoardActivityViewModelFactory viewModelFactory;
-    NaviActivityComponent component;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -42,9 +41,9 @@ public class BoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityBoardBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_board);
-        component = DaggerNaviActivityComponent.builder()
-                .build();
-        component.inject(this);
+        DaggerNaviActivityComponent.builder()
+                .build()
+                .inject(this);
         BoardActivityViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(BoardActivityViewModel.class);
         RecyclerView mRecycler = binding.boardRecycler;
         mRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
