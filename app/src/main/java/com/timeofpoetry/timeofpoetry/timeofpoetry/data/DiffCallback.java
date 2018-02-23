@@ -5,6 +5,7 @@ import android.support.v7.util.DiffUtil;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sangroklee on 2018. 1. 2..
@@ -12,10 +13,10 @@ import java.util.ArrayList;
 
 public class DiffCallback extends DiffUtil.Callback {
 
-    private final ArrayList<PoetryClass.Poem> mOldEmployeeList;
-    private final ArrayList<PoetryClass.Poem> mNewEmployeeList;
+    private final List<PoetryClass.Poem> mOldEmployeeList;
+    private final List<PoetryClass.Poem> mNewEmployeeList;
 
-    DiffCallback(ArrayList<PoetryClass.Poem> mOldEmployeeList, ArrayList<PoetryClass.Poem> mNewEmployeeList) {
+    DiffCallback(List<PoetryClass.Poem> mOldEmployeeList, List<PoetryClass.Poem> mNewEmployeeList) {
         this.mOldEmployeeList = mOldEmployeeList;
         this.mNewEmployeeList = mNewEmployeeList;
     }

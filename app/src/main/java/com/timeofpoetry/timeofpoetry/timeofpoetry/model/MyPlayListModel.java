@@ -27,6 +27,10 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.concerns.SharedPreferenceController;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
 import java.util.logging.Handler;
 
@@ -69,9 +73,9 @@ public class MyPlayListModel{
         playList.setValue(poetryModelData);
     }
 
-    public void addItems(ArrayList<PoetryClass.Poem> items) {
+    public void addItems(List<PoetryClass.Poem> items) {
         if (items.size() != 0) {
-            ArrayList<PoetryClass.Poem> data = new ArrayList<>(poetryModelData.getPoetry());
+            LinkedList<PoetryClass.Poem> data = new LinkedList<>(poetryModelData.getPoetry());
             for (PoetryClass.Poem item : items) {
                 item.setDatabaseId((int) playListDB.addItem(item));
                 data.add(0, item);
@@ -85,26 +89,21 @@ public class MyPlayListModel{
     }
 
     public void removeItems(){
-        int start = 0;
-        int tmp = position;
-        ArrayList<PoetryClass.Poem> data = new ArrayList<>(poetryModelData.getPoetry());
+        LinkedList<PoetryClass.Poem> data = new LinkedList<>(poetryModelData.getPoetry());
+        ListIterator<PoetryClass.Poem> itr = data.listIterator();
 
-        while(start < data.size()){
-            PoetryClass.Poem poem = data.get(start);
+        while(itr.hasNext()){
+            int index = itr.nextIndex();
+            PoetryClass.Poem poem = itr.next();
             if(poem.getIsSelected().get()){
-                playListDB.removeItem(data.remove(start).getDatabaseId());
-                if(start < tmp){
-                    tmp--;
+                playListDB.removeItem(poem.getDatabaseId());
+                itr.remove();
+                if(index < position){
+                    position--;
                 }
-                else{
-                    if(tmp > data.size() - 1){
-                        tmp = 0;
-                    }
+                else if(position > data.size() - 1){
+                    position = 0;
                 }
-                position = tmp;
-            }
-            else{
-                start++;
             }
         }
 
@@ -125,7 +124,8 @@ public class MyPlayListModel{
         }
         else{
             tmpPoem = poetryModelData.getPoetry().get(position);
-            if(!isRemoved||currentPoem.getValue().getDatabaseId() != tmpPoem.getDatabaseId()){
+            //삭제 후 같은 시일 경우에 currentpoem set이 되면서 재생이되는데 이를 막고자 삭제일 경우 동일 음원은 observer event를 일으키지 않게 함
+            if(!isRemoved || currentPoem.getValue().getDatabaseId() != tmpPoem.getDatabaseId()){
                 currentPoem.setValue(tmpPoem);
             }
         }
@@ -218,22 +218,6 @@ public class MyPlayListModel{
     public void setSelectAll(boolean bool){
         for(PoetryClass.Poem poem : poetryModelData.getPoetry()){
             poem.setIsSelect(bool);
-        }
-    }
-
-    public static PoetryClass.Poem getCurrentPoem(Context context){
-        PlayListDB playListDB = new PlayListDB(context);
-        SharedPreferenceController sharedPreferenceController = new SharedPreferenceController(context);
-
-        ArrayList<PoetryClass.Poem> myPlayList = playListDB.getPoetryModelData().getPoetry();
-        if(myPlayList.size() == 0){
-            return PoetryClass.getNullPoem();
-        }
-        try{
-            return playListDB.getPoetryModelData().getPoetry().get(sharedPreferenceController.getLastPosition());
-        }
-        catch (ArrayIndexOutOfBoundsException e){
-            return playListDB.getPoetryModelData().getPoetry().get(0);
         }
     }
 }

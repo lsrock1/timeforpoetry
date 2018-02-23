@@ -11,6 +11,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -39,10 +40,10 @@ public class BannerModel {
         }
         else {
             data.setValue(new PoetryClass.Banner());
-            Call<ArrayList<PoetryClass.Banner>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).getBanner();
-            call.enqueue(new Callback<ArrayList<PoetryClass.Banner>>() {
+            Call<List<PoetryClass.Banner>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).getBanner();
+            call.enqueue(new Callback<List<PoetryClass.Banner>>() {
                 @Override
-                public void onResponse(Call<ArrayList<PoetryClass.Banner>> call, Response<ArrayList<PoetryClass.Banner>> response) {
+                public void onResponse(Call<List<PoetryClass.Banner>> call, Response<List<PoetryClass.Banner>> response) {
                     try {
                         cache = response.body().get(0);
                         data.setValue(response.body().get(0));
@@ -53,7 +54,7 @@ public class BannerModel {
                 }
 
                 @Override
-                public void onFailure(Call<ArrayList<PoetryClass.Banner>> call, Throwable t) {
+                public void onFailure(Call<List<PoetryClass.Banner>> call, Throwable t) {
 
                 }
             });

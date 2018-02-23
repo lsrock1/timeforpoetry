@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.util.ArrayMap;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -176,7 +177,7 @@ public class PlayListDB extends SQLiteOpenHelper {
     }
 
     public PoetryModelData getPoetryModelData(){
-        ArrayList<PoetryClass.Poem> playListData = new ArrayList<>();
+        LinkedList<PoetryClass.Poem> playListData = new LinkedList<>();
         int currentId = getLastItemId();
         while(currentId != -1){
             PoetryClass.Poem poem = getPoem(currentId);

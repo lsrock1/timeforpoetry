@@ -13,6 +13,9 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.concerns.SharedPreferenceController;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -24,7 +27,7 @@ import retrofit2.Response;
 /**
  * Created by sangroklee on 2017. 12. 19..
  */
-@ActivityScope
+@Singleton
 public class MyPoetryModel {
 
     private SharedPreferenceController sharedPreferenceController;
@@ -33,7 +36,8 @@ public class MyPoetryModel {
     public final static int SUCCESS = 1;
     public final static int ERROR = 0;
     public final static int CONNECTING = 3;
-    private PoetryModelData cache = new PoetryModelData(new ArrayList<PoetryClass.Poem>());
+
+    private PoetryModelData cache = new PoetryModelData(new ArrayList<>());
     private MutableLiveData<PoetryModelData> liveData = new MutableLiveData<>();
     private String userId;
 
@@ -47,12 +51,12 @@ public class MyPoetryModel {
         if(sharedPreferenceController.isLogin() && userId == null || userId != null && !userId.equals(sharedPreferenceController.getUserId())){
             userId = sharedPreferenceController.getUserId();
             PoetryClass.ServerService getMyPoetry = PoetryClass.retrofit.create(PoetryClass.ServerService.class);
-            Call<ArrayList<ArrayList<PoetryClass.Poem>>> call = getMyPoetry.getMyPoetry(new PoetryClass.GetMyPoetry(sharedPreferenceController.getUserId(), sharedPreferenceController.getUserPwd()));
-            call.enqueue(new Callback<ArrayList<ArrayList<PoetryClass.Poem>>>() {
+            Call<List<List<PoetryClass.Poem>>> call = getMyPoetry.getMyPoetry(new PoetryClass.GetMyPoetry(sharedPreferenceController.getUserId(), sharedPreferenceController.getUserPwd()));
+            call.enqueue(new Callback<List<List<PoetryClass.Poem>>>() {
                 @Override
-                public void onResponse(Call<ArrayList<ArrayList<PoetryClass.Poem>>> call,
-                                       Response<ArrayList<ArrayList<PoetryClass.Poem>>> response) {
-                    ArrayList<PoetryClass.Poem> mValues = response.body().get(0);
+                public void onResponse(Call<List<List<PoetryClass.Poem>>> call,
+                                       Response<List<List<PoetryClass.Poem>>> response) {
+                    List<PoetryClass.Poem> mValues = response.body().get(0);
 
                     if (mValues.get(0).getVoice() != null || mValues.get(0).getPoet() != null) {
                         cache.setNewArray(mValues, true);
@@ -61,7 +65,7 @@ public class MyPoetryModel {
                 }
 
                 @Override
-                public void onFailure(Call<ArrayList<ArrayList<PoetryClass.Poem>>> call, Throwable t) {
+                public void onFailure(Call<List<List<PoetryClass.Poem>>> call, Throwable t) {
                 }
             });
         }
@@ -70,11 +74,11 @@ public class MyPoetryModel {
 
     public void removeRequest(PoetryClass.Poem poem){
         PoetryClass.ServerService delMyPoetry = PoetryClass.retrofit.create(PoetryClass.ServerService.class);
-        Call<ArrayList<PoetryClass.Response>> call = delMyPoetry.setMyPoetry(new PoetryClass.SetMyPoetry("del", sharedPreferenceController.getUserId(), sharedPreferenceController.getUserPwd(), poem.getPoet(), poem.getPoem(), poem.getVoice()));
-        call.enqueue(new Callback<ArrayList<PoetryClass.Response>>() {
+        Call<List<PoetryClass.Response>> call = delMyPoetry.setMyPoetry(new PoetryClass.SetMyPoetry("del", sharedPreferenceController.getUserId(), sharedPreferenceController.getUserPwd(), poem.getPoet(), poem.getPoem(), poem.getVoice()));
+        call.enqueue(new Callback<List<PoetryClass.Response>>() {
             @Override
-            public void onResponse(Call<ArrayList<PoetryClass.Response>> call,
-                                   Response<ArrayList<PoetryClass.Response>> response) {
+            public void onResponse(Call<List<PoetryClass.Response>> call,
+                                   Response<List<PoetryClass.Response>> response) {
 //                if(PoetryClass.checkStatus(response.body())){
 //                    isRemoved.setValue(isRemoved.getValue() + 1);
 //                    removeList.remove(0);
@@ -88,17 +92,17 @@ public class MyPoetryModel {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<PoetryClass.Response>> call, Throwable t) {
+            public void onFailure(Call<List<PoetryClass.Response>> call, Throwable t) {
             }
         });
     }
 
     private void bookMark(final PoetryClass.Poem poem, final MutableLiveData<Integer> data){
-        Call<ArrayList<PoetryClass.Response>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).setMyPoetry(new PoetryClass.SetMyPoetry("insert", sharedPreferenceController.getUserId(), sharedPreferenceController.getUserPwd(), poem.getPoet(), poem.getPoem(), poem.getVoice()));
-        call.enqueue(new Callback<ArrayList<PoetryClass.Response>>() {
+        Call<List<PoetryClass.Response>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).setMyPoetry(new PoetryClass.SetMyPoetry("insert", sharedPreferenceController.getUserId(), sharedPreferenceController.getUserPwd(), poem.getPoet(), poem.getPoem(), poem.getVoice()));
+        call.enqueue(new Callback<List<PoetryClass.Response>>() {
             @Override
-            public void onResponse(Call<ArrayList<PoetryClass.Response>> call,
-                                   Response<ArrayList<PoetryClass.Response>> response) {
+            public void onResponse(Call<List<PoetryClass.Response>> call,
+                                   Response<List<PoetryClass.Response>> response) {
                 if(PoetryClass.checkStatus(response.body())){
                     data.setValue(SUCCESS);
                     cache.addOnePoem(poem);
@@ -110,7 +114,7 @@ public class MyPoetryModel {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<PoetryClass.Response>> call, Throwable t) {
+            public void onFailure(Call<List<PoetryClass.Response>> call, Throwable t) {
                 data.setValue(NETWORK_ERROR);
             }
         });
@@ -119,11 +123,11 @@ public class MyPoetryModel {
     public LiveData<Integer> checkInBookMark(final PoetryClass.Poem poem){
         final MutableLiveData<Integer> data = new MutableLiveData<>();
         data.setValue(CONNECTING);
-        Call<ArrayList<PoetryClass.Response>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).isMyPoetry(new PoetryClass.IsMyPoetry(sharedPreferenceController.getUserId(), poem.getPoet(), poem.getPoem(), poem.getVoice()));
-        call.enqueue(new Callback<ArrayList<PoetryClass.Response>>() {
+        Call<List<PoetryClass.Response>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).isMyPoetry(new PoetryClass.IsMyPoetry(sharedPreferenceController.getUserId(), poem.getPoet(), poem.getPoem(), poem.getVoice()));
+        call.enqueue(new Callback<List<PoetryClass.Response>>() {
             @Override
-            public void onResponse(Call<ArrayList<PoetryClass.Response>> call,
-                                   Response<ArrayList<PoetryClass.Response>> response) {
+            public void onResponse(Call<List<PoetryClass.Response>> call,
+                                   Response<List<PoetryClass.Response>> response) {
                 if (response.body().get(0).getStatus().equals("True")) {
                     data.setValue(ALREADY);
                 } else {
@@ -132,7 +136,7 @@ public class MyPoetryModel {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<PoetryClass.Response>> call, Throwable t) {
+            public void onFailure(Call<List<PoetryClass.Response>> call, Throwable t) {
                 data.setValue(NETWORK_ERROR);
             }
         });
@@ -155,18 +159,17 @@ public class MyPoetryModel {
     }
 
     public void selectedItemsRemove(){
-        int start = 0;
-        ArrayList<PoetryClass.Poem> data = new ArrayList<>(cache.getPoetry());
-        while(start < data.size()){
-            PoetryClass.Poem poem = data.get(start);
+        LinkedList<PoetryClass.Poem> data = new LinkedList<>(cache.getPoetry());
+        ListIterator<PoetryClass.Poem> itr = data.listIterator();
+
+        while(itr.hasNext()){
+            PoetryClass.Poem poem = itr.next();
             if(poem.getIsSelected().get()){
-                data.remove(start);
                 removeRequest(poem);
-            }
-            else{
-                start++;
+                itr.remove();
             }
         }
+
         cache.setNewArray(data, false);
         liveData.setValue(cache);
     }

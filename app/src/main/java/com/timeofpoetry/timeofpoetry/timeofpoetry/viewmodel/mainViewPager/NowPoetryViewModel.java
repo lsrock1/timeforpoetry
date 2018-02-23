@@ -13,6 +13,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.RankModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.RecommendModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -24,8 +25,8 @@ public class NowPoetryViewModel extends ViewModel {
 
     private MyPlayListModel myPlayListModel;
     private LiveData<PoetryClass.Banner> banner;
-    private LiveData<ArrayList<PoetryClass.Poem>> rank;
-    private LiveData<ArrayList<PoetryClass.Poem>> recommend;
+    private LiveData<List<PoetryClass.Poem>> rank;
+    private LiveData<List<PoetryClass.Poem>> recommend;
 
     NowPoetryViewModel(MyPlayListModel myModel, RankModel rankModel, RecommendModel recommendModel, BannerModel bannerModel) {
         this.myPlayListModel = myModel;
@@ -38,11 +39,11 @@ public class NowPoetryViewModel extends ViewModel {
         return banner;
     }
 
-    public LiveData<ArrayList<PoetryClass.Poem>> getRank(){
+    public LiveData<List<PoetryClass.Poem>> getRank(){
         return rank;
     }
 
-    public LiveData<ArrayList<PoetryClass.Poem>> getRecommend(){
+    public LiveData<List<PoetryClass.Poem>> getRecommend(){
         return recommend;
     }
 

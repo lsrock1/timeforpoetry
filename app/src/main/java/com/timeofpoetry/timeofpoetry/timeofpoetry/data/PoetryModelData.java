@@ -3,6 +3,8 @@ package com.timeofpoetry.timeofpoetry.timeofpoetry.data;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by sangroklee on 2018. 1. 2..
@@ -10,12 +12,12 @@ import java.util.ArrayList;
 
 public class PoetryModelData {
 
-    private ArrayList<PoetryClass.Poem> poetry;
+    private List<PoetryClass.Poem> poetry;
     private DiffCallback callback;
     private int change;
     private boolean alert = false;
 
-    public PoetryModelData(ArrayList<PoetryClass.Poem> newList) {
+    public PoetryModelData(List<PoetryClass.Poem> newList) {
         this.poetry = newList;
         this.callback = new DiffCallback(null, newList);
         this.change = 0;
@@ -29,7 +31,7 @@ public class PoetryModelData {
         this.alert = alert;
     }
 
-    public ArrayList<PoetryClass.Poem> getPoetry() {
+    public List<PoetryClass.Poem> getPoetry() {
         return poetry;
     }
 
@@ -37,7 +39,7 @@ public class PoetryModelData {
         return callback;
     }
 
-    public void setNewArray(ArrayList<PoetryClass.Poem> newArray, boolean isInit){
+    public void setNewArray(List<PoetryClass.Poem> newArray, boolean isInit){
         callback = new DiffCallback(poetry, newArray);
         change = isInit ? 0 : newArray.size() - poetry.size();
         poetry = newArray;
@@ -45,7 +47,7 @@ public class PoetryModelData {
     }
 
     public void addOnePoem(PoetryClass.Poem poem){
-        ArrayList<PoetryClass.Poem> tmp = new ArrayList<>(poetry);
+        LinkedList<PoetryClass.Poem> tmp = new LinkedList<>(poetry);
         tmp.add(0, poem);
         setNewArray(tmp, false);
     }

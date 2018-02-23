@@ -21,6 +21,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.NowPoetryViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -45,9 +46,9 @@ public class NowPoetry extends Fragment {
 
         mRecycle.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         binding.setViewModel(viewModel);
-        viewModel.getRecommend().observe(this, new Observer<ArrayList<PoetryClass.Poem>>() {
+        viewModel.getRecommend().observe(this, new Observer<List<PoetryClass.Poem>>() {
             @Override
-            public void onChanged(@Nullable ArrayList<PoetryClass.Poem> poems) {
+            public void onChanged(@Nullable List<PoetryClass.Poem> poems) {
                 if(poems.size() > 2)
                     binding.setPoetry(poems);
             }
@@ -60,9 +61,9 @@ public class NowPoetry extends Fragment {
             }
         });
 
-        viewModel.getRank().observe(this, new Observer<ArrayList<PoetryClass.Poem>>() {
+        viewModel.getRank().observe(this, new Observer<List<PoetryClass.Poem>>() {
             @Override
-            public void onChanged(@Nullable ArrayList<PoetryClass.Poem> poems) {
+            public void onChanged(@Nullable List<PoetryClass.Poem> poems) {
                 if(poems.size() > 0)
                     mAdapter.notifyItemRangeInserted(0, 10);
             }

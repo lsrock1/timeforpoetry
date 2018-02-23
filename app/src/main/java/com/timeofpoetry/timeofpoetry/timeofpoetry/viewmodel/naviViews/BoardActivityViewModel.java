@@ -16,6 +16,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.BoardModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -26,14 +27,14 @@ import javax.inject.Inject;
 public class BoardActivityViewModel extends ViewModel {
 
     private BoardModel boardModel;
-    private LiveData<ArrayList<PoetryClass.BoardIdItem>> boardItems;
+    private LiveData<List<PoetryClass.BoardIdItem>> boardItems;
 
     BoardActivityViewModel(BoardModel boardModel) {
         this.boardModel = boardModel;
         boardItems = this.boardModel.getList();
     }
 
-    public LiveData<ArrayList<PoetryClass.BoardIdItem>> getBoardItems(){
+    public LiveData<List<PoetryClass.BoardIdItem>> getBoardItems(){
         return boardItems;
     }
 

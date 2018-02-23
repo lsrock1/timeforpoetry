@@ -23,6 +23,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviViews.BoardActiv
 import com.tsengvn.typekit.TypekitContextWrapper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -49,9 +50,9 @@ public class BoardActivity extends AppCompatActivity {
         mRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecycler.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        viewModel.getBoardItems().observe(this, new Observer<ArrayList<PoetryClass.BoardIdItem>>() {
+        viewModel.getBoardItems().observe(this, new Observer<List<PoetryClass.BoardIdItem>>() {
             @Override
-            public void onChanged(@Nullable ArrayList<PoetryClass.BoardIdItem> boardIdItems) {
+            public void onChanged(@Nullable List<PoetryClass.BoardIdItem> boardIdItems) {
                 mRecycler.setAdapter(new BoardActivityAdapter(boardIdItems, viewModel));
             }
         });

@@ -24,6 +24,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.MonthlyPoetryViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -58,9 +59,9 @@ public class MonthlyPoetry extends Fragment {
         final MonthlyPoetryRecyclerViewAdapter mAdapter = new MonthlyPoetryRecyclerViewAdapter(viewModel);
         mRecycle.setAdapter(mAdapter);
 
-        viewModel.getMonthlyPoetry().observe(this, new Observer<ArrayList<PoetryClass.Poem>>() {
+        viewModel.getMonthlyPoetry().observe(this, new Observer<List<PoetryClass.Poem>>() {
             @Override
-            public void onChanged(@Nullable ArrayList<PoetryClass.Poem> poems) {
+            public void onChanged(@Nullable List<PoetryClass.Poem> poems) {
                 if(poems != null && poems.size() > 0) binding.scroll.setVisibility(View.VISIBLE);
                 mAdapter.notifyDataSetChanged();
             }

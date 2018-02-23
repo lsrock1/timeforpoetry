@@ -9,6 +9,8 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -23,14 +25,14 @@ import retrofit2.http.POST;
 @ActivityScope
 public class MonthlyPoetryModel {
 
-    private ArrayList<PoetryClass.Poem> cache;
+    private List<PoetryClass.Poem> cache;
 
     @Inject
     public MonthlyPoetryModel() {
     }
 
-    public MutableLiveData<ArrayList<PoetryClass.Poem>> getMonthlyPoetry(){
-        final MutableLiveData<ArrayList<PoetryClass.Poem>> poetry = new MutableLiveData<>();
+    public MutableLiveData<List<PoetryClass.Poem>> getMonthlyPoetry(){
+        final MutableLiveData<List<PoetryClass.Poem>> poetry = new MutableLiveData<>();
 
         Calendar cal = Calendar.getInstance();
         String yearMonth[] = new SimpleDateFormat("yyyy/MM", Locale.KOREA).format(cal.getTime()).split("/");
@@ -39,7 +41,7 @@ public class MonthlyPoetryModel {
             poetry.setValue(cache);
         }
         else {
-            poetry.setValue(new ArrayList<PoetryClass.Poem>());
+            poetry.setValue(new ArrayList<>());
             ServerService getMonthly = PoetryClass.retrofit.create(ServerService.class);
             Call<ArrayList<ArrayList<PoetryClass.Poem>>> call = getMonthly.getMonthlyPoetry(new PoetryClass.GetMonthlyPoetry(yearMonth));
 
@@ -59,8 +61,8 @@ public class MonthlyPoetryModel {
         return poetry;
     }
 
-    public ArrayList<PoetryClass.Poem> getSelectedItems(){
-        ArrayList<PoetryClass.Poem> tmp = new ArrayList<>();
+    public List<PoetryClass.Poem> getSelectedItems(){
+        LinkedList<PoetryClass.Poem> tmp = new LinkedList<>();
         for(PoetryClass.Poem poem : cache){
             if(poem.getIsSelected().get()) tmp.add(poem.clone());
         }

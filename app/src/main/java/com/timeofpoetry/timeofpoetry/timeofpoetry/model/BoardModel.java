@@ -10,6 +10,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,12 +30,12 @@ public class BoardModel {
     public BoardModel() {
     }
 
-    public LiveData<ArrayList<PoetryClass.BoardIdItem>> getList(){
-        final MutableLiveData<ArrayList<PoetryClass.BoardIdItem>> data = new MutableLiveData<>();
-        Call<ArrayList<ArrayList<PoetryClass.BoardIdItem>>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).getNoticeId(new PoetryClass.GetNoticeId());
-        call.enqueue(new Callback<ArrayList<ArrayList<PoetryClass.BoardIdItem>>>() {
+    public LiveData<List<PoetryClass.BoardIdItem>> getList(){
+        final MutableLiveData<List<PoetryClass.BoardIdItem>> data = new MutableLiveData<>();
+        Call<List<List<PoetryClass.BoardIdItem>>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).getNoticeId(new PoetryClass.GetNoticeId());
+        call.enqueue(new Callback<List<List<PoetryClass.BoardIdItem>>>() {
             @Override
-            public void onResponse(Call<ArrayList<ArrayList<PoetryClass.BoardIdItem>>> call, Response<ArrayList<ArrayList<PoetryClass.BoardIdItem>>> response) {
+            public void onResponse(Call<List<List<PoetryClass.BoardIdItem>>> call, Response<List<List<PoetryClass.BoardIdItem>>> response) {
                 try{
                     data.setValue(response.body().get(0));
                 }
@@ -44,7 +45,7 @@ public class BoardModel {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<ArrayList<PoetryClass.BoardIdItem>>> call, Throwable t) {
+            public void onFailure(Call<List<List<PoetryClass.BoardIdItem>>> call, Throwable t) {
             }
         });
         return data;
@@ -55,16 +56,16 @@ public class BoardModel {
             content.set(cache.get(id));
         }
         else {
-            Call<ArrayList<ArrayList<PoetryClass.BoardIdItem>>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).getNoticeBody(new PoetryClass.GetNoticeBody(id));
-            call.enqueue(new Callback<ArrayList<ArrayList<PoetryClass.BoardIdItem>>>() {
+            Call<List<List<PoetryClass.BoardIdItem>>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).getNoticeBody(new PoetryClass.GetNoticeBody(id));
+            call.enqueue(new Callback<List<List<PoetryClass.BoardIdItem>>>() {
                 @Override
-                public void onResponse(Call<ArrayList<ArrayList<PoetryClass.BoardIdItem>>> call, retrofit2.Response<ArrayList<ArrayList<PoetryClass.BoardIdItem>>> response) {
+                public void onResponse(Call<List<List<PoetryClass.BoardIdItem>>> call, retrofit2.Response<List<List<PoetryClass.BoardIdItem>>> response) {
                     cache.put(id, response.body().get(0).get(0).getContent());
                     content.set(response.body().get(0).get(0).getContent());
                 }
 
                 @Override
-                public void onFailure(Call<ArrayList<ArrayList<PoetryClass.BoardIdItem>>> call, Throwable t) {
+                public void onFailure(Call<List<List<PoetryClass.BoardIdItem>>> call, Throwable t) {
 
                 }
             });

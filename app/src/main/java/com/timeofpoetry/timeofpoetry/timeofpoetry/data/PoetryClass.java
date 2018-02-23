@@ -12,6 +12,8 @@ import android.util.Log;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -36,76 +38,76 @@ public class PoetryClass {
     public interface ServerService{
         @Headers({"Accept: application/json"})
         @POST("/tfp_getmypoetry")
-        Call<ArrayList<ArrayList<Poem>>> getMyPoetry(@Body GetMyPoetry body);
+        Call<List<List<Poem>>> getMyPoetry(@Body GetMyPoetry body);
 
         @Headers({"content-type: application/json"})
         @POST("/tfp_getmonthly")
-        Call<ArrayList<ArrayList<Poem>>> getMonthlyPoetry(@Body GetMonthlyPoetry body);
+        Call<List<List<Poem>>> getMonthlyPoetry(@Body GetMonthlyPoetry body);
 
         @Headers({"content-type: application/json"})
         @POST("/tfp_getcontent")
-        Call<ArrayList<ArrayList<Poem>>> getPlayByList(@Body GetPlayByList body);
+        Call<List<List<Poem>>> getPlayByList(@Body GetPlayByList body);
 
         @Headers({"content-type: application/json"})
         @POST("/tfp_set_mypoetry")
-        Call<ArrayList<Response>> setMyPoetry(@Body SetMyPoetry body);
+        Call<List<Response>> setMyPoetry(@Body SetMyPoetry body);
 
         @Headers({"content-type: application/json"})
         @POST("/tfp_like_only")
-        Call<ArrayList<Response>> like(@Body Like body);
+        Call<List<Response>> like(@Body Like body);
 
         @Headers({"content-type: application/json"})
         @POST("/tfp_ismypoetry")
-        Call<ArrayList<Response>> isMyPoetry(@Body IsMyPoetry body);
+        Call<List<Response>> isMyPoetry(@Body IsMyPoetry body);
 
         @Headers({"content-type: application/json"})
         @POST("/tfp_getweatherpoetry")
-        Call<ArrayList<ArrayList<Poem>>> nowPoetry(@Body NowPoetry body);
+        Call<List<List<Poem>>> nowPoetry(@Body NowPoetry body);
 
         @Headers({"content-type: application/json"})
         @POST("/setaddedinfo")
-        Call<ArrayList<Response>> addInfo(@Body AddInfo body);
+        Call<List<Response>> addInfo(@Body AddInfo body);
 
         @Headers({"content-type: application/json"})
         @POST("/getnotice_list")
-        Call<ArrayList<ArrayList<BoardIdItem>>> getNoticeId(@Body GetNoticeId body);
+        Call<List<List<BoardIdItem>>> getNoticeId(@Body GetNoticeId body);
 
         @Headers({"content-type: application/json"})
         @POST("/getnotice_body")
-        Call<ArrayList<ArrayList<BoardIdItem>>> getNoticeBody(@Body GetNoticeBody body);
+        Call<List<List<BoardIdItem>>> getNoticeBody(@Body GetNoticeBody body);
 
         @Headers({"content-type: application/json"})
         @POST("/tfp_like_rank")
-        Call<ArrayList<ArrayList<Poem>>> getRank();
+        Call<List<List<Poem>>> getRank();
 
         @Headers({"content-type: application/json"})
         @POST("/get_banner")
-        Call<ArrayList<Banner>> getBanner();
+        Call<List<Banner>> getBanner();
 
         @Headers({"content-type: application/json"})
         @POST("/getaddedinfo")
-        Call<ArrayList<ArrayList<GetAddInfo>>> getAddInfo(@Body RequestAddInfo body);
+        Call<List<List<GetAddInfo>>> getAddInfo(@Body RequestAddInfo body);
     }
 
     //나의 시집 조회
     public static class GetMyPoetry{
         final String request = PoetryClass.REQUEST_MEMBER;
-        ArrayList<KeyValue> get_mypoetry = new ArrayList<>();
+        List<KeyValue> get_mypoetry = new LinkedList<>();
 
         public GetMyPoetry(String email, String pwd){
-            this.get_mypoetry.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
-            this.get_mypoetry.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
+            get_mypoetry.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
+            get_mypoetry.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
         }
     }
 
     //나의 시집 추가 혹은 중복 체크
     public static class NewMyPoetry{
         final String request = PoetryClass.REQUEST_CONTENT;
-        ArrayList<KeyValue> set_mypoetry_and_like = new ArrayList<>();
-        ArrayList<KeyValue> is_my_poetry = new ArrayList<>();
+        List<KeyValue> set_mypoetry_and_like = new LinkedList<>();
+        List<KeyValue> is_my_poetry = new LinkedList<>();
 
         public NewMyPoetry(String option, String email, String poet, String title, String voice){
-            ArrayList<KeyValue> handleArray = option.equals("set")? this.set_mypoetry_and_like : this.is_my_poetry;
+            List<KeyValue> handleArray = option.equals("set")? set_mypoetry_and_like : is_my_poetry;
 
             handleArray.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
             handleArray.add(new KeyValue("r_authorName", poet));
@@ -117,28 +119,28 @@ public class PoetryClass {
     //지금몇시 조회
     public static class GetWeatherPoetry{
         final String request = PoetryClass.REQUEST_MEMBER;
-        ArrayList<KeyValue> get_todaylist = new ArrayList<>();
+        List<KeyValue> get_todaylist = new LinkedList<>();
 
         public GetWeatherPoetry(){
-            this.get_todaylist.add(new KeyValue("r_weather", "SKY_ALL"));
-            this.get_todaylist.add(new KeyValue("r_temperature", "cold"));
-            this.get_todaylist.add(new KeyValue("r_orderby", "id"));
-            this.get_todaylist.add(new KeyValue("r_sort", "ASC"));
+            get_todaylist.add(new KeyValue("r_weather", "SKY_ALL"));
+            get_todaylist.add(new KeyValue("r_temperature", "cold"));
+            get_todaylist.add(new KeyValue("r_orderby", "id"));
+            get_todaylist.add(new KeyValue("r_sort", "ASC"));
         }
     }
 
     public static class SetMyPoetry{
         final String request = PoetryClass.REQUEST_MEMBER;
-        ArrayList<KeyValue> set_mypoetry = new ArrayList<>();
+        List<KeyValue> set_mypoetry = new LinkedList<>();
 
         public SetMyPoetry(String work, String email, String pwd, String poet, String poem, String voice){
-            this.set_mypoetry.add(new KeyValue("r_work", work));
-            this.set_mypoetry.add(new KeyValue(PoetryClass.KEY_TYPE, "single"));
-            this.set_mypoetry.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
-            this.set_mypoetry.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
-            this.set_mypoetry.add(new KeyValue(PoetryClass.AUTHOR, poet));
-            this.set_mypoetry.add(new KeyValue(PoetryClass.POETRY, poem));
-            this.set_mypoetry.add(new KeyValue(PoetryClass.VOICE, voice));
+            set_mypoetry.add(new KeyValue("r_work", work));
+            set_mypoetry.add(new KeyValue(PoetryClass.KEY_TYPE, "single"));
+            set_mypoetry.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
+            set_mypoetry.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
+            set_mypoetry.add(new KeyValue(PoetryClass.AUTHOR, poet));
+            set_mypoetry.add(new KeyValue(PoetryClass.POETRY, poem));
+            set_mypoetry.add(new KeyValue(PoetryClass.VOICE, voice));
 
         }
     }
@@ -146,37 +148,37 @@ public class PoetryClass {
     //월간 몇시 조회
     public static class GetMonthlyPoetry{
         final String request = PoetryClass.REQUEST_MEMBER;
-        ArrayList<KeyValue> get_monthlylist = new ArrayList<>();
+        List<KeyValue> get_monthlylist = new LinkedList<>();
 
         public GetMonthlyPoetry(String yearMonth[]){
-            this.get_monthlylist.add(new KeyValue(PoetryClass.KEY_TYPE, "month"));
-            this.get_monthlylist.add(new KeyValue("r_year", yearMonth[0]));
-            this.get_monthlylist.add(new KeyValue("r_month", yearMonth[1]));
-            this.get_monthlylist.add(new KeyValue("r_orderby", "x_contentTitle"));
-            this.get_monthlylist.add(new KeyValue("r_sort", "ASC"));
+            get_monthlylist.add(new KeyValue(PoetryClass.KEY_TYPE, "month"));
+            get_monthlylist.add(new KeyValue("r_year", yearMonth[0]));
+            get_monthlylist.add(new KeyValue("r_month", yearMonth[1]));
+            get_monthlylist.add(new KeyValue("r_orderby", "x_contentTitle"));
+            get_monthlylist.add(new KeyValue("r_sort", "ASC"));
         }
     }
 
     public static class GetPlayByList{
         final String request = PoetryClass.REQUEST_CONTENT;
-        ArrayList<KeyValue> get_playbylist = new ArrayList<>();
+        List<KeyValue> get_playbylist = new LinkedList<>();
 
         public GetPlayByList(String poet, String poem, String voice){
-            this.get_playbylist.add(new KeyValue(PoetryClass.KEY_TYPE, "union"));
-            this.get_playbylist.add(new KeyValue(PoetryClass.AUTHOR, poet));
-            this.get_playbylist.add(new KeyValue(PoetryClass.POETRY, poem));
-            this.get_playbylist.add(new KeyValue("r_voice", voice));
+            get_playbylist.add(new KeyValue(PoetryClass.KEY_TYPE, "union"));
+            get_playbylist.add(new KeyValue(PoetryClass.AUTHOR, poet));
+            get_playbylist.add(new KeyValue(PoetryClass.POETRY, poem));
+            get_playbylist.add(new KeyValue("r_voice", voice));
         }
     }
 
     public static class Like{
         final String request = PoetryClass.REQUEST_CONTENT;
-        ArrayList<KeyValue> set_like_only = new ArrayList<>();
+        List<KeyValue> set_like_only = new LinkedList<>();
 
         public Like(String poet, String poem, String voice){
-            this.set_like_only.add(new KeyValue("r_authorName", poet));
-            this.set_like_only.add(new KeyValue("r_poetryTitle", poem));
-            this.set_like_only.add(new KeyValue("r_voiceName", voice));
+            set_like_only.add(new KeyValue("r_authorName", poet));
+            set_like_only.add(new KeyValue("r_poetryTitle", poem));
+            set_like_only.add(new KeyValue("r_voiceName", voice));
         }
     }
 
@@ -193,45 +195,45 @@ public class PoetryClass {
 
     public static class IsMyPoetry{
         final String request = PoetryClass.REQUEST_CONTENT;
-        ArrayList<KeyValue> is_my_poetry = new ArrayList<>();
+        List<KeyValue> is_my_poetry = new LinkedList<>();
 
         public IsMyPoetry(String email, String poet, String poem, String voice){
-            this.is_my_poetry.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
-            this.is_my_poetry.add(new KeyValue("r_authorName", poet));
-            this.is_my_poetry.add(new KeyValue("r_poetryTitle", poem));
-            this.is_my_poetry.add(new KeyValue("r_voiceName", voice));
+            is_my_poetry.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
+            is_my_poetry.add(new KeyValue("r_authorName", poet));
+            is_my_poetry.add(new KeyValue("r_poetryTitle", poem));
+            is_my_poetry.add(new KeyValue("r_voiceName", voice));
         }
     }
 
     public static class NowPoetry{
         final String request = PoetryClass.REQUEST_MEMBER;
-        ArrayList<KeyValue> get_todaylist = new ArrayList<>();
+        List<KeyValue> get_todaylist = new LinkedList<>();
 
         public NowPoetry(){
-            this.get_todaylist.add(new KeyValue("r_weather", "SKY_A11"));
-            this.get_todaylist.add(new KeyValue("r_temperatur", "cold"));
-            this.get_todaylist.add(new KeyValue("r_orderby", "id"));
-            this.get_todaylist.add(new KeyValue("r_sort", "ASC"));
+            get_todaylist.add(new KeyValue("r_weather", "SKY_A11"));
+            get_todaylist.add(new KeyValue("r_temperatur", "cold"));
+            get_todaylist.add(new KeyValue("r_orderby", "id"));
+            get_todaylist.add(new KeyValue("r_sort", "ASC"));
         }
     }
 
     public static class AddInfo{
         final String request = "addedinfo";
-        ArrayList<KeyValue> addedinfo = new ArrayList<>();
+        List<KeyValue> addedinfo = new LinkedList<>();
 
         public AddInfo(String email, String pwd, String poet, String poem, String season){
-            this.addedinfo.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
-            this.addedinfo.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
-            this.addedinfo.add(new KeyValue("r_nickname", email));
-            this.addedinfo.add(new KeyValue("r_like_poet", poet));
-            this.addedinfo.add(new KeyValue("r_like_poetry", poem));
-            this.addedinfo.add(new KeyValue("r_like_season", season));
+            addedinfo.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
+            addedinfo.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
+            addedinfo.add(new KeyValue("r_nickname", email));
+            addedinfo.add(new KeyValue("r_like_poet", poet));
+            addedinfo.add(new KeyValue("r_like_poetry", poem));
+            addedinfo.add(new KeyValue("r_like_season", season));
         }
     }
 
     public static class GetNoticeId {
         final String request = "notice";
-        ArrayList<KeyValue> notice_list_info = new ArrayList<>();
+        List<KeyValue> notice_list_info = new LinkedList<>();
 
         public GetNoticeId(){
             notice_list_info.add(new KeyValue("r_notice_date", "all"));
@@ -240,10 +242,10 @@ public class PoetryClass {
 
     public static class GetNoticeBody{
         final String request = "notice";
-        ArrayList<KeyValue> notice_body_info = new ArrayList<>();
+        List<KeyValue> notice_body_info = new LinkedList<>();
 
         public GetNoticeBody(int id){
-            this.notice_body_info.add(new KeyValue("r_notice_id", Integer.toString(id)));
+            notice_body_info.add(new KeyValue("r_notice_id", Integer.toString(id)));
         }
     }
 
@@ -543,12 +545,12 @@ public class PoetryClass {
         .addConverterFactory(GsonConverterFactory.create())
         .build();
 
-    public static boolean checkStatus(ArrayList<Response> responses){
+    public static boolean checkStatus(List<Response> responses){
         String status = responses.get(0).status.split("-")[0];
         return status.equals("200");
     }
 
-    public static int checkRegister(ArrayList<Response> responses){
+    public static int checkRegister(List<Response> responses){
         String status = responses.get(0).status.split("-")[0];
         if(status.equals("200")){
             return 1;

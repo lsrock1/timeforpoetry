@@ -14,6 +14,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.MonthlyPoetryModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,21 +24,17 @@ public class MonthlyPoetryViewModel extends ViewModel implements PlayListControl
 
     private MyPlayListModel playListModel;
     private MonthlyPoetryModel monthlyPoetryModel;
-    private MutableLiveData<ArrayList<PoetryClass.Poem>> poetry;
+    private MutableLiveData<List<PoetryClass.Poem>> poetry;
     public ObservableBoolean isEditMode = new ObservableBoolean();
 
     MonthlyPoetryViewModel(MyPlayListModel playListModel, MonthlyPoetryModel monthlyPoetryModel) {
         this.playListModel = playListModel;
         this.monthlyPoetryModel = monthlyPoetryModel;
-        loadData();
-    }
-
-    public LiveData<ArrayList<PoetryClass.Poem>> getMonthlyPoetry(){
-        return poetry;
-    }
-
-    private void loadData(){
         poetry = monthlyPoetryModel.getMonthlyPoetry();
+    }
+
+    public LiveData<List<PoetryClass.Poem>> getMonthlyPoetry(){
+        return poetry;
     }
 
     public PoetryClass.Poem getItem(int index){

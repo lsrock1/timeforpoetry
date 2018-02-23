@@ -60,7 +60,7 @@ public class MyPoetryFragment extends Fragment {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
                 binding.setIsLogin(aBoolean);
-                viewModel.login();
+                viewModel.loadData();
             }
         });
 

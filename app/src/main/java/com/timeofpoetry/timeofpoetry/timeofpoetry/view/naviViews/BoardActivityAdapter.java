@@ -15,13 +15,14 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.BoardItemBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviViews.BoardActivityViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BoardActivityAdapter extends RecyclerView.Adapter<BoardActivityAdapter.ViewHolder> {
 
-    private ArrayList<PoetryClass.BoardIdItem> values;
+    private List<PoetryClass.BoardIdItem> values;
     private BoardActivityViewModel viewModel;
 
-    BoardActivityAdapter(ArrayList<PoetryClass.BoardIdItem> items, BoardActivityViewModel viewModel) {
+    BoardActivityAdapter(List<PoetryClass.BoardIdItem> items, BoardActivityViewModel viewModel) {
         values = items;
         this.viewModel = viewModel;
     }

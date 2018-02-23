@@ -14,6 +14,8 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
 
+import java.util.ListIterator;
+
 import javax.inject.Inject;
 
 /**
@@ -24,16 +26,14 @@ public class PlayListViewModel extends ViewModel{
 
     public ObservableBoolean isEditMode = new ObservableBoolean();
     private MyPlayListModel model;
-    private PlayBackStateModel playBackStateModel;
     private LiveData<Integer> state;
     private LiveData<PoetryModelData> myPlayList;
     private LiveData<PoetryClass.Poem> currentPoem;
     private ArrayMap<Integer, ObservableInt> playHash = new ArrayMap<>();
     private int currentId = -1;
 
-    PlayListViewModel(MyPlayListModel model, PlayBackStateModel playModel) {
+    PlayListViewModel(MyPlayListModel model, PlayBackStateModel playBackStateModel) {
         this.model = model;
-        playBackStateModel = playModel;
         myPlayList = model.getPlayList();
         currentPoem = model.getCurrentPoem();
         state = playBackStateModel.getState();
@@ -112,7 +112,7 @@ public class PlayListViewModel extends ViewModel{
             poem.setIsSelect(!poem.getIsSelected().get());
         }
         else{
-            model.setPosition(getPoemByDbId(poem.getDatabaseId()));
+            model.setPosition(getPositionByDbId(poem.getDatabaseId()));
         }
     }
 
@@ -120,12 +120,17 @@ public class PlayListViewModel extends ViewModel{
         return playHash.get(poem.getDatabaseId());
     }
 
-    private int getPoemByDbId(int id){
-        for(int i = 0 ; i < myPlayList.getValue().getPoetry().size() ; i++){
-            if(myPlayList.getValue().getPoetry().get(i).getDatabaseId() == id){
-                return i;
+    private int getPositionByDbId(int id){
+        ListIterator<PoetryClass.Poem> itr = myPlayList.getValue().getPoetry().listIterator();
+
+        while(itr.hasNext()){
+            int index = itr.nextIndex();
+            PoetryClass.Poem poem = itr.next();
+            if(poem.getDatabaseId() == id){
+                return index;
             }
         }
+
         return -1;
     }
 

@@ -6,7 +6,7 @@
             type="String"/>
         <variable
             name="poetry"
-            type="ArrayList&lt;com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.Poem&gt;"/>
+            type="java.util.List&lt;com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.Poem&gt;"/>
         <variable
             name="viewModel"
             type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.NowPoetryViewModel"/>

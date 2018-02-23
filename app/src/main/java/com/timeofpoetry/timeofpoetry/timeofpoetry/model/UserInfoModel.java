@@ -7,6 +7,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -41,10 +42,10 @@ public class UserInfoModel {
     public void infoUpdate(String id, String pwd, String poet, String poem, String season){
         if(data.getValue() != UPDATING) {
             data.setValue(UPDATING);
-            Call<ArrayList<PoetryClass.Response>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).addInfo(new PoetryClass.AddInfo(id, pwd, poet, poem, season));
-            call.enqueue(new Callback<ArrayList<PoetryClass.Response>>() {
+            Call<List<PoetryClass.Response>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).addInfo(new PoetryClass.AddInfo(id, pwd, poet, poem, season));
+            call.enqueue(new Callback<List<PoetryClass.Response>>() {
                 @Override
-                public void onResponse(Call<ArrayList<PoetryClass.Response>> call, Response<ArrayList<PoetryClass.Response>> response) {
+                public void onResponse(Call<List<PoetryClass.Response>> call, Response<List<PoetryClass.Response>> response) {
                     if (PoetryClass.checkStatus(response.body())) {
                         data.setValue(SUCCESS);
                     } else {
@@ -53,7 +54,7 @@ public class UserInfoModel {
                 }
 
                 @Override
-                public void onFailure(Call<ArrayList<PoetryClass.Response>> call, Throwable t) {
+                public void onFailure(Call<List<PoetryClass.Response>> call, Throwable t) {
                     data.setValue(NETWORK_ERROR);
                 }
             });
@@ -62,15 +63,15 @@ public class UserInfoModel {
 
     public LiveData<PoetryClass.GetAddInfo> infoLoad(String id, String pwd){
         MutableLiveData<PoetryClass.GetAddInfo> data = new MutableLiveData<>();
-        Call<ArrayList<ArrayList<PoetryClass.GetAddInfo>>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).getAddInfo(new PoetryClass.RequestAddInfo(id, pwd));
-        call.enqueue(new Callback<ArrayList<ArrayList<PoetryClass.GetAddInfo>>>() {
+        Call<List<List<PoetryClass.GetAddInfo>>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).getAddInfo(new PoetryClass.RequestAddInfo(id, pwd));
+        call.enqueue(new Callback<List<List<PoetryClass.GetAddInfo>>>() {
             @Override
-            public void onResponse(Call<ArrayList<ArrayList<PoetryClass.GetAddInfo>>> call, Response<ArrayList<ArrayList<PoetryClass.GetAddInfo>>> response) {
+            public void onResponse(Call<List<List<PoetryClass.GetAddInfo>>> call, Response<List<List<PoetryClass.GetAddInfo>>> response) {
                 data.setValue(response.body().get(0).get(0));
             }
 
             @Override
-            public void onFailure(Call<ArrayList<ArrayList<PoetryClass.GetAddInfo>>> call, Throwable t) {
+            public void onFailure(Call<List<List<PoetryClass.GetAddInfo>>> call, Throwable t) {
 
             }
         });

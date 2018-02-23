@@ -36,11 +36,7 @@ public class MyPoetryViewModel extends ViewModel implements PlayListController {
         loadData();
     }
 
-    public void login(){
-        myPoetry = myPoetryModel.getMyPoetryList();
-    }
-
-    private void loadData(){
+    public void loadData(){
         myPoetry = myPoetryModel.getMyPoetryList();
     }
 

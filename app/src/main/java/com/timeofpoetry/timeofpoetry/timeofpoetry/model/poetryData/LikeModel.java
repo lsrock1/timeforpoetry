@@ -8,6 +8,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -41,10 +42,10 @@ public class LikeModel {
         else {
 
             data.setValue(0);
-            Call<ArrayList<ArrayList<PoetryClass.Poem>>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).getPlayByList(new PoetryClass.GetPlayByList(poem.getPoet(), poem.getPoem(), poem.getVoice()));
-            call.enqueue(new Callback<ArrayList<ArrayList<PoetryClass.Poem>>>() {
+            Call<List<List<PoetryClass.Poem>>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).getPlayByList(new PoetryClass.GetPlayByList(poem.getPoet(), poem.getPoem(), poem.getVoice()));
+            call.enqueue(new Callback<List<List<PoetryClass.Poem>>>() {
                 @Override
-                public void onResponse(Call<ArrayList<ArrayList<PoetryClass.Poem>>> call, Response<ArrayList<ArrayList<PoetryClass.Poem>>> response) {
+                public void onResponse(Call<List<List<PoetryClass.Poem>>> call, Response<List<List<PoetryClass.Poem>>> response) {
                     try {
                         int tmpInt = 0;
                         if(cache.get("tmp") != null){
@@ -59,7 +60,7 @@ public class LikeModel {
                 }
 
                 @Override
-                public void onFailure(Call<ArrayList<ArrayList<PoetryClass.Poem>>> call, Throwable t) {
+                public void onFailure(Call<List<List<PoetryClass.Poem>>> call, Throwable t) {
                 }
             });
         }
@@ -77,30 +78,30 @@ public class LikeModel {
         else {
             cache.put(poem.getPoem(), cache.get(poem.getPoem()) + 1);
         }
-        Call<ArrayList<PoetryClass.Response>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).like(new PoetryClass.Like(poem.getPoet(), poem.getPoem(), poem.getVoice()));
-        call.enqueue(new Callback<ArrayList<PoetryClass.Response>>() {
+        Call<List<PoetryClass.Response>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).like(new PoetryClass.Like(poem.getPoet(), poem.getPoem(), poem.getVoice()));
+        call.enqueue(new Callback<List<PoetryClass.Response>>() {
             @Override
-            public void onResponse(Call<ArrayList<PoetryClass.Response>> call,
-                                   Response<ArrayList<PoetryClass.Response>> response) {
+            public void onResponse(Call<List<PoetryClass.Response>> call,
+                                   Response<List<PoetryClass.Response>> response) {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<PoetryClass.Response>> call, Throwable t) {
+            public void onFailure(Call<List<PoetryClass.Response>> call, Throwable t) {
             }
         });
 
     }
 
     public void unlike(PoetryClass.Poem poem){
-        Call<ArrayList<PoetryClass.Response>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).like(new PoetryClass.Like(poem.getPoet(), poem.getPoem(), poem.getVoice()));
-        call.enqueue(new Callback<ArrayList<PoetryClass.Response>>() {
+        Call<List<PoetryClass.Response>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).like(new PoetryClass.Like(poem.getPoet(), poem.getPoem(), poem.getVoice()));
+        call.enqueue(new Callback<List<PoetryClass.Response>>() {
             @Override
-            public void onResponse(Call<ArrayList<PoetryClass.Response>> call,
-                                   Response<ArrayList<PoetryClass.Response>> response) {
+            public void onResponse(Call<List<PoetryClass.Response>> call,
+                                   Response<List<PoetryClass.Response>> response) {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<PoetryClass.Response>> call, Throwable t) {
+            public void onFailure(Call<List<PoetryClass.Response>> call, Throwable t) {
             }
         });
     }
