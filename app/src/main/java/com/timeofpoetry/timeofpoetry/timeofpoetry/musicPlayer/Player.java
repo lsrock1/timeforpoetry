@@ -6,16 +6,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.PowerManager;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.model.SeekModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MediaServiceViewModel;
 
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * Created by sangroklee on 2018. 1. 3..
