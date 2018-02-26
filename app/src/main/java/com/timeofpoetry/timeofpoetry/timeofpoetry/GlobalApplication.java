@@ -3,7 +3,7 @@ package com.timeofpoetry.timeofpoetry.timeofpoetry;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.support.multidex.MultiDex;
+//import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.kakao.auth.ApprovalType;
@@ -110,9 +110,9 @@ public class GlobalApplication extends Application{
         return component;
     }
 
-    @Override
-    protected void attachBaseContext(Context context) {
-        super.attachBaseContext(context);
-        MultiDex.install(this);
-    }
+//    @Override
+//    protected void attachBaseContext(Context context) {
+//        super.attachBaseContext(context);
+//        MultiDex.install(this);
+//    }
 }

@@ -335,7 +335,9 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
         Intent intent = new Intent();
         intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
         intent.putExtra("state", viewModel.getState().getValue());
-        intent.putExtra("poem", viewModel.getCurrentPoem().getValue());
+        intent.putExtra("poem", viewModel.getCurrentPoem().getValue().getPoem());
+        intent.putExtra("poet", viewModel.getCurrentPoem().getValue().getPoet());
+        intent.putExtra("url", viewModel.getCurrentPoem().getValue().getArtworkUrl());
         sendBroadcast(intent);
     }
 }

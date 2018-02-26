@@ -10,6 +10,8 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.concerns.SharedPreferenceController;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -54,11 +56,12 @@ public class SignModel{
 
     public void signIn(final String id, final String pwd, final boolean isSocial, final int kind){
         signIn.setValue(REQUEST_READY);
-        Call<ArrayList<PoetryClass.Response>> call = PoetryClass.retrofit.create(SignService.class).signIn(new SignIn(id, pwd));
-        call.enqueue(new Callback<ArrayList<PoetryClass.Response>>() {
+
+        Call<List<PoetryClass.Response>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).signIn(new PoetryClass.SignIn(id, pwd));
+        call.enqueue(new Callback<List<PoetryClass.Response>>() {
             @Override
-            public void onResponse(Call<ArrayList<PoetryClass.Response>> call,
-                                   Response<ArrayList<PoetryClass.Response>> response) {
+            public void onResponse(Call<List<PoetryClass.Response>> call,
+                                   Response<List<PoetryClass.Response>> response) {
                 if(PoetryClass.checkStatus(response.body()) && sharedPreferenceController.setUserId(id) && sharedPreferenceController.setUserPwd(pwd) && sharedPreferenceController.setLogin(true)){
                     signIn.setValue(IN_SUCCESS);
                 }
@@ -74,7 +77,7 @@ public class SignModel{
             }
 
             @Override
-            public void onFailure(Call<ArrayList<PoetryClass.Response>> call, Throwable t) {
+            public void onFailure(Call<List<PoetryClass.Response>> call, Throwable t) {
                 signIn.setValue(NETWORK_FAIL);
                 signIn.setValue(REQUEST_READY);
             }
@@ -83,10 +86,10 @@ public class SignModel{
 
     public void signUp(final String id, final String pwd, final boolean isSocial, final int kind){
         signUp.setValue(REQUEST_READY);
-        Call<ArrayList<PoetryClass.Response>> call = PoetryClass.retrofit.create(SignService.class).signUp(new SignUp(id, pwd));
-        call.enqueue(new Callback<ArrayList<PoetryClass.Response>>() {
+        Call<List<PoetryClass.Response>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).signUp(new PoetryClass.SignUp(id, pwd));
+        call.enqueue(new Callback<List<PoetryClass.Response>>() {
             @Override
-            public void onResponse(Call<ArrayList<PoetryClass.Response>> call, Response<ArrayList<PoetryClass.Response>> response) {
+            public void onResponse(Call<List<PoetryClass.Response>> call, Response<List<PoetryClass.Response>> response) {
                 int status = PoetryClass.checkRegister(response.body());
                 if (status == 1 && sharedPreferenceController.setUserId(id) && sharedPreferenceController.setUserPwd(pwd) && sharedPreferenceController.setLogin(true)){
                     signUp.setValue(UP_SUCCESS);
@@ -103,7 +106,7 @@ public class SignModel{
             }
 
             @Override
-            public void onFailure(Call<ArrayList<PoetryClass.Response>> call, Throwable t) {
+            public void onFailure(Call<List<PoetryClass.Response>> call, Throwable t) {
                 signUp.setValue(NETWORK_FAIL);
                 signIn.setValue(REQUEST_READY);
             }
@@ -111,78 +114,15 @@ public class SignModel{
     }
 
     public void setSns(final String id, final String pwd, int kind){
-        Call<ArrayList<PoetryClass.SetSocial>> call = PoetryClass.retrofit.create(SignService.class).setSns(new SetSns(id, pwd, kind));
-        call.enqueue(new Callback<ArrayList<PoetryClass.SetSocial>>() {
+        Call<List<PoetryClass.SetSocial>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).setSns(new PoetryClass.SetSns(id, pwd, kind));
+        call.enqueue(new Callback<List<PoetryClass.SetSocial>>() {
             @Override
-            public void onResponse(Call<ArrayList<PoetryClass.SetSocial>> call, Response<ArrayList<PoetryClass.SetSocial>> response) {
+            public void onResponse(Call<List<PoetryClass.SetSocial>> call, Response<List<PoetryClass.SetSocial>> response) {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<PoetryClass.SetSocial>> call, Throwable t) {
+            public void onFailure(Call<List<PoetryClass.SetSocial>> call, Throwable t) {
             }
         });
-    }
-
-    interface SignService{
-        @Headers({"Accept: application/json"})
-        @POST("/tfp_regist")
-        Call<ArrayList<PoetryClass.Response>> signUp(@Body SignUp body);
-
-        @Headers({"Accept: application/json"})
-        @POST("/tfp_login")
-        Call<ArrayList<PoetryClass.Response>> signIn(@Body SignIn body);
-
-        @Headers({"Accept: application/json"})
-        @POST("/get_sns")
-        Call<ArrayList<PoetryClass.GetSocial>> getSns(@Body GetSns body);
-
-        @Headers({"Accept: application/json"})
-        @POST("/set_sns")
-        Call<ArrayList<PoetryClass.SetSocial>> setSns(@Body SetSns body);
-    }
-
-    static class SignUp{
-        final String request = PoetryClass.REQUEST_MEMBER;
-        ArrayList<PoetryClass.KeyValue> regist = new ArrayList<PoetryClass.KeyValue>();
-
-        SignUp(String email, String pwd){
-            this.regist.add(new PoetryClass.KeyValue(PoetryClass.E_MAIL_KEY, email));
-            this.regist.add(new PoetryClass.KeyValue(PoetryClass.PASSWORD_KEY, pwd));
-        }
-    }
-
-    static class SignIn{
-        final String request = PoetryClass.REQUEST_MEMBER;
-        ArrayList<PoetryClass.KeyValue> login = new ArrayList<>();
-
-        SignIn(String email, String pwd){
-            this.login.add(new PoetryClass.KeyValue(PoetryClass.E_MAIL_KEY, email));
-            this.login.add(new PoetryClass.KeyValue(PoetryClass.PASSWORD_KEY, pwd));
-        }
-    }
-
-    static class SetSns{
-        final String request = "SNS";
-        ArrayList<PoetryClass.KeyValue> create = new ArrayList<>();
-
-        SetSns(String email, String pwd, int kind){
-            this.create.add(new PoetryClass.KeyValue(PoetryClass.E_MAIL_KEY, email));
-            this.create.add(new PoetryClass.KeyValue(PoetryClass.PASSWORD_KEY, pwd));
-            this.create.add(new PoetryClass.KeyValue("r_social_kind", kind == 0 ? "KAKAO/TALK" : "facebook"));
-            this.create.add(new PoetryClass.KeyValue("r_auth_token", ""));
-            this.create.add(new PoetryClass.KeyValue("r_access_token", ""));
-            this.create.add(new PoetryClass.KeyValue("r_refresh_token", ""));
-        }
-    }
-
-    static class GetSns{
-        final String request = "SNS";
-        ArrayList<PoetryClass.KeyValue> search = new ArrayList<>();
-
-        GetSns(String email, String pwd, int kind){
-            this.search.add(new PoetryClass.KeyValue(PoetryClass.E_MAIL_KEY, email));
-            this.search.add(new PoetryClass.KeyValue(PoetryClass.PASSWORD_KEY, pwd));
-            this.search.add(new PoetryClass.KeyValue("r_social_kind", kind == 0 ? "KAKAO/TALK" : "FACEBOOK"));
-        }
     }
 }

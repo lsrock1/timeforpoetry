@@ -87,12 +87,73 @@ public class PoetryClass {
         @Headers({"content-type: application/json"})
         @POST("/getaddedinfo")
         Call<List<List<GetAddInfo>>> getAddInfo(@Body RequestAddInfo body);
+
+        @Headers({"Accept: application/json"})
+        @POST("/tfp_regist")
+        Call<List<Response>> signUp(@Body SignUp body);
+
+        @Headers({"Accept: application/json"})
+        @POST("/tfp_login")
+        Call<List<Response>> signIn(@Body SignIn body);
+
+        @Headers({"Accept: application/json"})
+        @POST("/get_sns")
+        Call<List<GetSocial>> getSns(@Body GetSns body);
+
+        @Headers({"Accept: application/json"})
+        @POST("/set_sns")
+        Call<List<SetSocial>> setSns(@Body SetSns body);
+    }
+
+    public static class SignUp{
+        private final String request = PoetryClass.REQUEST_MEMBER;
+        private List<KeyValue> regist = new LinkedList<>();
+
+        public SignUp(String email, String pwd){
+            regist.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
+            regist.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
+        }
+    }
+
+    public static class SignIn{
+        private final String request = PoetryClass.REQUEST_MEMBER;
+        private List<KeyValue> login = new LinkedList<>();
+
+        public SignIn(String email, String pwd){
+            login.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
+            login.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
+        }
+    }
+
+    public static class SetSns{
+        private final String request = "SNS";
+        private List<KeyValue> create = new LinkedList<>();
+
+        public SetSns(String email, String pwd, int kind){
+            create.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
+            create.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
+            create.add(new KeyValue("r_social_kind", kind == 0 ? "KAKAO/TALK" : "facebook"));
+            create.add(new KeyValue("r_auth_token", ""));
+            create.add(new KeyValue("r_access_token", ""));
+            create.add(new KeyValue("r_refresh_token", ""));
+        }
+    }
+
+    public static class GetSns{
+        private final String request = "SNS";
+        private List<KeyValue> search = new LinkedList<>();
+
+        public GetSns(String email, String pwd, int kind){
+            search.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
+            search.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
+            search.add(new KeyValue("r_social_kind", kind == 0 ? "KAKAO/TALK" : "FACEBOOK"));
+        }
     }
 
     //나의 시집 조회
     public static class GetMyPoetry{
-        final String request = PoetryClass.REQUEST_MEMBER;
-        List<KeyValue> get_mypoetry = new LinkedList<>();
+        private final String request = PoetryClass.REQUEST_MEMBER;
+        private List<KeyValue> get_mypoetry = new LinkedList<>();
 
         public GetMyPoetry(String email, String pwd){
             get_mypoetry.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
@@ -102,9 +163,9 @@ public class PoetryClass {
 
     //나의 시집 추가 혹은 중복 체크
     public static class NewMyPoetry{
-        final String request = PoetryClass.REQUEST_CONTENT;
-        List<KeyValue> set_mypoetry_and_like = new LinkedList<>();
-        List<KeyValue> is_my_poetry = new LinkedList<>();
+        private final String request = PoetryClass.REQUEST_CONTENT;
+        private List<KeyValue> set_mypoetry_and_like = new LinkedList<>();
+        private List<KeyValue> is_my_poetry = new LinkedList<>();
 
         public NewMyPoetry(String option, String email, String poet, String title, String voice){
             List<KeyValue> handleArray = option.equals("set")? set_mypoetry_and_like : is_my_poetry;
@@ -118,8 +179,8 @@ public class PoetryClass {
 
     //지금몇시 조회
     public static class GetWeatherPoetry{
-        final String request = PoetryClass.REQUEST_MEMBER;
-        List<KeyValue> get_todaylist = new LinkedList<>();
+        private final String request = PoetryClass.REQUEST_MEMBER;
+        private List<KeyValue> get_todaylist = new LinkedList<>();
 
         public GetWeatherPoetry(){
             get_todaylist.add(new KeyValue("r_weather", "SKY_ALL"));
@@ -130,8 +191,8 @@ public class PoetryClass {
     }
 
     public static class SetMyPoetry{
-        final String request = PoetryClass.REQUEST_MEMBER;
-        List<KeyValue> set_mypoetry = new LinkedList<>();
+        private final String request = PoetryClass.REQUEST_MEMBER;
+        private List<KeyValue> set_mypoetry = new LinkedList<>();
 
         public SetMyPoetry(String work, String email, String pwd, String poet, String poem, String voice){
             set_mypoetry.add(new KeyValue("r_work", work));
@@ -147,8 +208,8 @@ public class PoetryClass {
 
     //월간 몇시 조회
     public static class GetMonthlyPoetry{
-        final String request = PoetryClass.REQUEST_MEMBER;
-        List<KeyValue> get_monthlylist = new LinkedList<>();
+        private final String request = PoetryClass.REQUEST_MEMBER;
+        private List<KeyValue> get_monthlylist = new LinkedList<>();
 
         public GetMonthlyPoetry(String yearMonth[]){
             get_monthlylist.add(new KeyValue(PoetryClass.KEY_TYPE, "month"));
@@ -160,8 +221,8 @@ public class PoetryClass {
     }
 
     public static class GetPlayByList{
-        final String request = PoetryClass.REQUEST_CONTENT;
-        List<KeyValue> get_playbylist = new LinkedList<>();
+        private final String request = PoetryClass.REQUEST_CONTENT;
+        private List<KeyValue> get_playbylist = new LinkedList<>();
 
         public GetPlayByList(String poet, String poem, String voice){
             get_playbylist.add(new KeyValue(PoetryClass.KEY_TYPE, "union"));
@@ -172,8 +233,8 @@ public class PoetryClass {
     }
 
     public static class Like{
-        final String request = PoetryClass.REQUEST_CONTENT;
-        List<KeyValue> set_like_only = new LinkedList<>();
+        private final String request = PoetryClass.REQUEST_CONTENT;
+        private List<KeyValue> set_like_only = new LinkedList<>();
 
         public Like(String poet, String poem, String voice){
             set_like_only.add(new KeyValue("r_authorName", poet));
@@ -183,19 +244,19 @@ public class PoetryClass {
     }
 
     //key value pair
-    public static class KeyValue{
-        final String key;
-        final String value;
+    static class KeyValue{
+        private final String key;
+        private final String value;
 
-        public KeyValue(String key, String value){
+        KeyValue(String key, String value){
             this.key = key;
             this.value = value;
         }
     }
 
     public static class IsMyPoetry{
-        final String request = PoetryClass.REQUEST_CONTENT;
-        List<KeyValue> is_my_poetry = new LinkedList<>();
+        private final String request = PoetryClass.REQUEST_CONTENT;
+        private List<KeyValue> is_my_poetry = new LinkedList<>();
 
         public IsMyPoetry(String email, String poet, String poem, String voice){
             is_my_poetry.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
@@ -206,8 +267,8 @@ public class PoetryClass {
     }
 
     public static class NowPoetry{
-        final String request = PoetryClass.REQUEST_MEMBER;
-        List<KeyValue> get_todaylist = new LinkedList<>();
+        private final String request = PoetryClass.REQUEST_MEMBER;
+        private List<KeyValue> get_todaylist = new LinkedList<>();
 
         public NowPoetry(){
             get_todaylist.add(new KeyValue("r_weather", "SKY_A11"));
@@ -218,8 +279,8 @@ public class PoetryClass {
     }
 
     public static class AddInfo{
-        final String request = "addedinfo";
-        List<KeyValue> addedinfo = new LinkedList<>();
+        private final String request = "addedinfo";
+        private List<KeyValue> addedinfo = new LinkedList<>();
 
         public AddInfo(String email, String pwd, String poet, String poem, String season){
             addedinfo.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
@@ -232,8 +293,8 @@ public class PoetryClass {
     }
 
     public static class GetNoticeId {
-        final String request = "notice";
-        List<KeyValue> notice_list_info = new LinkedList<>();
+        private final String request = "notice";
+        private List<KeyValue> notice_list_info = new LinkedList<>();
 
         public GetNoticeId(){
             notice_list_info.add(new KeyValue("r_notice_date", "all"));
@@ -241,8 +302,8 @@ public class PoetryClass {
     }
 
     public static class GetNoticeBody{
-        final String request = "notice";
-        List<KeyValue> notice_body_info = new LinkedList<>();
+        private final String request = "notice";
+        private List<KeyValue> notice_body_info = new LinkedList<>();
 
         public GetNoticeBody(int id){
             notice_body_info.add(new KeyValue("r_notice_id", Integer.toString(id)));
@@ -547,11 +608,13 @@ public class PoetryClass {
 
     public static boolean checkStatus(List<Response> responses){
         String status = responses.get(0).status.split("-")[0];
+        Log.d("test response code", responses.get(0).status);
         return status.equals("200");
     }
 
     public static int checkRegister(List<Response> responses){
         String status = responses.get(0).status.split("-")[0];
+        Log.d("test register code", responses.get(0).status);
         if(status.equals("200")){
             return 1;
         }

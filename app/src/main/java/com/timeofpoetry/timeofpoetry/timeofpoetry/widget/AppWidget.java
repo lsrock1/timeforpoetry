@@ -44,8 +44,7 @@ public class AppWidget extends AppWidgetProvider {
         super.onReceive(context, intent);
 
         if(intent != null && intent.getAction() != null && intent.getAction().equals("android.appwidget.action.APPWIDGET_UPDATE") && intent.hasExtra("state")){
-
-            buildView(intent.getParcelableExtra("poem"), intent.getIntExtra("state", PlayBackStateModel.STOP), context);
+            buildView(intent, context);
         }
     }
 
@@ -69,7 +68,9 @@ public class AppWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    private void buildView(PoetryClass.Poem poem, int state, Context context){
+    private void buildView(Intent intent, Context context){
+        int state = intent.getIntExtra("state", PlayBackStateModel.STOP);
+
         RemoteViews views = new RemoteViews(getApplicationContext().getPackageName(), R.layout.app_widget);
         views.setViewVisibility(R.id.play, state == PlayBackStateModel.PAUSE || state == PlayBackStateModel.STOP ? View.VISIBLE : View.GONE);
         views.setViewVisibility(R.id.stop, state == PlayBackStateModel.PLAYING || state == PlayBackStateModel.BUFFERING ? View.VISIBLE : View.GONE);
@@ -83,16 +84,16 @@ public class AppWidget extends AppWidgetProvider {
                 R.id.cover,
                 PendingIntent.getActivity(context, 0, new Intent(context, SplashActivity.class),
                         0));
-        if(poem.getPoet().equals("")){
+        if(intent.getStringExtra("poet").equals("")){
             views.setImageViewResource(R.id.cover, R.drawable.logo);
             views.setTextViewText(R.id.title, "추가된 시가 없습니다");
             views.setTextViewText(R.id.poet, "");
             setView(context, views);
         }
         else{
-            views.setTextViewText(R.id.title, poem.getPoem());
-            views.setTextViewText(R.id.poet, poem.getPoet());
-            getBitmap(views, context, poem.getArtworkUrl());
+            views.setTextViewText(R.id.title, intent.getStringExtra("poem"));
+            views.setTextViewText(R.id.poet, intent.getStringExtra("poet"));
+            getBitmap(views, context, intent.getStringExtra("url"));
         }
     }
 

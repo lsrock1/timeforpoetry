@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'com.google.firebase.firebase-crash'
 
 android {
     compileSdkVersion 27
@@ -10,13 +11,7 @@ android {
         targetSdkVersion 27
         versionCode 37
         versionName "1.02"
-        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-
-    dexOptions {
-        jumboMode true
-        javaMaxHeapSize "4g"
     }
 
     dataBinding {
@@ -25,7 +20,18 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            useProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug{
+            debuggable true
+            minifyEnabled true
+            shrinkResources true
+            useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -45,7 +51,7 @@ dependencies {
     compile 'com.google.firebase:firebase-perf:11.8.0'
     compile group: 'com.kakao.sdk', name: 'usermgmt', version: project.KAKAO_SDK_VERSION
     compile 'com.google.firebase:firebase-core:11.8.0'
-    compile 'com.facebook.android:facebook-login:4.29.0'
+    compile 'com.facebook.android:facebook-login:[4,5)'
     compile 'com.github.aakira:expandable-layout:1.6.0@aar'
     compile 'com.android.support:appcompat-v7:27.0.2'
     compile 'com.android.support:design:27.0.2'

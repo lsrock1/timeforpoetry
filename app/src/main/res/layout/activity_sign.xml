@@ -47,8 +47,6 @@
 
         </FrameLayout>
 
-
-
         <RelativeLayout
             android:contentDescription="@string/sign_kakao_btn"
             android:id="@+id/kakaoLogin"

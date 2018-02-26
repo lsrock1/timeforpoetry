@@ -1,6 +1,5 @@
 package com.timeofpoetry.timeofpoetry.timeofpoetry.musicPlayer;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -44,7 +43,7 @@ public class MediaStyleHelper {
         else{
             NotificationChannel channel = new NotificationChannel("time_for_poetry", "media_playback", NotificationManager.IMPORTANCE_LOW);
             channel.setShowBadge(true);
-            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            channel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
             builder = new NotificationCompat.Builder(context, channel.toString());
         }
 

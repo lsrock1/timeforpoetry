@@ -42,19 +42,19 @@ public class MonthlyPoetryModel {
         }
         else {
             poetry.setValue(new ArrayList<>());
-            ServerService getMonthly = PoetryClass.retrofit.create(ServerService.class);
-            Call<ArrayList<ArrayList<PoetryClass.Poem>>> call = getMonthly.getMonthlyPoetry(new PoetryClass.GetMonthlyPoetry(yearMonth));
+            PoetryClass.ServerService getMonthly = PoetryClass.retrofit.create(PoetryClass.ServerService.class);
+            Call<List<List<PoetryClass.Poem>>> call = getMonthly.getMonthlyPoetry(new PoetryClass.GetMonthlyPoetry(yearMonth));
 
-            call.enqueue(new Callback<ArrayList<ArrayList<PoetryClass.Poem>>>() {
+            call.enqueue(new Callback<List<List<PoetryClass.Poem>>>() {
                 @Override
-                public void onResponse(Call<ArrayList<ArrayList<PoetryClass.Poem>>> call,
-                                       Response<ArrayList<ArrayList<PoetryClass.Poem>>> response) {
+                public void onResponse(Call<List<List<PoetryClass.Poem>>> call,
+                                       Response<List<List<PoetryClass.Poem>>> response) {
                     cache = response.body().get(0);
                     poetry.setValue(response.body().get(0));
                 }
 
                 @Override
-                public void onFailure(Call<ArrayList<ArrayList<PoetryClass.Poem>>> call, Throwable t) {
+                public void onFailure(Call<List<List<PoetryClass.Poem>>> call, Throwable t) {
                 }
             });
         }
@@ -74,11 +74,5 @@ public class MonthlyPoetryModel {
         for(PoetryClass.Poem poem : cache){
             poem.setIsSelect(bool);
         }
-    }
-
-    public interface ServerService {
-        @Headers({"content-type: application/json"})
-        @POST("/tfp_getmonthly")
-        Call<ArrayList<ArrayList<PoetryClass.Poem>>> getMonthlyPoetry(@Body PoetryClass.GetMonthlyPoetry body);
     }
 }
