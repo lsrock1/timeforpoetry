@@ -2,14 +2,10 @@ package com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.content.Context;
-import android.support.annotation.Nullable;
-import android.util.Log;
 
-import com.timeofpoetry.timeofpoetry.timeofpoetry.data.DiffCallback;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.concerns.SharedPreferenceController;
 
 import java.util.ArrayList;
@@ -28,7 +24,7 @@ import retrofit2.Response;
  * Created by sangroklee on 2017. 12. 19..
  */
 @Singleton
-public class MyPoetryModel {
+public class MyPoetryModel extends PoetryModel{
 
     private SharedPreferenceController sharedPreferenceController;
     public final static int NETWORK_ERROR = -1;
@@ -47,7 +43,8 @@ public class MyPoetryModel {
         liveData.setValue(cache);
     }
 
-    public LiveData<PoetryModelData> getMyPoetryList(){
+    @Override
+    public LiveData<PoetryModelData> getPoetry(){
         if(sharedPreferenceController.isLogin() && userId == null || userId != null && !userId.equals(sharedPreferenceController.getUserId())){
             userId = sharedPreferenceController.getUserId();
             PoetryClass.ServerService getMyPoetry = PoetryClass.retrofit.create(PoetryClass.ServerService.class);
@@ -72,7 +69,7 @@ public class MyPoetryModel {
         return liveData;
     }
 
-    public void removeRequest(PoetryClass.Poem poem){
+    private void removeRequest(PoetryClass.Poem poem){
         PoetryClass.ServerService delMyPoetry = PoetryClass.retrofit.create(PoetryClass.ServerService.class);
         Call<List<PoetryClass.Response>> call = delMyPoetry.setMyPoetry(new PoetryClass.SetMyPoetry("del", sharedPreferenceController.getUserId(), sharedPreferenceController.getUserPwd(), poem.getPoet(), poem.getPoem(), poem.getVoice()));
         call.enqueue(new Callback<List<PoetryClass.Response>>() {
@@ -143,24 +140,9 @@ public class MyPoetryModel {
         return data;
     }
 
-    public void setSelectAll(boolean bool){
-        for(PoetryClass.Poem poem : cache.getPoetry()){
-            poem.setIsSelect(bool);
-        }
-    }
-
-    public ArrayList<PoetryClass.Poem> getSelectedItems(){
-        ArrayList<PoetryClass.Poem> tmp = new ArrayList<>();
-        for(PoetryClass.Poem poem : cache.getPoetry()){
-            if(poem.getIsSelected().get()) tmp.add(poem.clone());
-        }
-
-        return tmp;
-    }
-
-    public void selectedItemsRemove(){
-        LinkedList<PoetryClass.Poem> data = new LinkedList<>(cache.getPoetry());
-        ListIterator<PoetryClass.Poem> itr = data.listIterator();
+    @Override
+    public void removePoetry(List<PoetryClass.Poem> poetry) {
+        ListIterator<PoetryClass.Poem> itr = poetry.listIterator();
 
         while(itr.hasNext()){
             PoetryClass.Poem poem = itr.next();
@@ -170,7 +152,7 @@ public class MyPoetryModel {
             }
         }
 
-        cache.setNewArray(data, false);
+        cache.setNewArray(poetry, false);
         liveData.setValue(cache);
     }
 }

@@ -7,6 +7,8 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
 
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.SupplierPoetryViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.PlayListController;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
@@ -20,60 +22,16 @@ import javax.inject.Inject;
 
 //서버에서 월간 몇시 받아오기, 다중 선택, 플레이리스트에 추가
 
-public class MonthlyPoetryViewModel extends ViewModel implements PlayListController {
-
-    private MyPlayListModel playListModel;
-    private MonthlyPoetryModel monthlyPoetryModel;
-    private MutableLiveData<List<PoetryClass.Poem>> poetry;
-    public ObservableBoolean isEditMode = new ObservableBoolean();
+public class MonthlyPoetryViewModel extends SupplierPoetryViewModel {
 
     MonthlyPoetryViewModel(MyPlayListModel playListModel, MonthlyPoetryModel monthlyPoetryModel) {
-        this.playListModel = playListModel;
-        this.monthlyPoetryModel = monthlyPoetryModel;
-        poetry = monthlyPoetryModel.getMonthlyPoetry();
-    }
-
-    public LiveData<List<PoetryClass.Poem>> getMonthlyPoetry(){
-        return poetry;
-    }
-
-    public PoetryClass.Poem getItem(int index){
-        return poetry.getValue().get(index);
-    }
-
-    public int getItemCount(){
-        return poetry.getValue().size();
-    }
-
-    public void toggleEditMode(){
-        if(isEditMode.get()){
-            isEditMode.set(false);
-            setAllUnselected();
-        }
-        else{
-            isEditMode.set(true);
-        }
+        super(monthlyPoetryModel, playListModel);
     }
 
     @Override
-    public void multiSelect(PoetryClass.Poem poem){
-        if(isEditMode.get()){
-            poem.setIsSelect(!poem.getIsSelected().get());
-        }
-    }
-
-    public void multiAdd(){
-        playListModel.addItems(monthlyPoetryModel.getSelectedItems());
+    public void addSelectedPoetryToPlayList(){
+        super.addSelectedPoetryToPlayList();
         toggleEditMode();
-    }
-
-    @Override
-    public void add(PoetryClass.Poem poem){
-        playListModel.addItems(poem.clone());
-    }
-
-    private void setAllUnselected(){
-        monthlyPoetryModel.setSelectAll(false);
     }
 
     @FragScope
@@ -83,7 +41,7 @@ public class MonthlyPoetryViewModel extends ViewModel implements PlayListControl
         private MonthlyPoetryModel monthlyPoetryModel;
 
         @Inject
-        public MonthlyPoetryViewModelFactory(MyPlayListModel playListModel, MonthlyPoetryModel monthlyPoetryModel) {
+        MonthlyPoetryViewModelFactory(MyPlayListModel playListModel, MonthlyPoetryModel monthlyPoetryModel) {
             myPlayListModel = playListModel;
             this.monthlyPoetryModel = monthlyPoetryModel;
         }

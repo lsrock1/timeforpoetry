@@ -79,7 +79,7 @@
                         android:background="@drawable/edit_bg"
                         android:foreground="?attr/selectableItemBackground"
                         android:text="@string/listen"
-                        android:onClick="@{() -> viewModel.multiAdd()}"
+                        android:onClick="@{() -> viewModel.addSelectedPoetryToPlayList()}"
                         android:visibility="@{viewModel.isEditMode ? View.VISIBLE : View.INVISIBLE}"/>
 
                 </LinearLayout>

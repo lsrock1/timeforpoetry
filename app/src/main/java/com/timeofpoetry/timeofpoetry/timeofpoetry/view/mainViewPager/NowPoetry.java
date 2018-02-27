@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentNowPoetryBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragComponent;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragModule;
@@ -45,11 +46,11 @@ public class NowPoetry extends Fragment {
 
         mRecycle.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         binding.setViewModel(viewModel);
-        viewModel.getRecommend().observe(this, new Observer<List<PoetryClass.Poem>>() {
+        viewModel.getRecommend().observe(this, new Observer<PoetryModelData>() {
             @Override
-            public void onChanged(@Nullable List<PoetryClass.Poem> poems) {
-                if(poems.size() > 2)
-                    binding.setPoetry(poems);
+            public void onChanged(@Nullable PoetryModelData poems) {
+                if(poems != null && poems.getPoetry().size() > 2)
+                    binding.setPoetry(poems.getPoetry());
             }
         });
 
@@ -60,10 +61,10 @@ public class NowPoetry extends Fragment {
             }
         });
 
-        viewModel.getRank().observe(this, new Observer<List<PoetryClass.Poem>>() {
+        viewModel.getRank().observe(this, new Observer<PoetryModelData>() {
             @Override
-            public void onChanged(@Nullable List<PoetryClass.Poem> poems) {
-                if(poems.size() > 0)
+            public void onChanged(@Nullable PoetryModelData poems) {
+                if(poems != null && poems.getPoetry().size() > 0)
                     mAdapter.notifyItemRangeInserted(0, 10);
             }
         });

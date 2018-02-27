@@ -10,6 +10,7 @@ import android.util.ArrayMap;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
@@ -22,36 +23,22 @@ import javax.inject.Inject;
  * Created by sangroklee on 2017. 12. 21..
  */
 
-public class PlayListViewModel extends ViewModel{
+public class PlayListViewModel extends PoetryViewModel{
 
-    public ObservableBoolean isEditMode = new ObservableBoolean();
-    private MyPlayListModel model;
     private LiveData<Integer> state;
-    private LiveData<PoetryModelData> myPlayList;
     private LiveData<PoetryClass.Poem> currentPoem;
     private ArrayMap<Integer, ObservableInt> playHash = new ArrayMap<>();
     private int currentId = -1;
 
     PlayListViewModel(MyPlayListModel model, PlayBackStateModel playBackStateModel) {
-        this.model = model;
-        myPlayList = model.getPlayList();
+        super(model);
         currentPoem = model.getCurrentPoem();
         state = playBackStateModel.getState();
         init();
     }
 
-    public void toggleEditMode(){
-        if(isEditMode.get()){
-            isEditMode.set(false);
-            setAllUnselected();
-        }
-        else{
-            isEditMode.set(true);
-        }
-    }
-
     private void init(){
-        for(PoetryClass.Poem poem : myPlayList.getValue().getPoetry()){
+        for(PoetryClass.Poem poem : super.getPoetry().getValue().getPoetry()){
             playHash.put(poem.getDatabaseId(), new ObservableInt(0));
         }
         playHash.put(-1, new ObservableInt(0));
@@ -75,28 +62,8 @@ public class PlayListViewModel extends ViewModel{
         }
     }
 
-    public void removeItems(){
-        model.removeItems();
-    }
-
-    private void setAllUnselected(){
-        model.setSelectAll(false);
-    }
-
-    public void setAllSelected(){
-        model.setSelectAll(true);
-    }
-
-    public int getItemCount(){
-        return myPlayList.getValue().getPoetry().size();
-    }
-
-    public PoetryClass.Poem getItem(int index){
-        return myPlayList.getValue().getPoetry().get(index);
-    }
-
-    public LiveData<PoetryModelData> getMyPlayList(){
-        return myPlayList;
+    public void removeSelectedPoetry(){
+        super.getModel().removePoetry(getSelectedPoetry());
     }
 
     public LiveData<Integer> getState() {
@@ -107,12 +74,11 @@ public class PlayListViewModel extends ViewModel{
         return currentPoem;
     }
 
-    public void rowSelect(PoetryClass.Poem poem){
-        if(isEditMode.get()){
-            poem.setIsSelect(!poem.getIsSelected().get());
-        }
-        else{
-            model.setPosition(getPositionByDbId(poem.getDatabaseId()));
+    @Override
+    public void touchItem(PoetryClass.Poem poem) {
+        super.touchItem(poem);
+        if(!isEditMode.get()){
+            ((MyPlayListModel) super.getModel()).setPosition(getPositionByDbId(poem.getDatabaseId()));
         }
     }
 
@@ -121,7 +87,7 @@ public class PlayListViewModel extends ViewModel{
     }
 
     private int getPositionByDbId(int id){
-        ListIterator<PoetryClass.Poem> itr = myPlayList.getValue().getPoetry().listIterator();
+        ListIterator<PoetryClass.Poem> itr = super.getPoetry().getValue().getPoetry().listIterator();
 
         while(itr.hasNext()){
             int index = itr.nextIndex();
@@ -136,7 +102,7 @@ public class PlayListViewModel extends ViewModel{
 
     public void listUpdate(int change){
         if(change > 0){
-            for(PoetryClass.Poem poem : myPlayList.getValue().getPoetry().subList(0, change)){
+            for(PoetryClass.Poem poem : super.getPoetry().getValue().getPoetry().subList(0, change)){
                 if(playHash.get(poem.getDatabaseId()) == null) playHash.put(poem.getDatabaseId(), new ObservableInt(0));
             }
         }

@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
 
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.SupplierPoetryViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.PlayListController;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
@@ -20,79 +21,29 @@ import javax.inject.Inject;
  * 나의 시집 다중 선택, 플레이리스트에 추가, 사버 통신을 통해 나의 시집에서 삭제
  */
 
-public class MyPoetryViewModel extends ViewModel implements PlayListController {
+public class MyPoetryViewModel extends SupplierPoetryViewModel {
 
     private SignCheckModel signCheckModel;
     private MyPoetryModel myPoetryModel;
-    private MyPlayListModel playListModel;
-    private LiveData<PoetryModelData> myPoetry;
-
-    public ObservableBoolean isEditMode = new ObservableBoolean();
 
     MyPoetryViewModel(SignCheckModel mSignCheckModel, MyPoetryModel mMyPoetryModel, MyPlayListModel myPlayListModel) {
+        super(mMyPoetryModel, myPlayListModel);
         signCheckModel = mSignCheckModel;
         myPoetryModel = mMyPoetryModel;
-        playListModel = myPlayListModel;
-        loadData();
-    }
-
-    public void loadData(){
-        myPoetry = myPoetryModel.getMyPoetryList();
     }
 
     public LiveData<Boolean> getIsLogin(){
         return signCheckModel.getIsLogin();
     }
 
-    public LiveData<PoetryModelData> getMyPoetry(){
-        return myPoetry;
-    }
-
-    public void toggleEditMode(){
-        if(isEditMode.get()){
-            isEditMode.set(false);
-            setAllUnselected();
-        }
-        else{
-            isEditMode.set(true);
-        }
-    }
-
-    public void allSelect(){
-        myPoetryModel.setSelectAll(true);
-    }
-
-    public PoetryClass.Poem getItem(int position){
-        return myPoetry.getValue().getPoetry().get(position);
-    }
-
     @Override
-    public void multiSelect(PoetryClass.Poem poem){
-        if(isEditMode.get()){
-            poem.setIsSelect(!poem.getIsSelected().get());
-        }
-    }
-
-    @Override
-    public void add(PoetryClass.Poem poem){
-        playListModel.addItems(poem.clone());
-    }
-
-    public int getItemCount(){
-        return myPoetry.getValue().getPoetry().size();
-    }
-
-    public void multiAdd(){
-        playListModel.addItems(myPoetryModel.getSelectedItems());
+    public void addSelectedPoetryToPlayList() {
+        super.addSelectedPoetryToPlayList();
         toggleEditMode();
     }
 
-    private void setAllUnselected(){
-        myPoetryModel.setSelectAll(false);
-    }
-
-    public void multiRemove(){
-        myPoetryModel.selectedItemsRemove();
+    public void selectedPoetryRemove(){
+        myPoetryModel.removePoetry(getSelectedPoetry());
         toggleEditMode();
     }
 

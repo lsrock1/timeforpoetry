@@ -7,7 +7,7 @@
             type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.Poem"/>
         <variable
             name="viewModel"
-            type="com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.PlayListController"/>
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.SupplierPoetryViewModel"/>
     </data>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,7 +20,7 @@
         android:paddingEnd="0dp"
         android:orientation="horizontal"
         android:background="@{poem.isSelected ? @color/colorAlpha : @color/white}"
-        android:onClick="@{() -> viewModel.multiSelect(poem)}">
+        android:onClick="@{() -> viewModel.touchItem(poem)}">
 
         <ImageView
             android:contentDescription="@string/artwork"
@@ -96,7 +96,7 @@
             android:paddingStart="@dimen/f60"
             android:paddingEnd="@dimen/f60"
             android:src="@drawable/ic_play_list"
-            android:onClick="@{() -> viewModel.add(poem)}"/>
+            android:onClick="@{() -> viewModel.addPoemToPlayList(poem)}"/>
 
     </LinearLayout>
 </layout>

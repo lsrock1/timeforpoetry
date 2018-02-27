@@ -23,6 +23,7 @@ import com.bumptech.glide.request.target.Target;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PlayListDB;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.concerns.SharedPreferenceController;
 
@@ -40,7 +41,7 @@ import javax.inject.Singleton;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 @Singleton
-public class MyPlayListModel{
+public class MyPlayListModel extends PoetryModel{
 
     public static final int SHUFFLE = 4;
 
@@ -62,18 +63,19 @@ public class MyPlayListModel{
         poetryModelData = playListDB.getPoetryModelData();
         playList.setValue(poetryModelData);
         currentPoem.setValue(PoetryClass.getNullPoem());
-        autoSetCurrentPoem(false);
+        setCurrentPoem(false);
     }
 
-    public void addItems(PoetryClass.Poem poem){
+    public void addPoetry(PoetryClass.Poem poem){
         poem.setDatabaseId((int) playListDB.addItem(poem));
         position = 0;
         poetryModelData.addOnePoem(poem);
-        autoSetCurrentPoem(false);
+        setCurrentPoem(false);
         playList.setValue(poetryModelData);
     }
 
-    public void addItems(List<PoetryClass.Poem> items) {
+    @Override
+    public void addPoetry(List<PoetryClass.Poem> items) {
         if (items.size() != 0) {
             LinkedList<PoetryClass.Poem> data = new LinkedList<>(poetryModelData.getPoetry());
             for (PoetryClass.Poem item : items) {
@@ -83,13 +85,14 @@ public class MyPlayListModel{
 
             position = 0;
             poetryModelData.setNewArray(data, false);
-            autoSetCurrentPoem(false);
+            setCurrentPoem(false);
             playList.setValue(poetryModelData);
         }
     }
 
-    public void removeItems(){
-        LinkedList<PoetryClass.Poem> data = new LinkedList<>(poetryModelData.getPoetry());
+    @Override
+    public void removePoetry(List<PoetryClass.Poem> poetry){
+        LinkedList<PoetryClass.Poem> data = new LinkedList<>(poetry);
         ListIterator<PoetryClass.Poem> itr = data.listIterator();
 
         while(itr.hasNext()){
@@ -108,11 +111,11 @@ public class MyPlayListModel{
         }
 
         poetryModelData.setNewArray(data, false);
-        autoSetCurrentPoem(true);
+        setCurrentPoem(true);
         playList.setValue(poetryModelData);
     }
 
-    private void autoSetCurrentPoem(boolean isRemoved){
+    private void setCurrentPoem(boolean isRemoved){
         PoetryClass.Poem tmpPoem;
         sharedPreferenceController.setLastPosition(position);
         if(poetryModelData.getPoetry().size() == 0){
@@ -145,7 +148,8 @@ public class MyPlayListModel{
         }
     }
 
-    public LiveData<PoetryModelData> getPlayList(){
+    @Override
+    public LiveData<PoetryModelData> getPoetry(){
         return playList;
     }
 
@@ -179,7 +183,7 @@ public class MyPlayListModel{
             return;
         }
         this.position = position;
-        autoSetCurrentPoem(false);
+        setCurrentPoem(false);
     }
 
     public void forward(){
@@ -207,17 +211,6 @@ public class MyPlayListModel{
             else{
                 setPosition(position - 1);
             }
-        }
-    }
-
-    public void setSelect(int index){
-        PoetryClass.Poem poem = poetryModelData.getPoetry().get(index);
-        poem.setIsSelect(!poem.getIsSelected().get());
-    }
-
-    public void setSelectAll(boolean bool){
-        for(PoetryClass.Poem poem : poetryModelData.getPoetry()){
-            poem.setIsSelect(bool);
         }
     }
 }

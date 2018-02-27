@@ -114,6 +114,6 @@
             android:paddingEnd="@dimen/f60"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_play_list"
-            android:onClick="@{() -> viewModel.add(poem)}"/>
+            android:onClick="@{() -> viewModel.addSelectedPoetryToPlayList(poem)}"/>
     </LinearLayout>
 </layout>

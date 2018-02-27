@@ -59,11 +59,11 @@ public class MyPoetryFragment extends Fragment {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
                 binding.setIsLogin(aBoolean);
-                viewModel.loadData();
+                viewModel.getReloadedPoetry();
             }
         });
 
-        viewModel.getMyPoetry().observe(this, new Observer<PoetryModelData>() {
+        viewModel.getPoetry().observe(this, new Observer<PoetryModelData>() {
             @Override
             public void onChanged(@Nullable PoetryModelData poetryModelData) {
                 binding.setIsZeroQueue(poetryModelData.getPoetry().size() == 0);

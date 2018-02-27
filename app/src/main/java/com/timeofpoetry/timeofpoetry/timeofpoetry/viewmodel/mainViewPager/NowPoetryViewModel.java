@@ -6,6 +6,8 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.SupplierPoetryViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.BannerModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
@@ -21,49 +23,34 @@ import javax.inject.Inject;
  * Created by sangroklee on 2017. 12. 20..
  */
 
-public class NowPoetryViewModel extends ViewModel {
+public class NowPoetryViewModel extends SupplierPoetryViewModel {
 
-    private MyPlayListModel myPlayListModel;
     private LiveData<PoetryClass.Banner> banner;
-    private LiveData<List<PoetryClass.Poem>> rank;
-    private LiveData<List<PoetryClass.Poem>> recommend;
+    private LiveData<PoetryModelData> recommend;
 
     NowPoetryViewModel(MyPlayListModel myModel, RankModel rankModel, RecommendModel recommendModel, BannerModel bannerModel) {
-        this.myPlayListModel = myModel;
+        super(rankModel, myModel);
         banner = bannerModel.getBanner();
-        rank = rankModel.getRank();
-        recommend = recommendModel.getRecommend();
+        recommend = recommendModel.getPoetryData();
     }
 
     public LiveData<PoetryClass.Banner> getBanner(){
         return banner;
     }
 
-    public LiveData<List<PoetryClass.Poem>> getRank(){
-        return rank;
+    public LiveData<PoetryModelData> getRank(){
+        return getPoetry();
     }
 
-    public LiveData<List<PoetryClass.Poem>> getRecommend(){
+    public LiveData<PoetryModelData> getRecommend(){
         return recommend;
     }
 
     public void addPlaylistFromRecommend(int position){
-        if(recommend.getValue().size() < 3){
+        if(recommend.getValue() != null && recommend.getValue().getPoetry().size() < 3){
             return;
         }
-        myPlayListModel.addItems(recommend.getValue().get(position));
-    }
-
-    public PoetryClass.Poem getItem(int position){
-        return rank.getValue().get(position);
-    }
-
-    public void add(PoetryClass.Poem poem){
-        myPlayListModel.addItems(poem.clone());
-    }
-
-    public int getItemCount(){
-        return rank.getValue().size();
+        addPoemToPlayList(recommend.getValue().getPoetry().get(position));
     }
 
     @FragScope

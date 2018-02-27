@@ -4,35 +4,34 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Body;
-import retrofit2.http.Headers;
-import retrofit2.http.POST;
-@ActivityScope
-public class MonthlyPoetryModel {
 
-    private List<PoetryClass.Poem> cache;
+@ActivityScope
+public class MonthlyPoetryModel extends PoetryModel{
+
+    private PoetryModelData cache;
 
     @Inject
     public MonthlyPoetryModel() {
     }
 
-    public MutableLiveData<List<PoetryClass.Poem>> getMonthlyPoetry(){
-        final MutableLiveData<List<PoetryClass.Poem>> poetry = new MutableLiveData<>();
+    @Override
+    public LiveData<PoetryModelData> getPoetry(){
+        final MutableLiveData<PoetryModelData> poetry = new MutableLiveData<>();
 
         Calendar cal = Calendar.getInstance();
         String yearMonth[] = new SimpleDateFormat("yyyy/MM", Locale.KOREA).format(cal.getTime()).split("/");
@@ -41,7 +40,6 @@ public class MonthlyPoetryModel {
             poetry.setValue(cache);
         }
         else {
-            poetry.setValue(new ArrayList<>());
             PoetryClass.ServerService getMonthly = PoetryClass.retrofit.create(PoetryClass.ServerService.class);
             Call<List<List<PoetryClass.Poem>>> call = getMonthly.getMonthlyPoetry(new PoetryClass.GetMonthlyPoetry(yearMonth));
 
@@ -49,8 +47,8 @@ public class MonthlyPoetryModel {
                 @Override
                 public void onResponse(Call<List<List<PoetryClass.Poem>>> call,
                                        Response<List<List<PoetryClass.Poem>>> response) {
-                    cache = response.body().get(0);
-                    poetry.setValue(response.body().get(0));
+                    cache = new PoetryModelData(response.body().get(0));
+                    poetry.setValue(cache);
                 }
 
                 @Override
@@ -59,20 +57,5 @@ public class MonthlyPoetryModel {
             });
         }
         return poetry;
-    }
-
-    public List<PoetryClass.Poem> getSelectedItems(){
-        LinkedList<PoetryClass.Poem> tmp = new LinkedList<>();
-        for(PoetryClass.Poem poem : cache){
-            if(poem.getIsSelected().get()) tmp.add(poem.clone());
-        }
-
-        return tmp;
-    }
-
-    public void setSelectAll(boolean bool){
-        for(PoetryClass.Poem poem : cache){
-            poem.setIsSelect(bool);
-        }
     }
 }

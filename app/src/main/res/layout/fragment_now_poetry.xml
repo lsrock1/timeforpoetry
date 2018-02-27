@@ -249,7 +249,7 @@
                     android:nestedScrollingEnabled="false"
                     android:focusable="false"
                     app:layoutManager="LinearLayoutManager"
-                    tools:listitem="@layout/fragment_poem"/>
+                    tools:listitem="@layout/now_poetry_item"/>
     
             </LinearLayout>
     

@@ -24,7 +24,7 @@
         android:paddingEnd="@dimen/f60"
         android:orientation="horizontal"
         android:background="@{poem.isSelected ? @color/colorAlpha : @color/white}"
-        android:onClick="@{() -> viewModel.rowSelect(poem)}">
+        android:onClick="@{() -> viewModel.touchItem(poem)}">
 
         <RelativeLayout
             android:layout_width="50dp"

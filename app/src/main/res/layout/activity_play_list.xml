@@ -79,7 +79,7 @@
                 android:background="@drawable/edit_bg"
                 android:foreground="?attr/selectableItemBackground"
                 android:text="@string/select_all"
-                android:onClick="@{() -> viewModel.setAllSelected()}"
+                android:onClick="@{() -> viewModel.selectAll()}"
                 android:visibility="@{viewModel.isEditMode ? View.VISIBLE : View.INVISIBLE}"/>
 
             <Button
@@ -92,7 +92,7 @@
                 android:background="@drawable/edit_bg"
                 android:foreground="?attr/selectableItemBackground"
                 android:text="@string/remove"
-                android:onClick="@{() -> viewModel.removeItems()}"
+                android:onClick="@{() -> viewModel.removeSelectedPoetry()}"
                 android:visibility="@{viewModel.isEditMode ? View.VISIBLE : View.INVISIBLE}"/>
 
             <Button

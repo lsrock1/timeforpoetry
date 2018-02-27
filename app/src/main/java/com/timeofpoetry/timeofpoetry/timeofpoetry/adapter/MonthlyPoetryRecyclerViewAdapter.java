@@ -1,27 +1,20 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainViewPager;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.adapter;
 
-import android.arch.lifecycle.Observer;
 import android.databinding.DataBindingUtil;
-import android.databinding.ObservableInt;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentPoemBinding;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.PoetryItemBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.MonthlyPoetryViewModel;
-
-import java.util.ArrayList;
 
 public class MonthlyPoetryRecyclerViewAdapter extends RecyclerView.Adapter<MonthlyPoetryRecyclerViewAdapter.ViewHolder> {
 
     private MonthlyPoetryViewModel viewModel;
 
-    MonthlyPoetryRecyclerViewAdapter(MonthlyPoetryViewModel viewModel) {
+    public MonthlyPoetryRecyclerViewAdapter(MonthlyPoetryViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
