@@ -55,7 +55,7 @@ public class MonthlyPoetry extends Fragment {
         final MonthlyPoetryRecyclerViewAdapter mAdapter = new MonthlyPoetryRecyclerViewAdapter(viewModel);
         mRecycle.setAdapter(mAdapter);
 
-        viewModel.getMonthlyPoetry().observe(this, new Observer<PoetryModelData>() {
+        viewModel.getPoetry().observe(this, new Observer<PoetryModelData>() {
             @Override
             public void onChanged(@Nullable PoetryModelData poems) {
                 if(poems != null && poems.getPoetry().size() > 0) {

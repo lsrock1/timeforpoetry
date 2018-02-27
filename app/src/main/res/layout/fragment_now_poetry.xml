@@ -75,7 +75,7 @@
                             android:drawablePadding="@dimen/f20"
                             android:singleLine="true"
                             android:text="@{poetry.get(0).getPoem()}"
-                            android:textSize="@dimen/f60"/>
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -85,7 +85,7 @@
                             android:drawablePadding="@dimen/f20"
                             android:singleLine="true"
                             android:text="@{poetry.get(0).getPoet()}"
-                            android:textSize="@dimen/f60"/>
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/firstVoice"
@@ -96,7 +96,7 @@
                             android:drawablePadding="@dimen/f20"
                             android:singleLine="true"
                             android:text="@{poetry.get(0).getVoice()}"
-                            android:textSize="@dimen/f60"/>
+                            android:textSize="15sp"/>
                     </LinearLayout>
     
                     <LinearLayout
@@ -137,7 +137,7 @@
                             android:drawablePadding="@dimen/f20"
                             android:singleLine="true"
                             android:text="@{poetry.get(1).getPoem()}"
-                            android:textSize="@dimen/f60"/>
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -147,7 +147,7 @@
                             android:drawablePadding="@dimen/f20"
                             android:singleLine="true"
                             android:text="@{poetry.get(1).getPoet()}"
-                            android:textSize="@dimen/f60"/>
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/secondVoice"
@@ -158,7 +158,7 @@
                             android:drawablePadding="@dimen/f20"
                             android:singleLine="true"
                             android:text="@{poetry.get(1).getVoice()}"
-                            android:textSize="@dimen/f60"/>
+                            android:textSize="15sp"/>
                     </LinearLayout>
     
                     <LinearLayout
@@ -198,7 +198,7 @@
                             android:drawablePadding="@dimen/f20"
                             android:singleLine="true"
                             android:text="@{poetry.get(2).getPoem()}"
-                            android:textSize="@dimen/f60"/>
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -208,7 +208,7 @@
                             android:drawablePadding="@dimen/f20"
                             android:singleLine="true"
                             android:text="@{poetry.get(2).getPoet()}"
-                            android:textSize="@dimen/f60"/>
+                            android:textSize="15sp"/>
 
                         <TextView
                             android:id="@+id/thirdVoice"
@@ -219,7 +219,7 @@
                             android:drawablePadding="@dimen/f20"
                             android:singleLine="true"
                             android:text="@{poetry.get(2).getVoice()}"
-                            android:textSize="@dimen/f60"/>
+                            android:textSize="15sp"/>
 
                     </LinearLayout>
                 </LinearLayout>
@@ -235,7 +235,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/f72"
+                    android:textSize="18sp"
                     android:layout_marginTop="@dimen/f96"
                     android:layout_marginStart="@dimen/f60"
                     android:textStyle="bold"
@@ -246,7 +246,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/f80"
-                    android:nestedScrollingEnabled="false"
                     android:focusable="false"
                     app:layoutManager="LinearLayoutManager"
                     tools:listitem="@layout/now_poetry_item"/>
@@ -254,7 +253,6 @@
             </LinearLayout>
     
         </android.support.v4.widget.NestedScrollView>
-    
-    
+
     </LinearLayout>
 </layout>

@@ -141,7 +141,8 @@ public class MyPoetryModel extends PoetryModel{
     }
 
     @Override
-    public void removePoetry(List<PoetryClass.Poem> poetry) {
+    public void removePoetry() {
+        List<PoetryClass.Poem> poetry = new LinkedList<>(cache.getPoetry());
         ListIterator<PoetryClass.Poem> itr = poetry.listIterator();
 
         while(itr.hasNext()){

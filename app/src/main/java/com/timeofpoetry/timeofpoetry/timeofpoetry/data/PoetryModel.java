@@ -14,7 +14,7 @@ abstract public class PoetryModel {
 
     }
 
-    public void removePoetry(List<PoetryClass.Poem> poetry){
+    public void removePoetry(){
 
     }
 

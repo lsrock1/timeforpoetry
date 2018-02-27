@@ -49,7 +49,7 @@ public class PlayListActivity extends AppCompatActivity implements OnPlayerFragm
         final PlayListRecyclerViewAdapter mAdapter = new PlayListRecyclerViewAdapter(viewModel);
         binding.setViewModel(viewModel);
         mRecycle.setAdapter(mAdapter);
-        viewModel.getMyPlayList().observe(this, new Observer<PoetryModelData>() {
+        viewModel.getPoetry().observe(this, new Observer<PoetryModelData>() {
             @Override
             public void onChanged(@Nullable PoetryModelData poetryModelData) {
                 viewModel.listUpdate(poetryModelData.getChange());

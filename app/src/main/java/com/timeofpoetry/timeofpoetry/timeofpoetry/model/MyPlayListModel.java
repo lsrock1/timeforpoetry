@@ -91,8 +91,8 @@ public class MyPlayListModel extends PoetryModel{
     }
 
     @Override
-    public void removePoetry(List<PoetryClass.Poem> poetry){
-        LinkedList<PoetryClass.Poem> data = new LinkedList<>(poetry);
+    public void removePoetry(){
+        LinkedList<PoetryClass.Poem> data = new LinkedList<>(poetryModelData.getPoetry());
         ListIterator<PoetryClass.Poem> itr = data.listIterator();
 
         while(itr.hasNext()){

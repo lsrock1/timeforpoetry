@@ -16,27 +16,39 @@ public class PoetryViewModel extends ViewModel {
     private PoetryModel model;
     private LiveData<PoetryModelData> data;
     public ObservableBoolean isEditMode = new ObservableBoolean(false);
+    private boolean toggleSelect = true;
 
     public PoetryViewModel(PoetryModel poetryModel) {
         this.model = poetryModel;
         data = model.getPoetry();
     }
 
-    protected void selectAll(){
+    public void toggleSelectAll(){
+        if(data.getValue() == null) return;
+        if(toggleSelect){
+            selectAll();
+        }
+        else{
+            unSelectAll();
+        }
+        toggleSelect = !toggleSelect;
+    }
+
+    public void selectAll(){
         if(data.getValue() == null) return;
         for(PoetryClass.Poem poem : data.getValue().getPoetry()){
             poem.setIsSelect(true);
         }
     }
 
-    protected void unSelectAll(){
+    public void unSelectAll(){
         if(data.getValue() == null) return;
         for(PoetryClass.Poem poem : data.getValue().getPoetry()){
             poem.setIsSelect(false);
         }
     }
 
-    protected List<PoetryClass.Poem> getSelectedPoetry(){
+    List<PoetryClass.Poem> getSelectedPoetry(){
         if(data.getValue() == null) return new LinkedList<>();
         List<PoetryClass.Poem> poetry = new LinkedList<>();
         for(PoetryClass.Poem poem : data.getValue().getPoetry()){

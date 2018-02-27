@@ -3,14 +3,10 @@ package com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
-import android.databinding.ObservableBoolean;
 import android.support.annotation.NonNull;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.SupplierPoetryViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragScope;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.PlayListController;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.MyPoetryModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.sign.SignCheckModel;
@@ -43,7 +39,7 @@ public class MyPoetryViewModel extends SupplierPoetryViewModel {
     }
 
     public void selectedPoetryRemove(){
-        myPoetryModel.removePoetry(getSelectedPoetry());
+        myPoetryModel.removePoetry();
         toggleEditMode();
     }
 

@@ -94,6 +94,6 @@ public class MediaServiceViewModel extends ViewModel {
     }
 
     public int getLength(){
-        return model.getPlayList().getValue().getPoetry().size();
+        return model.getPoetry().getValue().getPoetry().size();
     }
 }

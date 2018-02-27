@@ -42,6 +42,7 @@ public class NowPoetry extends Fragment {
                 .inject(this);
         final NowPoetryViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(NowPoetryViewModel.class);
         RecyclerView mRecycle = binding.recyclerView;
+        mRecycle.setNestedScrollingEnabled(false);
         final NowPoetryRecyclerViewAdapter mAdapter = new NowPoetryRecyclerViewAdapter(viewModel);
 
         mRecycle.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
@@ -57,7 +58,8 @@ public class NowPoetry extends Fragment {
         viewModel.getBanner().observe(this, new Observer<PoetryClass.Banner>() {
             @Override
             public void onChanged(@Nullable PoetryClass.Banner banner) {
-                binding.setBannerUrl(banner.getUri());
+                if(banner != null)
+                    binding.setBannerUrl(banner.getUri());
             }
         });
 

@@ -63,7 +63,7 @@ public class PlayListViewModel extends PoetryViewModel{
     }
 
     public void removeSelectedPoetry(){
-        super.getModel().removePoetry(getSelectedPoetry());
+        super.getModel().removePoetry();
     }
 
     public LiveData<Integer> getState() {

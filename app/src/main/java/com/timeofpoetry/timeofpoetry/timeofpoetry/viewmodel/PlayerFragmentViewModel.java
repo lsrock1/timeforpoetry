@@ -37,7 +37,7 @@ public class PlayerFragmentViewModel extends ViewModel {
     }
 
     public LiveData<PoetryModelData> getMyPlayList(){
-        return myPlayListModel.getPlayList();
+        return myPlayListModel.getPoetry();
     }
 
     public void setIsWide(boolean isWide){

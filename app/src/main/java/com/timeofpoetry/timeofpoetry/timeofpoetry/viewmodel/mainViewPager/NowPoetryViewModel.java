@@ -31,7 +31,7 @@ public class NowPoetryViewModel extends SupplierPoetryViewModel {
     NowPoetryViewModel(MyPlayListModel myModel, RankModel rankModel, RecommendModel recommendModel, BannerModel bannerModel) {
         super(rankModel, myModel);
         banner = bannerModel.getBanner();
-        recommend = recommendModel.getPoetryData();
+        recommend = recommendModel.getPoetry();
     }
 
     public LiveData<PoetryClass.Banner> getBanner(){

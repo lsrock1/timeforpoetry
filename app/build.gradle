@@ -7,15 +7,30 @@ android {
     buildToolsVersion '27.0.2'
     defaultConfig {
         applicationId "com.timeforpoetry.timeforpoetry.timeforpoetry"
-        minSdkVersion 19
+        minSdkVersion  19
         targetSdkVersion 27
-        versionCode 37
+        versionCode 38
         versionName "1.02"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     dataBinding {
         enabled = true
+    }
+
+    signingConfigs {
+
+        release {
+
+            storeFile file(project.KEY_PATH) // 기준은 App 폴더 기준이다.
+
+            storePassword project.STORE_PWD
+
+            keyAlias project.ALIAS
+
+            keyPassword project.KEY_PWD
+
+        }
     }
 
     buildTypes {
@@ -25,6 +40,7 @@ android {
             shrinkResources true
             useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
 
         debug{

@@ -79,7 +79,7 @@
                 android:background="@drawable/edit_bg"
                 android:foreground="?attr/selectableItemBackground"
                 android:text="@string/select_all"
-                android:onClick="@{() -> viewModel.selectAll()}"
+                android:onClick="@{() -> viewModel.toggleSelectAll()}"
                 android:visibility="@{viewModel.isEditMode ? View.VISIBLE : View.INVISIBLE}"/>
 
             <Button

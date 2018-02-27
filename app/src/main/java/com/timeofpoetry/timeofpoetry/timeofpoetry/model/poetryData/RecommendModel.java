@@ -4,9 +4,9 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.ReturnPoetryModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import retrofit2.Response;
  * Created by sangroklee on 2018. 1. 3..
  */
 @ActivityScope
-public class RecommendModel implements ReturnPoetryModel{
+public class RecommendModel extends PoetryModel{
 
     private PoetryModelData recommendCache;
 
@@ -31,7 +31,7 @@ public class RecommendModel implements ReturnPoetryModel{
     }
 
     @Override
-    public LiveData<PoetryModelData> getPoetryData() {
+    public LiveData<PoetryModelData> getPoetry() {
         final MutableLiveData<PoetryModelData> data = new MutableLiveData<>();
         if(recommendCache != null){
             data.setValue(recommendCache);
