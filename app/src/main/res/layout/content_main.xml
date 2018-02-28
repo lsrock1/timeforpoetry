@@ -26,7 +26,7 @@
                 android:id="@+id/mainView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:name="com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainViewPager.MainView"/>
+                android:name="com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainView.MainView"/>
         </FrameLayout>
 
         <fragment

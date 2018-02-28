@@ -1,21 +1,17 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviViews;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviView;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
-import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
-import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.BoardModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;

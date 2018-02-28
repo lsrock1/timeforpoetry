@@ -1,4 +1,4 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainViewPager;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
@@ -6,23 +6,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentPoemBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.PoetryItemBinding;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.MyPoetryViewModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.PoetryItemNoMapleBinding;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainView.MyPoetryViewModel;
 
 public class MyPoetryRecyclerViewAdapter extends RecyclerView.Adapter<MyPoetryRecyclerViewAdapter.ViewHolder> {
 
     private MyPoetryViewModel viewModel;
 
-    MyPoetryRecyclerViewAdapter(MyPoetryViewModel viewModel) {
+    public MyPoetryRecyclerViewAdapter(MyPoetryViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.poetry_item, parent, false);
+                .inflate(R.layout.poetry_item_no_maple, parent, false);
         return new ViewHolder(view);
     }
 
@@ -38,7 +37,7 @@ public class MyPoetryRecyclerViewAdapter extends RecyclerView.Adapter<MyPoetryRe
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        PoetryItemBinding binding;
+        PoetryItemNoMapleBinding binding;
 
         ViewHolder(View view) {
             super(view);

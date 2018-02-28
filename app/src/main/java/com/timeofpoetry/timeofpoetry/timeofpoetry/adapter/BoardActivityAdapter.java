@@ -1,20 +1,16 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.BoardItemBinding;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviViews.BoardActivityViewModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviView.BoardActivityViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BoardActivityAdapter extends RecyclerView.Adapter<BoardActivityAdapter.ViewHolder> {

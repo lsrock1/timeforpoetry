@@ -4,7 +4,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.MonthlyPoetryViewModel"/>
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainView.MonthlyPoetryViewModel"/>
     </data>
 
     <LinearLayout
@@ -100,8 +100,8 @@
                     android:focusable="false"
                     android:nestedScrollingEnabled="false"
                     app:layoutManager="LinearLayoutManager"
-                    tools:context=".view.mainViewPager.MonthlyPoetry"
-                    tools:listitem="@layout/fragment_poem" />
+                    tools:context=".view.mainView.MonthlyPoetry"
+                    tools:listitem="@layout/play_list_item" />
 
             </LinearLayout>
 

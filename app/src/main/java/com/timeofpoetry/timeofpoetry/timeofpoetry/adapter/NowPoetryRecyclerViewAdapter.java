@@ -1,28 +1,14 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainViewPager;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.adapter;
 
-import android.arch.lifecycle.Observer;
 import android.databinding.DataBindingUtil;
-import android.databinding.ObservableInt;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentPoemBinding;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.NowPoetryItemBinding;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.NowPoetryViewModel;
-
-import java.util.ArrayList;
-
-import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.PoetryItemWithMapleBinding;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainView.NowPoetryViewModel;
 
 /**
  * Created by sangroklee on 2017. 11. 7..
@@ -32,14 +18,14 @@ public class NowPoetryRecyclerViewAdapter extends RecyclerView.Adapter<NowPoetry
 
     private NowPoetryViewModel viewModel;
 
-    NowPoetryRecyclerViewAdapter(NowPoetryViewModel viewModel) {
+    public NowPoetryRecyclerViewAdapter(NowPoetryViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.now_poetry_item, parent, false);
+                .inflate(R.layout.poetry_item_with_maple, parent, false);
         return new ViewHolder(view);
     }
 
@@ -55,7 +41,7 @@ public class NowPoetryRecyclerViewAdapter extends RecyclerView.Adapter<NowPoetry
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        NowPoetryItemBinding binding;
+        PoetryItemWithMapleBinding binding;
 
         ViewHolder(View view) {
             super(view);

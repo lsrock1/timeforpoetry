@@ -115,7 +115,7 @@
             android:layout_marginEnd="@dimen/f60"
             android:layout_marginStart="@dimen/f60"
             app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/fragment_poem"
+            tools:listitem="@layout/play_list_item"
             android:name="com.timeofpoetry.timeofpoetry.timeofpoetry.MusicFragment"
             tools:context=".view.footer.MyPlayListFragment"/>
 

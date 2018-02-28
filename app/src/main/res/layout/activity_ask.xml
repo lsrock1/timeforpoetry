@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews.AskActivity">
+    tools:context="com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviView.AskActivity">
 
 </android.support.constraint.ConstraintLayout>

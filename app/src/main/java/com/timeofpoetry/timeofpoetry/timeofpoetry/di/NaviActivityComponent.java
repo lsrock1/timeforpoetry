@@ -1,9 +1,8 @@
 package com.timeofpoetry.timeofpoetry.timeofpoetry.di;
 
-import com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews.BoardActivity;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviView.BoardActivity;
 
 import dagger.Component;
-import dagger.Module;
 
 /**
  * Created by sangroklee on 2018. 1. 16..

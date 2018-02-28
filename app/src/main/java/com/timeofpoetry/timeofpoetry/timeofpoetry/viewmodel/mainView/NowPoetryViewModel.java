@@ -1,4 +1,4 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainView;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
@@ -13,9 +13,6 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.model.BannerModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.RankModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.RecommendModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 

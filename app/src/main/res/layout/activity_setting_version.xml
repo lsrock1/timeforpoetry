@@ -3,13 +3,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviViews.SettingVersionViewModel"/>
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviView.SettingVersionViewModel"/>
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews.SettingVersionActivity"
+        tools:context="com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviView.SettingVersionActivity"
         android:orientation="vertical"
         android:background="@color/white">
 

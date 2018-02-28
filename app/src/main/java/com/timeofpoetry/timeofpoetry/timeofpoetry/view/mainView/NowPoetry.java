@@ -1,4 +1,4 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainViewPager;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainView;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -12,17 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.timeofpoetry.timeofpoetry.timeofpoetry.adapter.NowPoetryRecyclerViewAdapter;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentNowPoetryBinding;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragComponent;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragModule;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.NowPoetryViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainView.NowPoetryViewModel;
 
 import javax.inject.Inject;
 

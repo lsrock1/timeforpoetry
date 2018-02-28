@@ -1,4 +1,4 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.view.footer;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
@@ -8,20 +8,21 @@ import android.view.ViewGroup;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentPoemBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.PlayListItemBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.PlayListViewModel;
 
 public class PlayListRecyclerViewAdapter extends RecyclerView.Adapter<PlayListRecyclerViewAdapter.ViewHolder> {
 
     private PlayListViewModel viewModel;
 
-    PlayListRecyclerViewAdapter(PlayListViewModel viewModel) {
+    public PlayListRecyclerViewAdapter(PlayListViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_poem, parent, false);
+                .inflate(R.layout.play_list_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -37,7 +38,8 @@ public class PlayListRecyclerViewAdapter extends RecyclerView.Adapter<PlayListRe
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        FragmentPoemBinding binding;
+
+        PlayListItemBinding binding;
 
         ViewHolder(View view) {
             super(view);

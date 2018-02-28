@@ -7,7 +7,7 @@
             type="com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass.Poem"/>
         <variable
             name="viewModel"
-            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.NowPoetryViewModel"/>
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainView.NowPoetryViewModel"/>
     </data>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

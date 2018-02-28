@@ -10,7 +10,7 @@
             type="boolean"/>
         <variable
             name="viewModel"
-            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.MyPoetryViewModel"/>
+            type="com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainView.MyPoetryViewModel"/>
     </data>
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -111,7 +111,7 @@
                 android:layout_marginTop="@dimen/f70"
                 app:layoutManager="LinearLayoutManager"
                 android:focusable="false"
-                tools:listitem="@layout/fragment_poem" />
+                tools:listitem="@layout/play_list_item" />
         </LinearLayout>
 
         <include
@@ -127,7 +127,7 @@
             android:visibility="@{!isLogin ? View.VISIBLE : View.GONE}">
             <fragment
                 android:id="@+id/notLogin"
-                android:name="com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainViewPager.RequireLoginFragment"
+                android:name="com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainView.RequireLogin"
                 tools:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>

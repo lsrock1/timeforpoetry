@@ -22,8 +22,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.LyricsLoad;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviViews.SettingVersionViewModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviView.SettingVersionViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.startActivities.SignInViewModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.startActivities.SignUpViewModel;
 

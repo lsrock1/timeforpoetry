@@ -1,8 +1,6 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainViewPager;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainView;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -13,9 +11,9 @@ import android.view.ViewGroup;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.startActivities.SignActivity;
 
-public class RequireLoginFragment extends Fragment {
+public class RequireLogin extends Fragment {
 
-    public RequireLoginFragment() {
+    public RequireLogin() {
         // Required empty public constructor
     }
 

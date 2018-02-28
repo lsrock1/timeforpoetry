@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:paddingStart="@dimen/f60"
     android:paddingEnd="@dimen/f60"
-    tools:context=".view.mainViewPager.RequireLoginFragment">
+    tools:context=".view.mainView.RequireLogin">
 
     <TextView
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainViewPager;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainView;
 
 
 import android.databinding.DataBindingUtil;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.adapter.TabPagerAdapter;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentMainViewBinding;
 
 public class MainView extends Fragment {

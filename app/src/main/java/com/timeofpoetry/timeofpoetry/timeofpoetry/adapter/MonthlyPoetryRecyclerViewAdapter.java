@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.PoetryItemBinding;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.MonthlyPoetryViewModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.PoetryItemNoMapleBinding;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainView.MonthlyPoetryViewModel;
 
 public class MonthlyPoetryRecyclerViewAdapter extends RecyclerView.Adapter<MonthlyPoetryRecyclerViewAdapter.ViewHolder> {
 
@@ -21,7 +21,7 @@ public class MonthlyPoetryRecyclerViewAdapter extends RecyclerView.Adapter<Month
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.poetry_item, parent, false);
+                .inflate(R.layout.poetry_item_no_maple, parent, false);
         return new ViewHolder(view);
     }
 
@@ -37,7 +37,7 @@ public class MonthlyPoetryRecyclerViewAdapter extends RecyclerView.Adapter<Month
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        PoetryItemBinding binding;
+        PoetryItemNoMapleBinding binding;
 
         ViewHolder(View view) {
             super(view);

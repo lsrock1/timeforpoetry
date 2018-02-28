@@ -1,4 +1,4 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviView;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;

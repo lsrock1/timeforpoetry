@@ -1,4 +1,4 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainView;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;

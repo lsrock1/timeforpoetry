@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews.OpenSourceActivity">
+        tools:context="com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviView.OpenSourceActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"

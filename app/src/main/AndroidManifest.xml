@@ -73,20 +73,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.naviViews.SettingVersionActivity"
+            android:name=".view.naviView.SettingVersionActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.naviViews.BoardActivity"
+            android:name=".view.naviView.BoardActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.naviViews.AskActivity" />
+        <activity android:name=".view.naviView.AskActivity" />
         <activity
             android:name=".view.startActivities.SignActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.naviViews.OpenSourceActivity"
+            android:name=".view.naviView.OpenSourceActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity

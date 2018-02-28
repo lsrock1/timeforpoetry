@@ -1,4 +1,4 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviView;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -10,19 +10,16 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.adapter.BoardActivityAdapter;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.ActivityBoardBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.DaggerNaviActivityComponent;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.di.NaviActivityComponent;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.di.NaviActivityModule;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviViews.BoardActivityViewModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviView.BoardActivityViewModel;
 import com.tsengvn.typekit.TypekitContextWrapper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;

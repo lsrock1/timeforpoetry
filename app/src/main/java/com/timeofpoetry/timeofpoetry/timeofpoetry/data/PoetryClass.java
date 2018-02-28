@@ -377,7 +377,7 @@ public class PoetryClass {
         int databaseId = -1;
         private ObservableBoolean isSelected = new ObservableBoolean(false);
         private Bitmap artwork;
-        private boolean ward;
+        private boolean ward = false;
 
         public Poem(){
 

@@ -3,7 +3,7 @@ package com.timeofpoetry.timeofpoetry.timeofpoetry.di;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.footer.PlayListActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.footer.PlayerActivity;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews.SettingVersionActivity;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviView.SettingVersionActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.startActivities.SignActivity;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.startActivities.SplashActivity;
 

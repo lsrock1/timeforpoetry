@@ -1,18 +1,15 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviViews;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviView;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityScope;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.UserInfoModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.concerns.SharedPreferenceController;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.model.sign.SignCheckModel;
 
 import javax.inject.Inject;
 

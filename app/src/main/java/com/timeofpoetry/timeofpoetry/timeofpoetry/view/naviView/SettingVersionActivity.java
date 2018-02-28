@@ -1,4 +1,4 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviViews;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.view.naviView;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -17,7 +17,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.ActivitySettingVer
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityComponent;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityModule;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.UserInfoModel;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviViews.SettingVersionViewModel;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviView.SettingVersionViewModel;
 import com.tsengvn.typekit.TypekitContextWrapper;
 
 import javax.inject.Inject;

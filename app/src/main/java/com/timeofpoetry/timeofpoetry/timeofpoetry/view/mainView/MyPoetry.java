@@ -1,7 +1,6 @@
-package com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainViewPager;
+package com.timeofpoetry.timeofpoetry.timeofpoetry.view.mainView;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,35 +8,27 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.timeofpoetry.timeofpoetry.timeofpoetry.GlobalApplication;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.data.DiffCallback;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.adapter.MyPoetryRecyclerViewAdapter;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentMyPoetryBinding;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragComponent;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragModule;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.view.MainActivity;
-import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainViewPager.MyPoetryViewModel;
-
-import java.util.ArrayList;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainView.MyPoetryViewModel;
 
 import javax.inject.Inject;
 
-public class MyPoetryFragment extends Fragment {
+public class MyPoetry extends Fragment {
 
     @Inject
     MyPoetryViewModel.MyPoetryViewModelFactory viewModelFactory;
 
-    public MyPoetryFragment() {
+    public MyPoetry() {
     }
 
     @Override
