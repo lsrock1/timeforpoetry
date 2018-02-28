@@ -9,6 +9,7 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.widget.Toast;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.RepeatState;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MediaServiceViewModel;
 
@@ -97,15 +98,20 @@ public class Player implements MediaPlayer.OnSeekCompleteListener, MediaPlayer.O
         if(!mediaServiceViewModel.getIsLogIn().getValue() || this.poem == null) {
             this.poem = poem;
         }
-        else if(this.poem.getDatabaseId() == poem.getDatabaseId()){
-            isNew = false;
-            if(!isPlaying) service.playProcess();
+        else if(this.poem.getDatabaseId() == poem.getDatabaseId()) {
+            if (poem.isWard()) {
+                mMediaPlayer.seekTo(0);
+            } else {
+                isNew = false;
+                if (!isPlaying) service.playProcess();
+            }
         }
         else{
             this.poem = poem;
             mediaServiceViewModel.setSeek(0);
             service.playProcess();
         }
+        this.poem.setWard(false);
     }
 
     void play(){
@@ -199,17 +205,7 @@ public class Player implements MediaPlayer.OnSeekCompleteListener, MediaPlayer.O
             service.stopProcess();
             return;
         }
-        int state = mediaServiceViewModel.getMode().getValue();
-        if(state == PlaybackStateCompat.REPEAT_MODE_ONE || (state == MyPlayListModel.SHUFFLE || state == PlaybackStateCompat.REPEAT_MODE_ALL)&& mediaServiceViewModel.getLength() == 1){
-            mediaPlayer.seekTo(0);
-        }
-        else if(state == MyPlayListModel.SHUFFLE || state == PlaybackStateCompat.REPEAT_MODE_ALL) {
-            mediaServiceViewModel.forward();
-        }
-        else if(state == PlaybackStateCompat.REPEAT_MODE_NONE){
-            service.stopProcess();
-            mediaServiceViewModel.setSeek(0);
-        }
+        mediaServiceViewModel.getMode().getValue().onComplete(mediaPlayer, service, mediaServiceViewModel);
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragScope;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.RepeatState;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
 
@@ -45,23 +46,12 @@ public class PlayerFragmentViewModel extends ViewModel {
     }
 
     public void onModeClick(){
-        if(currentMode.get() == MyPlayListModel.SHUFFLE){
-            myPlayListModel.setMode(PlaybackStateCompat.REPEAT_MODE_ALL);
-        }
-        else if(currentMode.get() == PlaybackStateCompat.REPEAT_MODE_ALL){
-            myPlayListModel.setMode(PlaybackStateCompat.REPEAT_MODE_ONE);
-        }
-        else if(currentMode.get() == PlaybackStateCompat.REPEAT_MODE_ONE){
-            myPlayListModel.setMode(PlaybackStateCompat.REPEAT_MODE_NONE);
-        }
-        else if(currentMode.get() == PlaybackStateCompat.REPEAT_MODE_NONE){
-            myPlayListModel.setMode(MyPlayListModel.SHUFFLE);
-        }
+        myPlayListModel.modeSwitch();
     }
 
     public LiveData<PoetryClass.Poem> getCurrentMedia() {return myPlayListModel.getCurrentPoem();}
 
-    public LiveData<Integer> getMode(){return myPlayListModel.getMode();}
+    public LiveData<RepeatState> getMode(){return myPlayListModel.getMode();}
 
     public LiveData<Integer> getState(){return playBackStateModel.getState();}
 

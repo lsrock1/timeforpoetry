@@ -32,6 +32,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentPlayerBind
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.ActivityComponent;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.di.FragModule;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.OnPlayerFragmentInteractionListener;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.RepeatState;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.musicPlayer.MediaPlaybackService;
@@ -104,23 +105,11 @@ public class PlayerFragment extends Fragment {
             }
         });
 
-        viewModel.getMode().observe(this, new Observer<Integer>() {
+        viewModel.getMode().observe(this, new Observer<RepeatState>() {
             @Override
-            public void onChanged(@Nullable Integer mode) {
-                if(viewModel.setMode(mode)){
-                    if(mode == MyPlayListModel.SHUFFLE){
-                        Toast.makeText(getContext(), "랜덤으로 재생합니다", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(mode == PlaybackStateCompat.REPEAT_MODE_ALL){
-                        Toast.makeText(getContext(), "전체 시를 반복합니다", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(mode == PlaybackStateCompat.REPEAT_MODE_ONE){
-                        Toast.makeText(getContext(), "시 하나를 반복합니다", Toast.LENGTH_SHORT).show();
-                    }
-                    else if(mode == PlaybackStateCompat.REPEAT_MODE_NONE){
-                        Toast.makeText(getContext(), "반복을 사용하지 않습니다", Toast.LENGTH_SHORT).show();
-                    }
-                }
+            public void onChanged(@Nullable RepeatState mode) {
+                if(viewModel.setMode(mode.getPreferData()) && !mode.isAlert())
+                    Toast.makeText(getContext(), mode.getToastString(), Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.RepeatState;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.MyPlayListModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.PlayBackStateModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.SeekModel;
@@ -71,7 +72,7 @@ public class MediaServiceViewModel extends ViewModel {
         return playBackStateModel.getState();
     }
 
-    public LiveData<Integer> getMode() {return model.getMode();}
+    public LiveData<RepeatState> getMode() {return model.getMode();}
 
     public LiveData<PoetryClass.Poem> getCurrentPoem(){
         return currentPoem;
@@ -91,9 +92,5 @@ public class MediaServiceViewModel extends ViewModel {
 
     public int getSeek(){
         return seekModel.getSeek().getValue();
-    }
-
-    public int getLength(){
-        return model.getPoetry().getValue().getPoetry().size();
     }
 }

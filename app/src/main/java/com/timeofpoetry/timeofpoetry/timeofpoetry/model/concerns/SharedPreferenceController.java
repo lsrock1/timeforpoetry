@@ -45,7 +45,7 @@ public class SharedPreferenceController {
     }
 
     public int getRepeatMode(){
-        return mSharedPreference.getInt("RepeatMode", PlaybackStateCompat.REPEAT_MODE_ALL);
+        return mSharedPreference.getInt("RepeatState", PlaybackStateCompat.REPEAT_MODE_ALL);
     }
 
     public int getLastPosition(){ return mSharedPreference.getInt("LastPosition", 0); }
@@ -69,7 +69,7 @@ public class SharedPreferenceController {
     }
 
     public boolean setRepeatMode(int in){
-        return mSharedPreference.edit().putInt("RepeatMode", in).commit();
+        return mSharedPreference.edit().putInt("RepeatState", in).commit();
     }
 
     public boolean setShuffleMode(boolean bool){

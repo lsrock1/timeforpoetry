@@ -78,7 +78,7 @@ public class PlayListViewModel extends PoetryViewModel{
     public void touchItem(PoetryClass.Poem poem) {
         super.touchItem(poem);
         if(!isEditMode.get()){
-            ((MyPlayListModel) super.getModel()).setPosition(getPositionByDbId(poem.getDatabaseId()));
+            ((MyPlayListModel) super.getModel()).setPosition(getPositionByDbId(poem.getDatabaseId()), false);
         }
     }
 

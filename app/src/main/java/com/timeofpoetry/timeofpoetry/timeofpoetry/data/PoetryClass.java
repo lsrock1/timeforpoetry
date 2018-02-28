@@ -377,7 +377,7 @@ public class PoetryClass {
         int databaseId = -1;
         private ObservableBoolean isSelected = new ObservableBoolean(false);
         private Bitmap artwork;
-        private boolean flag = false;
+        private boolean ward;
 
         public Poem(){
 
@@ -425,6 +425,14 @@ public class PoetryClass {
             this.playTime = src.readInt();
             this.composer = src.readString();
             this.databaseId = src.readInt();
+        }
+
+        public boolean isWard() {
+            return ward;
+        }
+
+        public void setWard(boolean ward) {
+            this.ward = ward;
         }
 
         public void setPlayTime(int time){

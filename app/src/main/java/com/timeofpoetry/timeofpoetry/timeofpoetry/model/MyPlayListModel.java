@@ -2,38 +2,27 @@ package com.timeofpoetry.timeofpoetry.timeofpoetry.model;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.util.Log;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PlayListDB;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryClass;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModel;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PoetryModelData;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.RepeatMode.RepeatAll;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.RepeatMode.RepeatNone;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.RepeatMode.RepeatOne;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.data.RepeatMode.Shuffle;
+import com.timeofpoetry.timeofpoetry.timeofpoetry.interfaces.RepeatState;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.model.concerns.SharedPreferenceController;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
-import java.util.logging.Handler;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -48,7 +37,7 @@ public class MyPlayListModel extends PoetryModel{
     private SharedPreferenceController sharedPreferenceController;
     private PlayListDB playListDB;
 
-    private MutableLiveData<Integer> mode = new MutableLiveData<>();
+    private MutableLiveData<RepeatState> mode = new MutableLiveData<>();
     private MutableLiveData<PoetryClass.Poem> currentPoem = new MutableLiveData<>();
     private int position;
     private PoetryModelData poetryModelData;
@@ -59,11 +48,32 @@ public class MyPlayListModel extends PoetryModel{
         this.sharedPreferenceController = sharedPreferenceController;
         this.playListDB = playListDB;
         position = sharedPreferenceController.getLastPosition();
-        mode.setValue(sharedPreferenceController.getShuffleMode() ? MyPlayListModel.SHUFFLE : sharedPreferenceController.getRepeatMode());
+        initMode();
         poetryModelData = playListDB.getPoetryModelData();
         playList.setValue(poetryModelData);
         currentPoem.setValue(PoetryClass.getNullPoem());
         setCurrentPoem(false);
+    }
+
+    private void initMode(){
+        boolean isShuffle = sharedPreferenceController.getShuffleMode();
+        RepeatState state;
+        if(isShuffle){
+            state = Shuffle.getInstance(this);
+        }
+        else{
+            int mode = sharedPreferenceController.getRepeatMode();
+            if(mode == PlaybackStateCompat.REPEAT_MODE_NONE){
+                state = RepeatNone.getInstance(this);
+            }
+            else if(mode == PlaybackStateCompat.REPEAT_MODE_ONE){
+                state = RepeatOne.getInstance(this);
+            }
+            else{
+                state = RepeatAll.getInstance(this);
+            }
+        }
+        mode.setValue(state);
     }
 
     public void addPoetry(PoetryClass.Poem poem){
@@ -134,17 +144,21 @@ public class MyPlayListModel extends PoetryModel{
         }
     }
 
-    private int getRand() {
-        Random r = new Random();
-        if (poetryModelData.getPoetry().size() == 1) {
-            return position;
-        } else {
-            int i;
-            do {
-                i = r.nextInt(poetryModelData.getPoetry().size());
-            } while (i == position);
+    private void setCurrentPoemByWard(){
+        PoetryClass.Poem tmpPoem;
+        sharedPreferenceController.setLastPosition(position);
+        if(poetryModelData.getPoetry().size() == 0){
+            tmpPoem = PoetryClass.getNullPoem();
+            BitmapDrawable drawable = (BitmapDrawable) ContextCompat.getDrawable(getApplicationContext(), R.drawable.logo);
+            Bitmap resource = drawable.getBitmap();
+            tmpPoem.setArtwork(resource);
+            currentPoem.setValue(tmpPoem);
+        }
+        else{
+            tmpPoem = poetryModelData.getPoetry().get(position);
+            tmpPoem.setWard(true);
+            currentPoem.setValue(tmpPoem);
 
-            return i;
         }
     }
 
@@ -157,60 +171,53 @@ public class MyPlayListModel extends PoetryModel{
         return currentPoem;
     }
 
-    public MutableLiveData<Integer> getMode(){
+    public MutableLiveData<RepeatState> getMode(){
         return mode;
     }
 
-    public void setMode(int mode){
-        if(mode == MyPlayListModel.SHUFFLE){
+    public void setMode(RepeatState mode, int preferData){
+        if(preferData == MyPlayListModel.SHUFFLE){
             sharedPreferenceController.setShuffleMode(true);
         }
-        else if(mode == PlaybackStateCompat.REPEAT_MODE_ALL){
+        else if(preferData == PlaybackStateCompat.REPEAT_MODE_ALL){
             sharedPreferenceController.setShuffleMode(false);
-            sharedPreferenceController.setRepeatMode(mode);
+            sharedPreferenceController.setRepeatMode(preferData);
         }
-        else if(mode == PlaybackStateCompat.REPEAT_MODE_ONE){
-            sharedPreferenceController.setRepeatMode(mode);
+        else if(preferData == PlaybackStateCompat.REPEAT_MODE_ONE){
+            sharedPreferenceController.setRepeatMode(preferData);
         }
-        else if(mode == PlaybackStateCompat.REPEAT_MODE_NONE){
-            sharedPreferenceController.setRepeatMode(mode);
+        else if(preferData == PlaybackStateCompat.REPEAT_MODE_NONE){
+            sharedPreferenceController.setRepeatMode(preferData);
         }
         this.mode.setValue(mode);
     }
 
-    public void setPosition(int position){
+    public void setPosition(int position, boolean byWard){
         if(position >= poetryModelData.getPoetry().size() || position < 0){
             return;
         }
         this.position = position;
-        setCurrentPoem(false);
+        if(byWard){
+            setCurrentPoemByWard();
+        }
+        else{
+            setCurrentPoem(false);
+        }
     }
 
     public void forward(){
-        if(mode.getValue() == SHUFFLE){
-            setPosition(getRand());
-        }
-        else{
-            if(position == poetryModelData.getPoetry().size() - 1){
-                setPosition(0);
-            }
-            else{
-                setPosition(position + 1);
-            }
-        }
+        mode.getValue().forward(this);
     }
 
     public void backward(){
-        if(mode.getValue() == SHUFFLE) {
-            setPosition(getRand());
-        }
-        else{
-            if(position == 0){
-                setPosition(poetryModelData.getPoetry().size() - 1);
-            }
-            else{
-                setPosition(position - 1);
-            }
-        }
+        mode.getValue().backward(this);
+    }
+
+    public int getPosition(){
+        return position;
+    }
+
+    public void modeSwitch(){
+        mode.getValue().modeSwitch();
     }
 }
