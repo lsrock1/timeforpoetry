@@ -31,11 +31,12 @@ import java.util.concurrent.TimeUnit;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
- * Created by sangroklee on 2017. 12. 11..
+ * databinding에 쓰이는 어댑터들을 모아놓은 클래스
  */
 
 public class Adapter {
-
+    // layout/activity_setting_version editText #like_session
+    // 텍스트 에디터에서 키보드 done 버튼을 눌렀을 때 정보 업데이트
     @BindingAdapter("onEditorActionUserInfoUpdate")
     public static void onEditorActionUserInfoUpdate(EditText view, final SettingVersionViewModel viewModel){
         view.setOnEditorActionListener(new TextView.OnEditorActionListener()
@@ -53,6 +54,8 @@ public class Adapter {
         });
     }
 
+    // layout/fragment_sign_in editText
+    // 텍스트 에디터에서 키보드 done 버튼을 눌렀을 때 로그인 작동
     @BindingAdapter("onEditorActionSignIn")
     public static void onEditorAction(EditText view, final SignInViewModel viewModel){
         view.setOnEditorActionListener(new TextView.OnEditorActionListener()
@@ -70,6 +73,8 @@ public class Adapter {
         });
     }
 
+    // layout/fragment_sign_up editText
+    // 텍스트 에디터에서 키보드 done 버튼을 눌렀을 때 회원가입 작동
     @BindingAdapter("onEditorActionSignUp")
     public static void onEditorAction(EditText view, final SignUpViewModel viewModel){
         view.setOnEditorActionListener(new TextView.OnEditorActionListener()
@@ -87,11 +92,14 @@ public class Adapter {
         });
     }
 
+    // layout/fragment_player
+    // marquee 기능을 작동시키기 위해
     @BindingAdapter("onSelected")
     public static void onSelected(View view, boolean s){
-        view.setSelected(true);
+        view.setSelected(s);
     }
 
+    //원 이미지를 로드할 때는 이 함수 사용
     @BindingAdapter("loadImage")
     public static void loadImage(ImageView view, String url){
         RequestOptions option = new RequestOptions().placeholder(R.drawable.logo).error(R.drawable.logo).transform(new CropCircleTransformation());
@@ -101,6 +109,7 @@ public class Adapter {
                 .into(view);
     }
 
+    //사각형 이미지를 로드할 때는 이 함수 사용
     @BindingAdapter("loadSquareImage")
     public static void loadSquareImage(ImageView view, String url){
         RequestOptions option = new RequestOptions().placeholder(R.drawable.logo).error(R.drawable.logo);
@@ -116,13 +125,14 @@ public class Adapter {
         view.setText(Integer.toString(count));
     }
 
-    @BindingAdapter({"setStartIcon"})
+    @BindingAdapter("setStartIcon")
     public static void setIcon(TextView view, Drawable drawable){
         drawable.setBounds(0, 0, view.getResources().getDimensionPixelSize(R.dimen.f34), view.getResources().getDimensionPixelSize(R.dimen.f60));
         view.setCompoundDrawables(drawable, null, null, null);
     }
 
-    @BindingAdapter({"setFilter"})
+    //재생중인 시의 커버에 회색 필터를 씌우는 함수
+    @BindingAdapter("setFilter")
     public static void setFilter(ImageView view, Boolean bool) {
         if (bool) {
             view.setColorFilter(Color.parseColor("#BDBDBD"), PorterDuff.Mode.MULTIPLY);
@@ -132,7 +142,7 @@ public class Adapter {
         }
     }
 
-    @BindingAdapter({"mode"})
+    @BindingAdapter("mode")
     public static void mode(ImageView view, int mode){
         if(mode == MyPlayListModel.SHUFFLE){
             view.setImageDrawable(ContextCompat.getDrawable(view.getContext(), R.drawable.player_random_off));
@@ -148,7 +158,7 @@ public class Adapter {
         }
     }
 
-    @BindingAdapter({"progressText"})
+    @BindingAdapter("progressText")
     public static void progressText(TextView view, int progress){
         view.setText(String.format("%02d : %02d",
                 TimeUnit.MILLISECONDS.toMinutes(progress),
@@ -156,21 +166,14 @@ public class Adapter {
         ));
     }
 
-    @BindingAdapter({"android:layout_height"})
+    @BindingAdapter("android:layout_height")
     public static void setLayoutHeight(View view, float value){
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.height = (int) value;
         view.setLayoutParams(layoutParams);
     }
 
-    @BindingAdapter({"android:layout_height"})
-    public static void setLayoutHeight(View view, int value){
-        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.height = value;
-        view.setLayoutParams(layoutParams);
-    }
-
-    @BindingAdapter({"android:layout_width"})
+    @BindingAdapter("android:layout_width")
     public static void setLayoutWidth(View view, float value){
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = (int) value;
@@ -184,22 +187,6 @@ public class Adapter {
         view.setLayoutParams(layoutParams);
     }
 
-    @BindingAdapter("android:layout_marginEnd")
-    public static void setMarginEnd(View view, float value){
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-        layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin,
-                layoutParams.rightMargin, Math.round(value));
-        view.setLayoutParams(layoutParams);
-    }
-
-    @BindingAdapter("android:layout_marginStart")
-    public static void setMarginStart(View view, float value){
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-        layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin,
-                layoutParams.rightMargin, Math.round(value));
-        view.setLayoutParams(layoutParams);
-    }
-
     @BindingAdapter("android:layout_weight")
     public static void setLayoutLast(View view, int value) {
         ViewGroup.LayoutParams params = view.getLayoutParams();
@@ -210,25 +197,9 @@ public class Adapter {
         view.setLayoutParams(layoutParams);
     }
 
-    @BindingAdapter("footerVisible")
-    public static void setFooterVisible(View view, boolean visible){
-        if (view.getTag() == null) {
-            view.setTag(true);
-            view.setVisibility(visible ? View.VISIBLE : View.GONE);
-        } else {
-            view.animate().cancel();
-            if (visible) {
-                view.setVisibility(View.VISIBLE);
-                Animation anim = AnimationUtils.loadAnimation(view.getContext(), R.anim.slide_bottom_up);
-                view.setAnimation(anim);
-            } else {
-                Animation anim = AnimationUtils.loadAnimation(view.getContext(), R.anim.slide_top_down);
-                view.setAnimation(anim);
-                view.setVisibility(View.GONE);
-            }
-        }
-    }
-
+    //layout/board_item
+    //content text의 변화를 observe해서
+    //expandable layout을 초기화하고 보이게 expand 함
     @BindingAdapter("expandableChildText")
     public static void setExpandableChildText(TextView view, String text){
         if(text.equals("")) return;
@@ -238,6 +209,8 @@ public class Adapter {
         exView.expand();
     }
 
+    //layout/open_source_row
+    //expandable layout을 토글
     @BindingAdapter("expandableToggle")
     public static void setExpandableToggle(View view, boolean bool){
         view.setOnClickListener(new View.OnClickListener() {

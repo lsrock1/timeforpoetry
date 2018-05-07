@@ -26,14 +26,14 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.data.PlayListDB;
 
 
 public class PoetryClass {
-    public static final String E_MAIL_KEY = "r_user_email";
-    public static final String PASSWORD_KEY = "r_user_password";
-    public static final String REQUEST_MEMBER = "member";
-    public static final String REQUEST_CONTENT = "content";
-    public static final String KEY_TYPE = "r_type";
-    public static final String AUTHOR = "r_author";
-    public static final String POETRY = "r_poetry";
-    public static final String VOICE = "r_voice";
+    static final String sEmailKey = "r_user_email";
+    static final String sPasswordKey = "r_user_password";
+    static final String sRequestMember = "member";
+    static final String sRequestContent = "content";
+    static final String sKeyType = "r_type";
+    static final String sAuthor = "r_author";
+    static final String sPoetry = "r_poetry";
+    static final String sVoice = "r_voice";
 
     public interface ServerService{
         @Headers({"Accept: application/json"})
@@ -106,22 +106,22 @@ public class PoetryClass {
     }
 
     public static class SignUp{
-        private final String request = PoetryClass.REQUEST_MEMBER;
+        private final String request = sRequestMember;
         private List<KeyValue> regist = new LinkedList<>();
 
         public SignUp(String email, String pwd){
-            regist.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
-            regist.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
+            regist.add(new KeyValue(sEmailKey, email));
+            regist.add(new KeyValue(sPasswordKey, pwd));
         }
     }
 
     public static class SignIn{
-        private final String request = PoetryClass.REQUEST_MEMBER;
+        private final String request = sRequestMember;
         private List<KeyValue> login = new LinkedList<>();
 
         public SignIn(String email, String pwd){
-            login.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
-            login.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
+            login.add(new KeyValue(sEmailKey, email));
+            login.add(new KeyValue(sPasswordKey, pwd));
         }
     }
 
@@ -130,8 +130,8 @@ public class PoetryClass {
         private List<KeyValue> create = new LinkedList<>();
 
         public SetSns(String email, String pwd, int kind){
-            create.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
-            create.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
+            create.add(new KeyValue(sEmailKey, email));
+            create.add(new KeyValue(sPasswordKey, pwd));
             create.add(new KeyValue("r_social_kind", kind == 0 ? "KAKAO/TALK" : "facebook"));
             create.add(new KeyValue("r_auth_token", ""));
             create.add(new KeyValue("r_access_token", ""));
@@ -144,33 +144,33 @@ public class PoetryClass {
         private List<KeyValue> search = new LinkedList<>();
 
         public GetSns(String email, String pwd, int kind){
-            search.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
-            search.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
+            search.add(new KeyValue(sEmailKey, email));
+            search.add(new KeyValue(sPasswordKey, pwd));
             search.add(new KeyValue("r_social_kind", kind == 0 ? "KAKAO/TALK" : "FACEBOOK"));
         }
     }
 
     //나의 시집 조회
     public static class GetMyPoetry{
-        private final String request = PoetryClass.REQUEST_MEMBER;
+        private final String request = sRequestMember;
         private List<KeyValue> get_mypoetry = new LinkedList<>();
 
         public GetMyPoetry(String email, String pwd){
-            get_mypoetry.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
-            get_mypoetry.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
+            get_mypoetry.add(new KeyValue(sEmailKey, email));
+            get_mypoetry.add(new KeyValue(sPasswordKey, pwd));
         }
     }
 
     //나의 시집 추가 혹은 중복 체크
     public static class NewMyPoetry{
-        private final String request = PoetryClass.REQUEST_CONTENT;
+        private final String request = sRequestContent;
         private List<KeyValue> set_mypoetry_and_like = new LinkedList<>();
         private List<KeyValue> is_my_poetry = new LinkedList<>();
 
         public NewMyPoetry(String option, String email, String poet, String title, String voice){
             List<KeyValue> handleArray = option.equals("set")? set_mypoetry_and_like : is_my_poetry;
 
-            handleArray.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
+            handleArray.add(new KeyValue(sEmailKey, email));
             handleArray.add(new KeyValue("r_authorName", poet));
             handleArray.add(new KeyValue("r_poetryTitle", title));
             handleArray.add(new KeyValue("r_voiceName", voice));
@@ -179,7 +179,7 @@ public class PoetryClass {
 
     //지금몇시 조회
     public static class GetWeatherPoetry{
-        private final String request = PoetryClass.REQUEST_MEMBER;
+        private final String request = sRequestMember;
         private List<KeyValue> get_todaylist = new LinkedList<>();
 
         public GetWeatherPoetry(){
@@ -191,28 +191,28 @@ public class PoetryClass {
     }
 
     public static class SetMyPoetry{
-        private final String request = PoetryClass.REQUEST_MEMBER;
+        private final String request = sRequestMember;
         private List<KeyValue> set_mypoetry = new LinkedList<>();
 
         public SetMyPoetry(String work, String email, String pwd, String poet, String poem, String voice){
             set_mypoetry.add(new KeyValue("r_work", work));
-            set_mypoetry.add(new KeyValue(PoetryClass.KEY_TYPE, "single"));
-            set_mypoetry.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
-            set_mypoetry.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
-            set_mypoetry.add(new KeyValue(PoetryClass.AUTHOR, poet));
-            set_mypoetry.add(new KeyValue(PoetryClass.POETRY, poem));
-            set_mypoetry.add(new KeyValue(PoetryClass.VOICE, voice));
+            set_mypoetry.add(new KeyValue(sKeyType, "single"));
+            set_mypoetry.add(new KeyValue(sEmailKey, email));
+            set_mypoetry.add(new KeyValue(sPasswordKey, pwd));
+            set_mypoetry.add(new KeyValue(sAuthor, poet));
+            set_mypoetry.add(new KeyValue(sPoetry, poem));
+            set_mypoetry.add(new KeyValue(sVoice, voice));
 
         }
     }
 
     //월간 몇시 조회
     public static class GetMonthlyPoetry{
-        private final String request = PoetryClass.REQUEST_MEMBER;
+        private final String request = sRequestMember;
         private List<KeyValue> get_monthlylist = new LinkedList<>();
 
         public GetMonthlyPoetry(String yearMonth[]){
-            get_monthlylist.add(new KeyValue(PoetryClass.KEY_TYPE, "month"));
+            get_monthlylist.add(new KeyValue(sKeyType, "month"));
             get_monthlylist.add(new KeyValue("r_year", yearMonth[0]));
             get_monthlylist.add(new KeyValue("r_month", yearMonth[1]));
             get_monthlylist.add(new KeyValue("r_orderby", "x_contentTitle"));
@@ -221,19 +221,19 @@ public class PoetryClass {
     }
 
     public static class GetPlayByList{
-        private final String request = PoetryClass.REQUEST_CONTENT;
+        private final String request = sRequestContent;
         private List<KeyValue> get_playbylist = new LinkedList<>();
 
         public GetPlayByList(String poet, String poem, String voice){
-            get_playbylist.add(new KeyValue(PoetryClass.KEY_TYPE, "union"));
-            get_playbylist.add(new KeyValue(PoetryClass.AUTHOR, poet));
-            get_playbylist.add(new KeyValue(PoetryClass.POETRY, poem));
+            get_playbylist.add(new KeyValue(sKeyType, "union"));
+            get_playbylist.add(new KeyValue(sAuthor, poet));
+            get_playbylist.add(new KeyValue(sPoetry, poem));
             get_playbylist.add(new KeyValue("r_voice", voice));
         }
     }
 
     public static class Like{
-        private final String request = PoetryClass.REQUEST_CONTENT;
+        private final String request = sRequestContent;
         private List<KeyValue> set_like_only = new LinkedList<>();
 
         public Like(String poet, String poem, String voice){
@@ -255,11 +255,11 @@ public class PoetryClass {
     }
 
     public static class IsMyPoetry{
-        private final String request = PoetryClass.REQUEST_CONTENT;
+        private final String request = sRequestContent;
         private List<KeyValue> is_my_poetry = new LinkedList<>();
 
         public IsMyPoetry(String email, String poet, String poem, String voice){
-            is_my_poetry.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
+            is_my_poetry.add(new KeyValue(sEmailKey, email));
             is_my_poetry.add(new KeyValue("r_authorName", poet));
             is_my_poetry.add(new KeyValue("r_poetryTitle", poem));
             is_my_poetry.add(new KeyValue("r_voiceName", voice));
@@ -267,7 +267,7 @@ public class PoetryClass {
     }
 
     public static class NowPoetry{
-        private final String request = PoetryClass.REQUEST_MEMBER;
+        private final String request = sRequestMember;
         private List<KeyValue> get_todaylist = new LinkedList<>();
 
         public NowPoetry(){
@@ -283,8 +283,8 @@ public class PoetryClass {
         private List<KeyValue> addedinfo = new LinkedList<>();
 
         public AddInfo(String email, String pwd, String poet, String poem, String season){
-            addedinfo.add(new KeyValue(PoetryClass.E_MAIL_KEY, email));
-            addedinfo.add(new KeyValue(PoetryClass.PASSWORD_KEY, pwd));
+            addedinfo.add(new KeyValue(sEmailKey, email));
+            addedinfo.add(new KeyValue(sPasswordKey, pwd));
             addedinfo.add(new KeyValue("r_nickname", email));
             addedinfo.add(new KeyValue("r_like_poet", poet));
             addedinfo.add(new KeyValue("r_like_poetry", poem));
@@ -345,28 +345,28 @@ public class PoetryClass {
         public ObservableField<String> displayContent = new ObservableField<>("");
 
         public String getTitle(){
-            return this.title;
+            return title;
         }
 
         public String getDate(){
-            return this.date;
+            return date;
         }
 
         public int getId(){
-            return this.id;
+            return id;
         }
 
-        public String getContent(){return this.content; }
+        public String getContent(){return content; }
     }
 
     //시 클래스
-    public static class Poem implements Parcelable{
+    public static class Poem{
         @SerializedName("x_artworkURL") String artworkUrl;
         @SerializedName("x_authorID") String authorID;
         @SerializedName("x_authorName") String poet;
         public @SerializedName("x_likecount") int likeCount = 0;
         @SerializedName("x_poetryID") String poetryId;
-        @SerializedName("x_poetryTitle") String poetryTitle;
+        @SerializedName("x_poetryTitle") String poem;
         public @SerializedName("x_soundURL") String soundUrl;
         @SerializedName("x_textURL") String textUrl;
         @SerializedName("x_voiceID") String voiceId;
@@ -383,48 +383,16 @@ public class PoetryClass {
 
         }
 
-        public Poem(Cursor c, int id){
-            artworkUrl = c.getString(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_ARTWORK));
-            poet = c.getString(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_POET));
-            poetryTitle = c.getString(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_POEM));
-            soundUrl = c.getString(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_SOUNDURL));
-            textUrl = c.getString(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_LYRICSURL));
-            voiceName = c.getString(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_VOICE));
-            playTime = c.getInt(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_DURATION));
+        public Poem(String artworkUrl, String poet, String poem, String soundUrl, String textUrl, String voiceName, int playTime, String composer, int id){
+            this.artworkUrl = artworkUrl;
+            this.poet = poet;
+            this.poem = poem;
+            this.soundUrl = soundUrl;
+            this.textUrl = textUrl;
+            this.voiceName = voiceName;
+            this.playTime = playTime;
             databaseId = id;
-            composer = c.getString(c.getColumnIndexOrThrow(PlayListDB.COLUMN_NAME_COMPOSER));
-        }
-
-        public Poem(Parcel src) {
-//            dest.writeString(artworkUrl);
-//            dest.writeString(authorID);
-//            dest.writeString(poet);
-//            dest.writeInt(likeCount);
-//            dest.writeString(poetryId);
-//            dest.writeString(poetryTitle);
-//            dest.writeString(soundUrl);
-//            dest.writeString(textUrl);
-//            dest.writeString(voiceId);
-//            dest.writeString(voiceName);
-//            dest.writeString(voiceSex);
-//            dest.writeInt(playTime);
-//            dest.writeString(composer);
-//            dest.writeInt(databaseId);
-//            if(artwork != null) dest.writeValue(artwork)
-            this.artworkUrl = src.readString();
-            this.authorID = src.readString();
-            this.poet = src.readString();
-            this.likeCount = src.readInt();
-            this.poetryId = src.readString();
-            this.poetryTitle = src.readString();
-            this.soundUrl = src.readString();
-            this.textUrl = src.readString();
-            this.voiceId = src.readString();
-            this.voiceName = src.readString();
-            this.voiceSex = src.readString();
-            this.playTime = src.readInt();
-            this.composer = src.readString();
-            this.databaseId = src.readInt();
+            this.composer = composer;
         }
 
         public boolean isWard() {
@@ -452,7 +420,7 @@ public class PoetryClass {
         }
 
         public void setPoetryTitle(String poem){
-            this.poetryTitle = poem;
+            this.poem = poem;
         }
 
         public void setDatabaseId(int id){
@@ -483,7 +451,7 @@ public class PoetryClass {
         }
 
         public String getPoem(){
-            return this.poetryTitle;
+            return this.poem;
         }
 
         public String getVoice(){
@@ -534,40 +502,6 @@ public class PoetryClass {
 
             return poem;
         }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(artworkUrl);
-            dest.writeString(authorID);
-            dest.writeString(poet);
-            dest.writeInt(likeCount);
-            dest.writeString(poetryId);
-            dest.writeString(poetryTitle);
-            dest.writeString(soundUrl);
-            dest.writeString(textUrl);
-            dest.writeString(voiceId);
-            dest.writeString(voiceName);
-            dest.writeString(voiceSex);
-            dest.writeInt(playTime);
-            dest.writeString(composer);
-            dest.writeInt(databaseId);
-        }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        public static final Creator CREATOR = new Creator<Poem>(){
-            public Poem createFromParcel(Parcel src){
-                return new Poem(src);
-            }
-
-            @Override
-            public Poem[] newArray(int size) {
-                return new Poem[0];
-            }
-        };
     }
 
     public static class Banner{
@@ -600,12 +534,12 @@ public class PoetryClass {
     }
 
     public static class RequestAddInfo{
-        final String request = REQUEST_MEMBER;
+        final String request = sRequestMember;
         ArrayList<KeyValue> addedinfo = new ArrayList<>();
 
         public RequestAddInfo(String email, String pwd){
-            addedinfo.add(new KeyValue(E_MAIL_KEY, email));
-            addedinfo.add(new KeyValue(PASSWORD_KEY, pwd));
+            addedinfo.add(new KeyValue(sEmailKey, email));
+            addedinfo.add(new KeyValue(sPasswordKey, pwd));
         }
     }
 

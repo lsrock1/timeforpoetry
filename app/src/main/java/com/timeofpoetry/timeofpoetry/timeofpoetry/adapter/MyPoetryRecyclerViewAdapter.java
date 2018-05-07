@@ -12,10 +12,10 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainView.MyPoetryVie
 
 public class MyPoetryRecyclerViewAdapter extends RecyclerView.Adapter<MyPoetryRecyclerViewAdapter.ViewHolder> {
 
-    private MyPoetryViewModel viewModel;
+    private MyPoetryViewModel mViewModel;
 
     public MyPoetryRecyclerViewAdapter(MyPoetryViewModel viewModel) {
-        this.viewModel = viewModel;
+        this.mViewModel = viewModel;
     }
 
     @Override
@@ -27,22 +27,22 @@ public class MyPoetryRecyclerViewAdapter extends RecyclerView.Adapter<MyPoetryRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.binding.setPoem(viewModel.getItem(position));
+        holder.mBinding.setPoem(mViewModel.getItem(position));
     }
 
     @Override
     public int getItemCount() {
-        return viewModel.getItemCount();
+        return mViewModel.getItemCount();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        PoetryItemNoMapleBinding binding;
+        PoetryItemNoMapleBinding mBinding;
 
         ViewHolder(View view) {
             super(view);
-            binding = DataBindingUtil.bind(view);
-            binding.setViewModel(viewModel);
+            mBinding = DataBindingUtil.bind(view);
+            mBinding.setViewModel(mViewModel);
         }
     }
 }

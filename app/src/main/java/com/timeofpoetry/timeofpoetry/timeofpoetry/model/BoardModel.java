@@ -19,12 +19,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by sangroklee on 2018. 1. 16..
+ * viewmodel/naviView/BoardActivityViewModel 에서 사용
+ * 공지사항 데이터를 실제로 가져오는 모델
+ * getlist는 공지사항의 제목들을 한번에 가져오며
+ * getContent는 해당 공지사항의 아이디를 가지고 실제 내용을 가져온다
  */
 @ActivityScope
 public class BoardModel {
-
-    private ArrayMap<Integer, String> cache = new ArrayMap<>();
 
     @Inject
     public BoardModel() {
@@ -52,24 +53,18 @@ public class BoardModel {
     }
 
     public void getContent(int id, ObservableField<String> content){
-        if(cache.get(id) != null){
-            content.set(cache.get(id));
-        }
-        else {
-            Call<List<List<PoetryClass.BoardIdItem>>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).getNoticeBody(new PoetryClass.GetNoticeBody(id));
-            call.enqueue(new Callback<List<List<PoetryClass.BoardIdItem>>>() {
-                @Override
-                public void onResponse(Call<List<List<PoetryClass.BoardIdItem>>> call, retrofit2.Response<List<List<PoetryClass.BoardIdItem>>> response) {
-                    cache.put(id, response.body().get(0).get(0).getContent());
-                    content.set(response.body().get(0).get(0).getContent());
-                }
+        Call<List<List<PoetryClass.BoardIdItem>>> call = PoetryClass.retrofit.create(PoetryClass.ServerService.class).getNoticeBody(new PoetryClass.GetNoticeBody(id));
+        call.enqueue(new Callback<List<List<PoetryClass.BoardIdItem>>>() {
+            @Override
+            public void onResponse(Call<List<List<PoetryClass.BoardIdItem>>> call, retrofit2.Response<List<List<PoetryClass.BoardIdItem>>> response) {
+                content.set(response.body().get(0).get(0).getContent());
+            }
 
-                @Override
-                public void onFailure(Call<List<List<PoetryClass.BoardIdItem>>> call, Throwable t) {
+            @Override
+            public void onFailure(Call<List<List<PoetryClass.BoardIdItem>>> call, Throwable t) {
 
-                }
-            });
-        }
+            }
+        });
     }
 
 }

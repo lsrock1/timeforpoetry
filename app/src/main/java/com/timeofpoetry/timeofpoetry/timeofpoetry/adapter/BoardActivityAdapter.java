@@ -13,14 +13,18 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.naviView.BoardActivi
 
 import java.util.List;
 
+/**
+ * view/naviView/BoardActivity recycler를 위한 어뎁터
+ */
+
 public class BoardActivityAdapter extends RecyclerView.Adapter<BoardActivityAdapter.ViewHolder> {
 
-    private List<PoetryClass.BoardIdItem> values;
-    private BoardActivityViewModel viewModel;
+    private List<PoetryClass.BoardIdItem> mValues;
+    private BoardActivityViewModel mViewModel;
 
-    BoardActivityAdapter(List<PoetryClass.BoardIdItem> items, BoardActivityViewModel viewModel) {
-        values = items;
-        this.viewModel = viewModel;
+    public BoardActivityAdapter(List<PoetryClass.BoardIdItem> items, BoardActivityViewModel viewModel) {
+        mValues = items;
+        this.mViewModel = viewModel;
     }
 
     @Override
@@ -32,24 +36,24 @@ public class BoardActivityAdapter extends RecyclerView.Adapter<BoardActivityAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.binding.setItem(values.get(position));
+        holder.mBinding.setItem(mValues.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return values.size();
+        return mValues.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        BoardItemBinding binding;
+        BoardItemBinding mBinding;
 
         ViewHolder(View view) {
             super(view);
-            binding = DataBindingUtil.bind(view);
-            binding.setViewModel(viewModel);
+            mBinding = DataBindingUtil.bind(view);
+            mBinding.setViewModel(mViewModel);
             setIsRecyclable(false);
-            binding.expand.setInRecyclerView(true);
+            mBinding.expand.setInRecyclerView(true);
         }
     }
 }

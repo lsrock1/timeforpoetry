@@ -30,26 +30,26 @@ import javax.inject.Inject;
 
 public class PlayerActivity extends AppCompatActivity implements OnPlayerFragmentInteractionListener{
 
-    private ActivityComponent component;
+    private ActivityComponent mComponent;
     @Inject
     PlayerViewModel.PlayerViewModelFactory viewModelFactory;
-    private PlayerViewModel viewModel;
+    private PlayerViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        component = ((GlobalApplication) getApplication())
+        mComponent = ((GlobalApplication) getApplication())
                 .getComponent()
                 .plus(new ActivityModule());
-        component.inject(this);
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(PlayerViewModel.class);
+        mComponent.inject(this);
+        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(PlayerViewModel.class);
         ActivityPlayerBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_player);
 
-        binding.setViewModel(viewModel);
-        viewModel.getSeek().observe(this, new Observer<Integer>() {
+        binding.setViewModel(mViewModel);
+        mViewModel.getSeek().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer integer) {
-                viewModel.setProgress(integer);
+                mViewModel.setProgress(integer);
             }
         });
 
@@ -58,7 +58,7 @@ public class PlayerActivity extends AppCompatActivity implements OnPlayerFragmen
                     private int progressValue;
 
                     public void onStopTrackingTouch(SeekBar seekBar) {
-                        viewModel.setSeek(progressValue);
+                        mViewModel.setSeek(progressValue);
                         MediaControllerCompat.getMediaController(PlayerActivity.this).getTransportControls().seekTo(progressValue);
                     }
 
@@ -77,7 +77,7 @@ public class PlayerActivity extends AppCompatActivity implements OnPlayerFragmen
             @Override
             public void onClick(View view) {
                 if(checkLogin())
-                    viewModel.lyricToggle();
+                    mViewModel.lyricToggle();
             }
         });
 
@@ -85,8 +85,8 @@ public class PlayerActivity extends AppCompatActivity implements OnPlayerFragmen
             @Override
             public void onClick(View view) {
                 if(checkLogin()) {
-                    if (viewModel.bookmarkStatus.getValue() == null || viewModel.bookmarkStatus.getValue() != MyPoetryModel.CONNECTING) {
-                        viewModel.bookMark().observe(PlayerActivity.this, new Observer<Integer>() {
+                    if (mViewModel.bookmarkStatus.getValue() == null || mViewModel.bookmarkStatus.getValue() != MyPoetryModel.CONNECTING) {
+                        mViewModel.bookMark().observe(PlayerActivity.this, new Observer<Integer>() {
                             @Override
                             public void onChanged(@Nullable Integer integer) {
                                 bookMarkStatus(integer);
@@ -103,7 +103,7 @@ public class PlayerActivity extends AppCompatActivity implements OnPlayerFragmen
             @Override
             public void onClick(View view) {
                 if(checkLogin()) {
-                    binding.setLike(Integer.toString(Integer.parseInt(binding.getLike() ) + (viewModel.like() ? 1 : -1)));
+                    binding.setLike(Integer.toString(Integer.parseInt(binding.getLike() ) + (mViewModel.like() ? 1 : -1)));
                 }
             }
         });
@@ -116,14 +116,14 @@ public class PlayerActivity extends AppCompatActivity implements OnPlayerFragmen
             }
         });
 
-        viewModel.getCurrent().observe(this, new Observer<PoetryClass.Poem>() {
+        mViewModel.getCurrent().observe(this, new Observer<PoetryClass.Poem>() {
             @Override
             public void onChanged(@Nullable PoetryClass.Poem poem) {
                 if(poem == null || binding.getPoem() != null && poem.getDatabaseId() == binding.getPoem().getDatabaseId()){
                     return;
                 }
                 binding.setPoem(poem);
-                viewModel.getLikeCount().observe(PlayerActivity.this, new Observer<Integer>() {
+                mViewModel.getLikeCount().observe(PlayerActivity.this, new Observer<Integer>() {
                     @Override
                     public void onChanged(@Nullable Integer integer) {
                         binding.setLike(Integer.toString(integer));
@@ -149,7 +149,7 @@ public class PlayerActivity extends AppCompatActivity implements OnPlayerFragmen
     }
 
     private Boolean checkLogin(){
-        if(viewModel.isLogin.getValue()){
+        if(mViewModel.isLogin.getValue()){
             return true;
         }
         else{
@@ -160,14 +160,14 @@ public class PlayerActivity extends AppCompatActivity implements OnPlayerFragmen
 
     @Override
     public void onBackPressed() {
-        if(!viewModel.onBackPressed()) {
+        if(!mViewModel.onBackPressed()) {
             super.onBackPressed();
             overridePendingTransition(0, R.anim.slide_top_down);
         }
     }
 
     public ActivityComponent getComponent(){
-        return component;
+        return mComponent;
     }
 
     @Override

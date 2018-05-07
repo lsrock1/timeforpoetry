@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by sangroklee on 2018. 1. 2..
+ * 시가 담겨있는 리스트를 diff계산하기 위해 만들어진 클래스
  */
 
 public class DiffCallback extends DiffUtil.Callback {

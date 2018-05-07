@@ -20,7 +20,7 @@ import javax.inject.Inject;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private final int SPLASH_DISPLAY_LENGTH = 1000;
+    private final int mDisplayLength = 1000;
 
     @Inject
     SplashViewModel.SplashViewModelFactory viewModelFactory;
@@ -49,6 +49,6 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }, SPLASH_DISPLAY_LENGTH);
+        }, mDisplayLength);
     }
 }

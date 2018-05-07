@@ -26,10 +26,10 @@ import javax.inject.Singleton;
 public class PlayerViewModel extends ViewModel {
 
     private MyPlayListModel myPlayListModel;
-    private SignCheckModel signCheckModel;
-    private MyPoetryModel bookMarkModel;
-    private LikeModel likeModel;
-    private SeekModel seekModel;
+    private SignCheckModel mSignCheckModel;
+    private MyPoetryModel mBookMarkModel;
+    private LikeModel mLikeModel;
+    private SeekModel mSeekModel;
     public ObservableInt progress = new ObservableInt();
     public ObservableBoolean isLiked = new ObservableBoolean();
     public ObservableBoolean lyricShow = new ObservableBoolean(false);
@@ -38,16 +38,16 @@ public class PlayerViewModel extends ViewModel {
     public LiveData<PoetryClass.Poem> current;
 
     PlayerViewModel(SeekModel seekModel, MyPlayListModel myPlayListModel, SignCheckModel signCheckModel, MyPoetryModel bookMarkModel, LikeModel likeModel) {
-        this.seekModel = seekModel;
+        mSeekModel = seekModel;
         this.myPlayListModel = myPlayListModel;
-        this.signCheckModel = signCheckModel;
-        this.bookMarkModel = bookMarkModel;
-        this.likeModel = likeModel;
+        this.mSignCheckModel = signCheckModel;
+        this.mBookMarkModel = bookMarkModel;
+        mLikeModel = likeModel;
         load();
     }
 
     private void load(){
-        this.isLogin = signCheckModel.getIsLogin();
+        this.isLogin = mSignCheckModel.getIsLogin();
         this.current = myPlayListModel.getCurrentPoem();
     }
 
@@ -69,16 +69,16 @@ public class PlayerViewModel extends ViewModel {
         if(current.getValue() == null){
             return null;
         }
-        bookmarkStatus = bookMarkModel.checkInBookMark(current.getValue().clone());
+        bookmarkStatus = mBookMarkModel.checkInBookMark(current.getValue().clone());
         return bookmarkStatus;
     }
 
     public void setSeek(int pos){
-        seekModel.setSeek(pos);
+        mSeekModel.setSeek(pos);
     }
 
     public LiveData<Integer> getSeek(){
-        return seekModel.getSeek();
+        return mSeekModel.getSeek();
     }
 
     public void setProgress(int progress){
@@ -90,16 +90,16 @@ public class PlayerViewModel extends ViewModel {
     }
 
     public LiveData<Integer> getLikeCount(){
-        return likeModel.updateTxt(current.getValue());
+        return mLikeModel.updateTxt(current.getValue());
     }
 
     public Boolean like(){
         isLiked.set(!isLiked.get());
         if(isLiked.get()){
-            likeModel.like(current.getValue());
+            mLikeModel.like(current.getValue());
         }
         else{
-            likeModel.unlike(current.getValue());
+            mLikeModel.unlike(current.getValue());
         }
         return isLiked.get();
     }
@@ -107,25 +107,25 @@ public class PlayerViewModel extends ViewModel {
     @ActivityScope
     public static class PlayerViewModelFactory implements ViewModelProvider.Factory{
 
-        private SeekModel seekModel;
-        private MyPlayListModel myPlayListModel;
-        private SignCheckModel signCheckModel;
-        private MyPoetryModel myPoetryModel;
-        private LikeModel likeModel;
+        private SeekModel mSeekModel;
+        private MyPlayListModel mMyPlayListModel;
+        private SignCheckModel mSignCheckModel;
+        private MyPoetryModel mMyPoetryModel;
+        private LikeModel mLikeModel;
 
         @Inject
         public PlayerViewModelFactory(SeekModel seekModel, MyPlayListModel myPlayListModel, SignCheckModel signCheckModel, MyPoetryModel bookMarkModel, LikeModel likeModel) {
-            this.seekModel = seekModel;
-            this.myPlayListModel = myPlayListModel;
-            this.signCheckModel = signCheckModel;
-            this.myPoetryModel = bookMarkModel;
-            this.likeModel = likeModel;
+            mSeekModel = seekModel;
+            mMyPlayListModel = myPlayListModel;
+            mSignCheckModel = signCheckModel;
+            mMyPoetryModel = bookMarkModel;
+            mLikeModel = likeModel;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new PlayerViewModel(seekModel, myPlayListModel, signCheckModel, myPoetryModel, likeModel);
+            return (T) new PlayerViewModel(mSeekModel, mMyPlayListModel, mSignCheckModel, mMyPoetryModel, mLikeModel);
         }
     }
 }

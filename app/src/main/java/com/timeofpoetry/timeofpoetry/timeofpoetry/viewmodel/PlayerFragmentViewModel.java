@@ -23,22 +23,21 @@ import javax.inject.Inject;
 
 public class PlayerFragmentViewModel extends ViewModel {
 
-    private MyPlayListModel myPlayListModel;
-    private PlayBackStateModel playBackStateModel;
+    private MyPlayListModel mMyPlayListModel;
+    private PlayBackStateModel mPlayBackStateModel;
 
     public ObservableInt viewState = new ObservableInt();
     public ObservableInt currentMode = new ObservableInt(100);
     public ObservableBoolean isWide = new ObservableBoolean(false);
 
     PlayerFragmentViewModel(MyPlayListModel myPlayListModel, PlayBackStateModel playBackStateModel) {
-        this.myPlayListModel = myPlayListModel;
-        this.playBackStateModel = playBackStateModel;
-
+        mMyPlayListModel = myPlayListModel;
+        mPlayBackStateModel = playBackStateModel;
         viewState.set(playBackStateModel.getState().getValue());
     }
 
     public LiveData<PoetryModelData> getMyPlayList(){
-        return myPlayListModel.getPoetry();
+        return mMyPlayListModel.getPoetry();
     }
 
     public void setIsWide(boolean isWide){
@@ -46,14 +45,14 @@ public class PlayerFragmentViewModel extends ViewModel {
     }
 
     public void onModeClick(){
-        myPlayListModel.modeSwitch();
+        mMyPlayListModel.modeSwitch();
     }
 
-    public LiveData<PoetryClass.Poem> getCurrentMedia() {return myPlayListModel.getCurrentPoem();}
+    public LiveData<PoetryClass.Poem> getCurrentMedia() {return mMyPlayListModel.getCurrentPoem();}
 
-    public LiveData<RepeatState> getMode(){return myPlayListModel.getMode();}
+    public LiveData<RepeatState> getMode(){return mMyPlayListModel.getMode();}
 
-    public LiveData<Integer> getState(){return playBackStateModel.getState();}
+    public LiveData<Integer> getState(){return mPlayBackStateModel.getState();}
 
     public void setState(int state){
         this.viewState.set(state);
@@ -73,19 +72,19 @@ public class PlayerFragmentViewModel extends ViewModel {
     @FragScope
     public static class PlayerFragmentViewModelFactory implements ViewModelProvider.Factory{
 
-        private MyPlayListModel myPlayListModel;
-        private PlayBackStateModel playBackStateModel;
+        private MyPlayListModel mMyPlayListModel;
+        private PlayBackStateModel mPlayBackStateModel;
 
         @Inject
         public PlayerFragmentViewModelFactory(MyPlayListModel myPlayListModel, PlayBackStateModel playBackStateModel) {
-            this.myPlayListModel = myPlayListModel;
-            this.playBackStateModel = playBackStateModel;
+            mMyPlayListModel = myPlayListModel;
+            mPlayBackStateModel = playBackStateModel;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new PlayerFragmentViewModel(myPlayListModel, playBackStateModel);
+            return (T) new PlayerFragmentViewModel(mMyPlayListModel, mPlayBackStateModel);
         }
     }
 }

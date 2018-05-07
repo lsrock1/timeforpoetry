@@ -29,35 +29,35 @@ public class SignUpViewModel extends ViewModel {
     public static final int WRONG_EMAIL = 1;
     public static final int AGREE_CONTRACT = 2;
 
-    private SignModel model;
-    private MutableLiveData<Integer> validation = new MutableLiveData<>();
+    private SignModel mModel;
+    private MutableLiveData<Integer> mValidation = new MutableLiveData<>();
     public ObservableField<String> id = new ObservableField<>("");
     public ObservableField<String> pwd = new ObservableField<>("");
     public ObservableBoolean checked = new ObservableBoolean(false);
     public ObservableBoolean isShowContract = new ObservableBoolean(false);
 
     SignUpViewModel(SignModel signModel) {
-        this.model = signModel;
+        mModel = signModel;
     }
 
     public LiveData<Integer> getValidationStatus(){
-        return validation;
+        return mValidation;
     }
 
     public void onSignUpBtn(){
         if(checked.get()){
             if(!isEmailValid()){
-                validation.setValue(WRONG_EMAIL);
+                mValidation.setValue(WRONG_EMAIL);
             }
             else if(!isPwdLongerThanEight()) {
-                validation.setValue(PASSWORD_TOO_SHORT);
+                mValidation.setValue(PASSWORD_TOO_SHORT);
             }
             else{
-                model.signUp(id.get(), pwd.get(), false, -1);
+                mModel.signUp(id.get(), pwd.get(), false, -1);
             }
         }
         else{
-            validation.setValue(AGREE_CONTRACT);
+            mValidation.setValue(AGREE_CONTRACT);
         }
 
     }

@@ -24,6 +24,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+/**
+ * 공지사항을 위한 view 클래스
+ */
+
 public class BoardActivity extends AppCompatActivity {
 
     @Inject

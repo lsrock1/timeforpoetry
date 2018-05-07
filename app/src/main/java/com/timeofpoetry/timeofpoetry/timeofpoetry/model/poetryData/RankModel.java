@@ -42,8 +42,13 @@ public class RankModel extends PoetryModel{
             call.enqueue(new Callback<List<List<PoetryClass.Poem>>>() {
                 @Override
                 public void onResponse(Call<List<List<PoetryClass.Poem>>> call, Response<List<List<PoetryClass.Poem>>> response) {
-                    rankCache = new PoetryModelData(response.body().get(0));
-                    data.setValue(rankCache);
+                    try {
+                        rankCache = new PoetryModelData(response.body().get(0));
+                        data.setValue(rankCache);
+                    }
+                    catch (NullPointerException e){
+                        getPoetry();
+                    }
                 }
 
                 @Override

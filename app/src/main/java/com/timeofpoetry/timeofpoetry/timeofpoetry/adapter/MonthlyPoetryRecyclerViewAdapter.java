@@ -10,12 +10,16 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.PoetryItemNoMapleBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainView.MonthlyPoetryViewModel;
 
+/**
+ * view/mainView/MonthlyPoetry recycler를 위한 어뎁터
+ */
+
 public class MonthlyPoetryRecyclerViewAdapter extends RecyclerView.Adapter<MonthlyPoetryRecyclerViewAdapter.ViewHolder> {
 
-    private MonthlyPoetryViewModel viewModel;
+    private MonthlyPoetryViewModel mViewModel;
 
     public MonthlyPoetryRecyclerViewAdapter(MonthlyPoetryViewModel viewModel) {
-        this.viewModel = viewModel;
+        this.mViewModel = viewModel;
     }
 
     @Override
@@ -27,22 +31,22 @@ public class MonthlyPoetryRecyclerViewAdapter extends RecyclerView.Adapter<Month
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.binding.setPoem(viewModel.getItem(position));
+        holder.mBinding.setPoem(mViewModel.getItem(position));
     }
 
     @Override
     public int getItemCount() {
-        return viewModel.getItemCount();
+        return mViewModel.getItemCount();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        PoetryItemNoMapleBinding binding;
+        PoetryItemNoMapleBinding mBinding;
 
         ViewHolder(View view) {
             super(view);
-            binding = DataBindingUtil.bind(view);
-            binding.setViewModel(viewModel);
+            mBinding = DataBindingUtil.bind(view);
+            mBinding.setViewModel(mViewModel);
         }
     }
 }

@@ -52,11 +52,11 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
     private static final int NOTI_ID = 13;
 
     @Inject public MediaServiceViewModel viewModel;
-    @Inject public LifecycleRegistry mLifecycleRegistry;
-    @Inject public Player mPlayer;
+    @Inject public LifecycleRegistry lifecycleRegistry;
+    @Inject public Player player;
     @Inject public MediaSystem mediaSystem;
     @Inject public ProgressTask progressTask;
-    @Inject public MediaSessionCompat mMediaSessionCompat;
+    @Inject public MediaSessionCompat mediaSessionCompat;
     private MediaSessionCompat.Callback callback = new
         MediaSessionCompat.Callback(){
             @Override
@@ -77,7 +77,7 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
 
             @Override
             public void onSeekTo(long pos) {
-                if(mPlayer.seekTo((int) pos)) {
+                if(player.seekTo((int) pos)) {
                     playProcess();
                 }
             }
@@ -91,7 +91,7 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
             @Override
             public void onSkipToPrevious() {
                 super.onSkipToPrevious();
-                if(mPlayer.rewind()){
+                if(player.rewind()){
                     viewModel.backward();
                 }
             }
@@ -160,30 +160,30 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
                 .plus(new ServiceModule(this))
                 .inject(this);
         initMediaSession();
-        mLifecycleRegistry.markState(Lifecycle.State.CREATED);
-        mLifecycleRegistry.markState(Lifecycle.State.STARTED);
+        lifecycleRegistry.markState(Lifecycle.State.CREATED);
+        lifecycleRegistry.markState(Lifecycle.State.STARTED);
         viewModelInit();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mLifecycleRegistry.markState(Lifecycle.State.DESTROYED);
-        mPlayer.onDestroy();
-        mMediaSessionCompat.release();
+        lifecycleRegistry.markState(Lifecycle.State.DESTROYED);
+        player.onDestroy();
+        mediaSessionCompat.release();
     }
 
     @NonNull
     @Override
     public Lifecycle getLifecycle() {
-        return mLifecycleRegistry;
+        return lifecycleRegistry;
     }
 
     private void viewModelInit(){
         viewModel.getCurrentPoem().observe(this, new Observer<PoetryClass.Poem>() {
             @Override
             public void onChanged(@Nullable PoetryClass.Poem poem) {
-                mPlayer.setMedia(poem);
+                player.setMedia(poem);
             }
         });
         viewModel.getIsLogIn().observe(this, new Observer<Boolean>() {
@@ -201,7 +201,7 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
                 showNotification();
                 PlaybackStateCompat.Builder mStateBuilder = new PlaybackStateCompat.Builder()
                         .setState(integer, 0, 1);
-                mMediaSessionCompat.setPlaybackState(mStateBuilder.build());
+                mediaSessionCompat.setPlaybackState(mStateBuilder.build());
                 if(integer == PlayBackStateModel.PLAYING){
                     progressTask.startProgress();
                 }
@@ -227,8 +227,8 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
     }
 
     private void initMediaSession(){
-        mMediaSessionCompat.setCallback(callback);
-        mMediaSessionCompat.setFlags(
+        mediaSessionCompat.setCallback(callback);
+        mediaSessionCompat.setFlags(
                 MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
                 MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
         PlaybackStateCompat.Builder mStateBuilder = new PlaybackStateCompat.Builder()
@@ -236,13 +236,13 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
                     PlaybackStateCompat.ACTION_PAUSE |
             PlaybackStateCompat.ACTION_SEEK_TO|PlaybackStateCompat.ACTION_SKIP_TO_NEXT|PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS)
                 .setState(PlaybackStateCompat.STATE_STOPPED, 0, 1);
-        mMediaSessionCompat.setPlaybackState(mStateBuilder.build());
+        mediaSessionCompat.setPlaybackState(mStateBuilder.build());
 
         Intent mediaButtonIntent = new Intent(Intent.ACTION_MEDIA_BUTTON);
         mediaButtonIntent.setClass(getApplicationContext(), MediaButtonReceiver.class);
 
-        mMediaSessionCompat.setMediaButtonReceiver(PendingIntent.getBroadcast(getApplicationContext(), 0, mediaButtonIntent, PendingIntent.FLAG_UPDATE_CURRENT));
-        setSessionToken(mMediaSessionCompat.getSessionToken());
+        mediaSessionCompat.setMediaButtonReceiver(PendingIntent.getBroadcast(getApplicationContext(), 0, mediaButtonIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+        setSessionToken(mediaSessionCompat.getSessionToken());
     }
 
     private void showNotification() {
@@ -257,7 +257,7 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
             getBitmap(viewModel.getCurrentPoem().getValue());
             return;
         }
-        NotificationCompat.Builder builder = MediaStyleHelper.from(MediaPlaybackService.this, mMediaSessionCompat, viewModel);
+        NotificationCompat.Builder builder = MediaStyleHelper.from(MediaPlaybackService.this, mediaSessionCompat, viewModel);
         sendBroadCast();
         if( builder == null ) {
             return;
@@ -293,27 +293,27 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
 
     public void pauseProcess(){
         mediaSystem.pause();
-        mPlayer.pause();
+        player.pause();
         stopForeground(false);
     }
 
     public void setDuckVolume(boolean bool){
-        mPlayer.setDuckVolume(bool);
+        player.setDuckVolume(bool);
     }
 
     public void stopProcess(){
         mediaSystem.stop();
-        mPlayer.stop();
+        player.stop();
         stopSelf();
-        mMediaSessionCompat.setActive(false);
+        mediaSessionCompat.setActive(false);
         stopForeground(false);
     }
 
     public void playProcess(){
         if(mediaSystem.successfullyRetrievedAudioFocus()) {
-            mPlayer.play();
+            player.play();
             startService(new Intent(getApplicationContext(), MediaPlaybackService.class));
-            mMediaSessionCompat.setActive(true);
+            mediaSessionCompat.setActive(true);
             mediaSystem.play();
         }
         else{
@@ -327,7 +327,7 @@ public class MediaPlaybackService extends MediaBrowserServiceCompat implements L
         if(intent != null && intent.getAction() != null && intent.getAction().equals("android.media.browse.MediaBrowserService") && intent.getBooleanExtra("fromWidget", false)){
             sendBroadCast();
         }
-        MediaButtonReceiver.handleIntent(mMediaSessionCompat, intent);
+        MediaButtonReceiver.handleIntent(mediaSessionCompat, intent);
         return super.onStartCommand(intent, flags, startId);
     }
 

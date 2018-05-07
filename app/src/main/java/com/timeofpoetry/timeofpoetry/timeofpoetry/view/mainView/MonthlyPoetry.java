@@ -22,6 +22,10 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.mainView.MonthlyPoet
 
 import javax.inject.Inject;
 
+/**
+ * 월간 몇시를 위한 view 클래스
+ */
+
 public class MonthlyPoetry extends Fragment {
 
     @Inject

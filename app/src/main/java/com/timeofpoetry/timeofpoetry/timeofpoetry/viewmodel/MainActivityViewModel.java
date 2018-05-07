@@ -25,9 +25,8 @@ import javax.inject.Singleton;
 
 public class MainActivityViewModel extends ViewModel {
 
-    private SignCheckModel signCheckModel;
-
-    private ActionBar actionBar;
+    private SignCheckModel mSignCheckModel;
+    private ActionBar mActionBar;
 
     public ObservableBoolean login = new ObservableBoolean();
     public ObservableBoolean isMainShow = new ObservableBoolean(true);
@@ -37,25 +36,25 @@ public class MainActivityViewModel extends ViewModel {
     public String id;
 
     public MainActivityViewModel(SignCheckModel model) {
-        signCheckModel = model;
-        login.set(signCheckModel.getIsLogin().getValue());
+        mSignCheckModel = model;
+        login.set(mSignCheckModel.getIsLogin().getValue());
     }
 
     public void setActionBar(ActionBar actionBar){
-        this.actionBar = actionBar;
+        mActionBar = actionBar;
     }
 
     public void logOut(){
-        signCheckModel.setLogin(false);
+        mSignCheckModel.setLogin(false);
     }
 
     public LiveData<Boolean> getIsLogin(){
-        return signCheckModel.getIsLogin();
+        return mSignCheckModel.getIsLogin();
     }
 
     public void setLogin(Boolean bool){
         if(bool){
-            id = signCheckModel.getUserId();
+            id = mSignCheckModel.getUserId();
         }
         this.login.set(bool);
     }
@@ -64,13 +63,13 @@ public class MainActivityViewModel extends ViewModel {
         if(isListFragShow.get()){
             isListFragShow.set(false);
             isMainShow.set(true);
-            actionBar.show();
+            mActionBar.show();
             return true;
         }
         else if(isPlayerShow.get()){
             isPlayerShow.set(false);
             isMainShow.set(true);
-            actionBar.show();
+            mActionBar.show();
             return true;
         }
         else if(isLyricShow.get()){
@@ -86,7 +85,7 @@ public class MainActivityViewModel extends ViewModel {
         if(isListFragShow.get()){
             isListFragShow.set(false);
             isMainShow.set(true);
-            actionBar.show();
+            mActionBar.show();
         }
         else if(isPlayerShow.get())
         {
@@ -100,7 +99,7 @@ public class MainActivityViewModel extends ViewModel {
         else{
             isListFragShow.set(true);
             isMainShow.set(false);
-            actionBar.hide();
+            mActionBar.hide();
         }
     }
 
@@ -112,7 +111,7 @@ public class MainActivityViewModel extends ViewModel {
         else{
             isPlayerShow.set(true);
             isMainShow.set(false);
-            actionBar.hide();
+            mActionBar.hide();
         }
     }
 
@@ -124,17 +123,17 @@ public class MainActivityViewModel extends ViewModel {
     @ActivityScope
     public static class MainActivityViewModelFactory implements ViewModelProvider.Factory{
 
-        SignCheckModel signCheckModel;
+        SignCheckModel mSignCheckModel;
 
         @Inject
-        public MainActivityViewModelFactory(SignCheckModel model) {
-            signCheckModel = model;
+        public MainActivityViewModelFactory(SignCheckModel signCheckModel) {
+            mSignCheckModel = signCheckModel;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new MainActivityViewModel(signCheckModel);
+            return (T) new MainActivityViewModel(mSignCheckModel);
         }
     }
 }

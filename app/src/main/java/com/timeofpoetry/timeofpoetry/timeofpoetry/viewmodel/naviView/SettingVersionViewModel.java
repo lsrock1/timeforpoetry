@@ -19,8 +19,8 @@ import javax.inject.Inject;
 
 public class SettingVersionViewModel extends ViewModel {
 
-    private UserInfoModel userInfoModel;
-    private SharedPreferenceController sharedPreferenceController;
+    private UserInfoModel mUserInfoModel;
+    private SharedPreferenceController mSharedPreferenceController;
 
     public ObservableField<String> likePoem = new ObservableField<>("");
     public ObservableField<String> likePoet = new ObservableField<>("");
@@ -28,17 +28,17 @@ public class SettingVersionViewModel extends ViewModel {
     public ObservableField<String> userId = new ObservableField<>();
 
     public SettingVersionViewModel(UserInfoModel userInfoModel, SharedPreferenceController sharedPreferenceController) {
-        this.userInfoModel = userInfoModel;
-        this.sharedPreferenceController = sharedPreferenceController;
+        this.mUserInfoModel = userInfoModel;
+        this.mSharedPreferenceController = sharedPreferenceController;
         userId.set(sharedPreferenceController.getUserId());
     }
 
     public LiveData<Integer> getData(){
-        return userInfoModel.getData();
+        return mUserInfoModel.getData();
     }
 
     public LiveData<PoetryClass.GetAddInfo> getUserInitData(){
-        return userInfoModel.infoLoad(sharedPreferenceController.getUserId(), sharedPreferenceController.getUserPwd());
+        return mUserInfoModel.infoLoad(mSharedPreferenceController.getUserId(), mSharedPreferenceController.getUserPwd());
     }
 
     public void setUserInitData(PoetryClass.GetAddInfo getAddInfo){
@@ -48,33 +48,33 @@ public class SettingVersionViewModel extends ViewModel {
     }
 
     public void logOut(){
-        sharedPreferenceController.setLogin(false);
+        mSharedPreferenceController.setLogin(false);
     }
 
     public boolean getIsLogin(){
-        return sharedPreferenceController.isLogin();
+        return mSharedPreferenceController.isLogin();
     }
 
     public void userInfoUpdate(){
-        userInfoModel.infoUpdate(sharedPreferenceController.getUserId(), sharedPreferenceController.getUserPwd(), likePoet.get(), likePoem.get(), likeSeason.get());
+        mUserInfoModel.infoUpdate(mSharedPreferenceController.getUserId(), mSharedPreferenceController.getUserPwd(), likePoet.get(), likePoem.get(), likeSeason.get());
     }
 
     @ActivityScope
     public static class SettingVersionViewModelFactory implements ViewModelProvider.Factory{
 
-        private UserInfoModel userInfoModel;
-        private SharedPreferenceController sharedPreferenceController;
+        private UserInfoModel mUserInfoModel;
+        private SharedPreferenceController mSharedPreferenceController;
 
         @Inject
         public SettingVersionViewModelFactory(UserInfoModel userInfoModel, SharedPreferenceController sharedPreferenceController) {
-            this.userInfoModel = userInfoModel;
-            this.sharedPreferenceController = sharedPreferenceController;
+            mUserInfoModel = userInfoModel;
+            mSharedPreferenceController = sharedPreferenceController;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new SettingVersionViewModel(userInfoModel, sharedPreferenceController);
+            return (T) new SettingVersionViewModel(mUserInfoModel, mSharedPreferenceController);
         }
     }
 }

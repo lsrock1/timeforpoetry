@@ -25,40 +25,40 @@ import javax.inject.Inject;
 
 public class PlayListViewModel extends PoetryViewModel{
 
-    private LiveData<Integer> state;
-    private LiveData<PoetryClass.Poem> currentPoem;
-    private ArrayMap<Integer, ObservableInt> playHash = new ArrayMap<>();
+    private LiveData<Integer> mState;
+    private LiveData<PoetryClass.Poem> mCurrentPoem;
+    private ArrayMap<Integer, ObservableInt> mPlayHash = new ArrayMap<>();
     private int currentId = -1;
 
     PlayListViewModel(MyPlayListModel model, PlayBackStateModel playBackStateModel) {
         super(model);
-        currentPoem = model.getCurrentPoem();
-        state = playBackStateModel.getState();
+        mCurrentPoem = model.getCurrentPoem();
+        mState = playBackStateModel.getState();
         init();
     }
 
     private void init(){
         for(PoetryClass.Poem poem : super.getPoetry().getValue().getPoetry()){
-            playHash.put(poem.getDatabaseId(), new ObservableInt(0));
+            mPlayHash.put(poem.getDatabaseId(), new ObservableInt(0));
         }
-        playHash.put(-1, new ObservableInt(0));
+        mPlayHash.put(-1, new ObservableInt(0));
     }
 
     public void setCurrentPoem(){
         if(currentId != -1)
-            playHash.get(currentId).set(0);
-        currentId = currentPoem.getValue().getDatabaseId();
-        if(playHash.get(currentId) == null)
-            playHash.put(currentId, new ObservableInt(0));
+            mPlayHash.get(currentId).set(0);
+        currentId = mCurrentPoem.getValue().getDatabaseId();
+        if(mPlayHash.get(currentId) == null)
+            mPlayHash.put(currentId, new ObservableInt(0));
         setPlayingShow();
     }
 
     public void setPlayingShow(){
-        if(state.getValue() == PlayBackStateModel.PLAYING || state.getValue() == PlayBackStateModel.BUFFERING){
-            playHash.get(currentId).set(2);
+        if(mState.getValue() == PlayBackStateModel.PLAYING || mState.getValue() == PlayBackStateModel.BUFFERING){
+            mPlayHash.get(currentId).set(2);
         }
         else{
-            playHash.get(currentId).set(1);
+            mPlayHash.get(currentId).set(1);
         }
     }
 
@@ -67,11 +67,11 @@ public class PlayListViewModel extends PoetryViewModel{
     }
 
     public LiveData<Integer> getState() {
-        return state;
+        return mState;
     }
 
     public LiveData<PoetryClass.Poem> getCurrentPoem(){
-        return currentPoem;
+        return mCurrentPoem;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class PlayListViewModel extends PoetryViewModel{
     }
 
     public ObservableInt getDisplayById(PoetryClass.Poem poem) {
-        return playHash.get(poem.getDatabaseId());
+        return mPlayHash.get(poem.getDatabaseId());
     }
 
     private int getPositionByDbId(int id){
@@ -103,7 +103,7 @@ public class PlayListViewModel extends PoetryViewModel{
     public void listUpdate(int change){
         if(change > 0){
             for(PoetryClass.Poem poem : super.getPoetry().getValue().getPoetry().subList(0, change)){
-                if(playHash.get(poem.getDatabaseId()) == null) playHash.put(poem.getDatabaseId(), new ObservableInt(0));
+                if(mPlayHash.get(poem.getDatabaseId()) == null) mPlayHash.put(poem.getDatabaseId(), new ObservableInt(0));
             }
         }
     }
@@ -111,19 +111,19 @@ public class PlayListViewModel extends PoetryViewModel{
     @ActivityScope
     public static class PlayListViewModelFactory implements ViewModelProvider.Factory{
 
-        private MyPlayListModel myPlayListModel;
-        private PlayBackStateModel playBackStateModel;
+        private MyPlayListModel mMyPlayListModel;
+        private PlayBackStateModel mPlayBackStateModel;
 
         @Inject
         public PlayListViewModelFactory(MyPlayListModel model, PlayBackStateModel playModel) {
-            myPlayListModel = model;
-            playBackStateModel = playModel;
+            mMyPlayListModel = model;
+            mPlayBackStateModel = playModel;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new PlayListViewModel(myPlayListModel, playBackStateModel);
+            return (T) new PlayListViewModel(mMyPlayListModel, mPlayBackStateModel);
         }
     }
 }

@@ -21,43 +21,43 @@ import javax.inject.Singleton;
 
 public class LyricsViewModel extends ViewModel {
 
-    private LiveData<PoetryClass.Poem> current;
-    private MutableLiveData<String> lyrics = new MutableLiveData<>();
-    private LyricsLoad lyricsLoad;
+    private LiveData<PoetryClass.Poem> mPoem;
+    private MutableLiveData<String> mLyrics = new MutableLiveData<>();
+    private LyricsLoad mLyricsLoad;
 
     LyricsViewModel(MyPlayListModel myPlayListModel, LyricsLoad lyricsLoad) {
-        current = myPlayListModel.getCurrentPoem();
-        this.lyricsLoad = lyricsLoad;
+        mPoem = myPlayListModel.getCurrentPoem();
+        this.mLyricsLoad = lyricsLoad;
     }
 
     public LiveData<PoetryClass.Poem> getCurrent(){
-        return current;
+        return mPoem;
     }
 
     public void lyricsLoad(){
-        lyricsLoad.startLyricsLoad(current.getValue().getTextUrl(), lyrics);
+        mLyricsLoad.startLyricsLoad(mPoem.getValue().getTextUrl(), mLyrics);
     }
 
     public LiveData<String> getLyrics(){
-        return lyrics;
+        return mLyrics;
     }
 
     @FragScope
     public static class LyricsViewModelFactory implements ViewModelProvider.Factory {
 
-        private MyPlayListModel myPlayListModel;
-        private LyricsLoad lyricsLoad;
+        private MyPlayListModel mMyPlayListModel;
+        private LyricsLoad mLyricsLoad;
 
         @Inject
         public LyricsViewModelFactory(MyPlayListModel myPlayListModel, LyricsLoad lyricsLoad) {
-            this.myPlayListModel = myPlayListModel;
-            this.lyricsLoad = lyricsLoad;
+            this.mMyPlayListModel = myPlayListModel;
+            this.mLyricsLoad = lyricsLoad;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new LyricsViewModel(myPlayListModel, lyricsLoad);
+            return (T) new LyricsViewModel(mMyPlayListModel, mLyricsLoad);
         }
     }
 }

@@ -17,27 +17,31 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Created by sangroklee on 2018. 1. 16..
+ * view/naviView/BoardActivity view를 위한 뷰모델
+ * 공지사항 데이터를 boardModel에서 가져와 view가 사용할 수 있게 wrapping
  */
 
 public class BoardActivityViewModel extends ViewModel {
 
-    private BoardModel boardModel;
-    private LiveData<List<PoetryClass.BoardIdItem>> boardItems;
+    private BoardModel mBoardModel;
+    private LiveData<List<PoetryClass.BoardIdItem>> mBoardItems;
 
     BoardActivityViewModel(BoardModel boardModel) {
-        this.boardModel = boardModel;
-        boardItems = this.boardModel.getList();
+        mBoardModel = boardModel;
+        mBoardItems = mBoardModel.getList();
     }
 
     public LiveData<List<PoetryClass.BoardIdItem>> getBoardItems(){
-        return boardItems;
+        return mBoardItems;
     }
 
+    //layout/board_item onclick시 작동
+    //content가 비어있으면 model에 요청해 content를 가져옴
+    //비어있지 않으면 내용이 나타나는 text를 열어줌
     public void getBody(View view, int id, PoetryClass.BoardIdItem content){
         ExpandableLinearLayout exView = ((ExpandableLinearLayout) ((ViewGroup)view.getParent().getParent()).getChildAt(1));
         if(content.displayContent.get().equals("")){
-            boardModel.getContent(id, content.displayContent);
+            mBoardModel.getContent(id, content.displayContent);
         }
         else{
             exView.toggle();
@@ -47,17 +51,17 @@ public class BoardActivityViewModel extends ViewModel {
     @ActivityScope
     public static class BoardActivityViewModelFactory implements ViewModelProvider.Factory{
 
-        private BoardModel boardModel;
+        private BoardModel mBoardModel;
 
         @Inject
         public BoardActivityViewModelFactory(BoardModel boardModel) {
-            this.boardModel = boardModel;
+            mBoardModel = boardModel;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new BoardActivityViewModel(boardModel);
+            return (T) new BoardActivityViewModel(mBoardModel);
         }
     }
 }

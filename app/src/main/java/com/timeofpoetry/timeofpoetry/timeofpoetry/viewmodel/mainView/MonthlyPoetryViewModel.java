@@ -11,7 +11,10 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.model.poetryData.MonthlyPoetry
 
 import javax.inject.Inject;
 
-//서버에서 월간 몇시 받아오기, 다중 선택, 플레이리스트에 추가
+/**
+ * view/naviView/BoardActivity view를 위한 뷰모델
+ * 공지사항 데이터를 boardModel에서 가져와 view가 사용할 수 있게 wrapping
+ */
 
 public class MonthlyPoetryViewModel extends SupplierPoetryViewModel {
 
@@ -28,19 +31,19 @@ public class MonthlyPoetryViewModel extends SupplierPoetryViewModel {
     @FragScope
     public static class MonthlyPoetryViewModelFactory implements ViewModelProvider.Factory{
 
-        private MyPlayListModel myPlayListModel;
-        private MonthlyPoetryModel monthlyPoetryModel;
+        private MyPlayListModel mMyPlayListModel;
+        private MonthlyPoetryModel mMonthlyPoetryModel;
 
         @Inject
         MonthlyPoetryViewModelFactory(MyPlayListModel playListModel, MonthlyPoetryModel monthlyPoetryModel) {
-            myPlayListModel = playListModel;
-            this.monthlyPoetryModel = monthlyPoetryModel;
+            mMyPlayListModel = playListModel;
+            this.mMonthlyPoetryModel = monthlyPoetryModel;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new MonthlyPoetryViewModel(myPlayListModel, monthlyPoetryModel);
+            return (T) new MonthlyPoetryViewModel(mMyPlayListModel, mMonthlyPoetryModel);
         }
     }
 }

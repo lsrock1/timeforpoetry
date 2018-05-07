@@ -17,57 +17,57 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * Created by sangroklee on 2018. 2. 19..
+ * sql로 데이터를 가져옴
  */
 @Singleton
 public class PlayListDB extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
-    private static final String TYPE_TEXT = " TEXT";
-    private static final String TYPE_INTEGER = " INTEGER";
-    private static final String COMMA_SEP = ",";
-    private static final String DATABASE_NAME = "PlayLists.db";
-    private static final String TABLE_NAME = "playList";
-    public static final String COLUMN_NAME_LISTNAME = "listName";
-    public static final String COLUMN_NAME_POET = "poet";
-    public static final String COLUMN_NAME_POEM = "poem";
-    public static final String COLUMN_NAME_VOICE = "voice";
-    public static final String COLUMN_NAME_ARTWORK = "artwork";
-    public static final String COLUMN_NAME_DURATION = "duration";
-    public static final String COLUMN_NAME_SOUNDURL = "soundUrl";
-    public static final String COLUMN_NAME_COMPOSER = "composer";
-    public static final String COLUMN_NAME_LYRICSURL = "lyricsUrl";
-    public static final String COLUMN_NAME_PREV = "prev";
-    public static final String COLUMN_NAME_NEXT = "next";
-    public static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_NAME_LISTNAME + TYPE_TEXT + " DEFAULT 'DFAULTLIST'" + COMMA_SEP +
-                    COLUMN_NAME_POET + TYPE_TEXT + COMMA_SEP +
-                    COLUMN_NAME_POEM + TYPE_TEXT + COMMA_SEP +
-                    COLUMN_NAME_VOICE + TYPE_TEXT + COMMA_SEP +
-                    COLUMN_NAME_ARTWORK + TYPE_TEXT + COMMA_SEP +
-                    COLUMN_NAME_SOUNDURL + TYPE_TEXT + COMMA_SEP +
-                    COLUMN_NAME_COMPOSER + TYPE_TEXT + COMMA_SEP +
-                    COLUMN_NAME_DURATION + TYPE_INTEGER + COMMA_SEP +
-                    COLUMN_NAME_LYRICSURL + TYPE_TEXT + COMMA_SEP +
-                    COLUMN_NAME_PREV + TYPE_INTEGER + " DEFAULT -1" + COMMA_SEP +
-                    COLUMN_NAME_NEXT + TYPE_INTEGER + " DEFAULT -1 )";
-    private  static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + TABLE_NAME;
+    private static final int sDatabaseVersion = 1;
+    private static final String sTypeText = " TEXT";
+    private static final String sTypeInteger = " INTEGER";
+    private static final String sCommaSep = ",";
+    private static final String sDatabaseName = "PlayLists.db";
+    private static final String sTableName = "playList";
+    private static final String sColumnNameListName = "listName";
+    private static final String sColumnNamePoet = "poet";
+    private static final String sColumnNamePoem = "poem";
+    private static final String sColumnNameVoice = "voice";
+    private static final String sColumnNameArtWork = "artwork";
+    private static final String sColumnNameDuration = "duration";
+    private static final String sColumnNameSoundUrl = "soundUrl";
+    private static final String sColumnNameComposer = "composer";
+    private static final String sColumnNameLyricsUrl = "lyricsUrl";
+    private static final String sColumnNamePrev = "prev";
+    private static final String sColumnNameNext = "next";
+    private static final String sSqlCreateEntries =
+            "CREATE TABLE " + sTableName + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    sColumnNameListName + sTypeText + " DEFAULT 'DFAULTLIST'" + sCommaSep +
+                    sColumnNamePoet + sTypeText + sCommaSep +
+                    sColumnNamePoem + sTypeText + sCommaSep +
+                    sColumnNameVoice + sTypeText + sCommaSep +
+                    sColumnNameArtWork + sTypeText + sCommaSep +
+                    sColumnNameSoundUrl + sTypeText + sCommaSep +
+                    sColumnNameComposer + sTypeText + sCommaSep +
+                    sColumnNameDuration + sTypeInteger + sCommaSep +
+                    sColumnNameLyricsUrl + sTypeText + sCommaSep +
+                    sColumnNamePrev + sTypeInteger + " DEFAULT -1" + sCommaSep +
+                    sColumnNameNext + sTypeInteger + " DEFAULT -1 )";
+    private  static final String sSqlDeleteEntries = "DROP TABLE IF EXISTS " + sTableName;
 
     @Inject
     public PlayListDB(Context context){
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        super(context, sDatabaseName, null, sDatabaseVersion);
     }
 
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_ENTRIES);
+        db.execSQL(sSqlCreateEntries);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(SQL_DELETE_ENTRIES);
+        db.execSQL(sSqlDeleteEntries);
         onCreate(db);
     }
 
@@ -75,16 +75,16 @@ public class PlayListDB extends SQLiteOpenHelper {
         int id = getLastItemId();
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME_VOICE, poem.getVoice());
-        values.put(COLUMN_NAME_POET, poem.getPoet());
-        values.put(COLUMN_NAME_POEM, poem.getPoem());
-        values.put(COLUMN_NAME_ARTWORK, poem.getArtworkUrl());
-        values.put(COLUMN_NAME_DURATION, poem.getPlayTime());
-        values.put(COLUMN_NAME_SOUNDURL, poem.getSoundUrl());
-        values.put(COLUMN_NAME_LYRICSURL, poem.getTextUrl());
-        values.put(COLUMN_NAME_COMPOSER, poem.getComposer());
-        values.put(COLUMN_NAME_PREV, id);
-        long newRowId = db.insert(TABLE_NAME, null, values);
+        values.put(sColumnNameVoice, poem.getVoice());
+        values.put(sColumnNamePoet, poem.getPoet());
+        values.put(sColumnNamePoem, poem.getPoem());
+        values.put(sColumnNameArtWork, poem.getArtworkUrl());
+        values.put(sColumnNameDuration, poem.getPlayTime());
+        values.put(sColumnNameSoundUrl, poem.getSoundUrl());
+        values.put(sColumnNameLyricsUrl, poem.getTextUrl());
+        values.put(sColumnNameComposer, poem.getComposer());
+        values.put(sColumnNamePrev, id);
+        long newRowId = db.insert(sTableName, null, values);
         if(id != -1)changeNext(id, (int) newRowId);
         return newRowId;
     }
@@ -96,7 +96,7 @@ public class PlayListDB extends SQLiteOpenHelper {
         SQLiteDatabase readDB = getReadableDatabase();
         String selection = "_id LIKE ?";
         String[] selectionArgs = { Integer.toString(id) };
-        readDB.delete(TABLE_NAME, selection, selectionArgs);
+        readDB.delete(sTableName, selection, selectionArgs);
     }
 
     @Nullable
@@ -105,11 +105,20 @@ public class PlayListDB extends SQLiteOpenHelper {
         String sId = Integer.toString(id);
         String selection = "_id = ?";
         String[] selectionArgs = {sId};
-        Cursor c = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        Cursor c = db.query(sTableName, null, selection, selectionArgs, null, null, null);
         if(c != null && c.moveToFirst()){
-            return new PoetryClass.Poem(c, id);
+            c.close();
+            return new PoetryClass.Poem(
+                    c.getString(c.getColumnIndexOrThrow(sColumnNameArtWork)),
+                    c.getString(c.getColumnIndexOrThrow(sColumnNamePoet)),
+                    c.getString(c.getColumnIndexOrThrow(sColumnNamePoem)),
+                    c.getString(c.getColumnIndexOrThrow(sColumnNameSoundUrl)),
+                    c.getString(c.getColumnIndexOrThrow(sColumnNameLyricsUrl)),
+                    c.getString(c.getColumnIndexOrThrow(sColumnNameVoice)),
+                    c.getInt(c.getColumnIndexOrThrow(sColumnNameDuration)),
+                    c.getString(c.getColumnIndexOrThrow(sColumnNameComposer)),
+                    id);
         }
-
         return null;
     }
 
@@ -119,10 +128,10 @@ public class PlayListDB extends SQLiteOpenHelper {
         String sId = Integer.toString(id);
         String selection = "_id = ?";
         String[] selectionArgs = {sId};
-        Cursor c = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        Cursor c = db.query(sTableName, null, selection, selectionArgs, null, null, null);
         if(c != null && c.moveToFirst()){
-            int prev = c.getInt(c.getColumnIndexOrThrow(COLUMN_NAME_PREV));
-            int next = c.getInt(c.getColumnIndexOrThrow(COLUMN_NAME_NEXT));
+            int prev = c.getInt(c.getColumnIndexOrThrow(sColumnNamePrev));
+            int next = c.getInt(c.getColumnIndexOrThrow(sColumnNameNext));
             c.close();
             return new int[]{prev, next};
         }
@@ -132,30 +141,30 @@ public class PlayListDB extends SQLiteOpenHelper {
     private void changeNext(int id, int next){
         SQLiteDatabase db = getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME_NEXT, next);
+        values.put(sColumnNameNext, next);
         String sId = Integer.toString(id);
         String selection = "_id LIKE ?";
         String[] selectionArgs = {sId};
 
-        db.update(TABLE_NAME, values, selection, selectionArgs);
+        db.update(sTableName, values, selection, selectionArgs);
     }
 
     private void changePrev(int id, int prev){
         SQLiteDatabase db = getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME_PREV, prev);
+        values.put(sColumnNamePrev, prev);
         String sId = Integer.toString(id);
         String selection = "_id LIKE ?";
         String[] selectionArgs = {sId};
 
-        db.update(TABLE_NAME, values, selection, selectionArgs);
+        db.update(sTableName, values, selection, selectionArgs);
     }
 
     private int getLastItemId(){
         SQLiteDatabase db = getReadableDatabase();
-        String selection = COLUMN_NAME_NEXT + " = ?";
+        String selection = sColumnNameNext + " = ?";
         String[] selectionArgs = {"-1"};
-        Cursor c = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        Cursor c = db.query(sTableName, null, selection, selectionArgs, null, null, null);
         if(c != null && c.moveToFirst()){
             int result = c.getInt(c.getColumnIndexOrThrow("_id"));
             c.close();
@@ -166,9 +175,9 @@ public class PlayListDB extends SQLiteOpenHelper {
 
     private int getFirstItemId(){
         SQLiteDatabase db = getReadableDatabase();
-        String selection = COLUMN_NAME_PREV + " = ?";
+        String selection = sColumnNameNext + " = ?";
         String[] selectionArgs = {"-1"};
-        Cursor c = db.query(TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        Cursor c = db.query(sTableName, null, selection, selectionArgs, null, null, null);
         if(c != null && c.moveToFirst()){
             c.close();
             return c.getInt(c.getColumnIndexOrThrow("_id"));

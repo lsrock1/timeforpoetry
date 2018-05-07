@@ -8,27 +8,28 @@ import android.widget.Toast;
  */
 
 public class BackPressCloseHandler {
-    private long backKeyPressedTime = 0;
-    private Toast toast;
-    private Activity activity;
+    private long mBackKeyPressedTime = 0;
+    private Toast mToast;
+    private Activity mActivity;
 
-    public BackPressCloseHandler(Activity context) { this.activity = context; }
+    public BackPressCloseHandler(Activity context) { this.mActivity = context; }
 
     public void onBackPressed() {
-        if (System.currentTimeMillis() > backKeyPressedTime + 2000){
-            backKeyPressedTime = System.currentTimeMillis();
+        if (System.currentTimeMillis() > mBackKeyPressedTime + 2000){
+            mBackKeyPressedTime = System.currentTimeMillis();
             showGuide();
             return;
         }
 
-        if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
-            activity.finish();
-            toast.cancel();
+        if (System.currentTimeMillis() <= mBackKeyPressedTime + 2000) {
+            mActivity.finish();
+            mToast.cancel();
         }
     }
-    public void showGuide() {
-        toast = Toast.makeText(activity, "뒤로 버튼을 한번 더 누르시면 종료됩니다", Toast.LENGTH_SHORT);
-        toast.show();
+
+    private void showGuide() {
+        mToast = Toast.makeText(mActivity, "뒤로 버튼을 한번 더 누르시면 종료됩니다", Toast.LENGTH_SHORT);
+        mToast.show();
     }
 
 }

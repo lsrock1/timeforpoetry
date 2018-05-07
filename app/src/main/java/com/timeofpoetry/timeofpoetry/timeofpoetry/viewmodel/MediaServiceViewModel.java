@@ -26,71 +26,71 @@ import javax.inject.Singleton;
 
 public class MediaServiceViewModel extends ViewModel {
 
-    private MyPlayListModel model;
-    private PlayBackStateModel playBackStateModel;
+    private MyPlayListModel mMyPlayListModel;
+    private PlayBackStateModel mPlayBackStateModel;
     private LiveData<PoetryClass.Poem> currentPoem;
-    private SignCheckModel signCheckModel;
-    private SeekModel seekModel;
+    private SignCheckModel mSignCheckModel;
+    private SeekModel mSeekModel;
 
     public MediaServiceViewModel(MyPlayListModel model, PlayBackStateModel playModel, SignCheckModel signCheckModel, SeekModel seekModel) {
-        this.model = model;
-        playBackStateModel = playModel;
-        this.signCheckModel = signCheckModel;
-        this.seekModel = seekModel;
+        mMyPlayListModel = model;
+        mPlayBackStateModel = playModel;
+        mSignCheckModel = signCheckModel;
+        mSeekModel = seekModel;
         load();
     }
 
     private void load(){
-        currentPoem = model.getCurrentPoem();
+        currentPoem = mMyPlayListModel.getCurrentPoem();
     }
 
     public void state_stop(){
-        playBackStateModel.setState(PlayBackStateModel.STOP);
+        mPlayBackStateModel.setState(PlayBackStateModel.STOP);
     }
 
     public void state_pause(){
-        playBackStateModel.setState(PlayBackStateModel.PAUSE);
+        mPlayBackStateModel.setState(PlayBackStateModel.PAUSE);
     }
 
     public void state_buffer(){
-        playBackStateModel.setState(PlayBackStateModel.BUFFERING);
+        mPlayBackStateModel.setState(PlayBackStateModel.BUFFERING);
     }
 
     public void state_play(){
-        playBackStateModel.setState(PlayBackStateModel.PLAYING);
+        mPlayBackStateModel.setState(PlayBackStateModel.PLAYING);
     }
 
     public void forward(){
-        model.forward();
+        mMyPlayListModel.forward();
     }
 
     public void backward(){
-        model.backward();
+        mMyPlayListModel.backward();
     }
 
     public LiveData<Integer> getState(){
-        return playBackStateModel.getState();
+        return mPlayBackStateModel.getState();
     }
 
-    public LiveData<RepeatState> getMode() {return model.getMode();}
+    public LiveData<RepeatState> getMode() {return mMyPlayListModel.getMode();}
 
     public LiveData<PoetryClass.Poem> getCurrentPoem(){
         return currentPoem;
     }
 
     public LiveData<Boolean> getIsLogIn(){
-        return signCheckModel.getIsLogin();
+        return mSignCheckModel.getIsLogin();
     }
 
     public void saveSeek(){
-        seekModel.saveSeek();
+        mSeekModel.saveSeek();
     }
 
     public void setSeek(int position){
-        seekModel.setSeek(position);
+        mSeekModel.setSeek(position);
     }
 
     public int getSeek(){
-        return seekModel.getSeek().getValue();
+        return mSeekModel.getSeek().getValue();
     }
 }

@@ -10,7 +10,7 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.view.startActivities.SplashAct
 import dagger.Subcomponent;
 
 /**
- * Created by sangroklee on 2018. 1. 7..
+ * singleton model들이 필요한 엑티비에 model을 제공하는 컴포넌트
  */
 @ActivityScope
 @Subcomponent(modules = {ActivityModule.class})

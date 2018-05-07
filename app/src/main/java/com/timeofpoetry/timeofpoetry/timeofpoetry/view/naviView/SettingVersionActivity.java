@@ -26,7 +26,6 @@ public class SettingVersionActivity extends AppCompatActivity {
 
     @Inject SettingVersionViewModel.SettingVersionViewModelFactory viewModelFactory;
     SettingVersionViewModel viewModel;
-    private ActivityComponent component;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -36,6 +35,7 @@ public class SettingVersionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityComponent component;
         ActivitySettingVersionBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_setting_version);
         component = ((GlobalApplication) getApplication())
                 .getComponent()

@@ -6,17 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.FragmentPoemBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.R;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.databinding.PlayListItemBinding;
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.footer.PlayListViewModel;
 
 public class PlayListRecyclerViewAdapter extends RecyclerView.Adapter<PlayListRecyclerViewAdapter.ViewHolder> {
 
-    private PlayListViewModel viewModel;
+    private PlayListViewModel mViewModel;
 
     public PlayListRecyclerViewAdapter(PlayListViewModel viewModel) {
-        this.viewModel = viewModel;
+        this.mViewModel = viewModel;
     }
 
     @Override
@@ -28,23 +27,23 @@ public class PlayListRecyclerViewAdapter extends RecyclerView.Adapter<PlayListRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.binding.setPoem(viewModel.getItem(position));
-        holder.binding.setDisplayOption(viewModel.getDisplayById(viewModel.getItem(position)));
+        holder.mBinding.setPoem(mViewModel.getItem(position));
+        holder.mBinding.setDisplayOption(mViewModel.getDisplayById(mViewModel.getItem(position)));
     }
 
     @Override
     public int getItemCount() {
-        return viewModel.getItemCount();
+        return mViewModel.getItemCount();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        PlayListItemBinding binding;
+        PlayListItemBinding mBinding;
 
         ViewHolder(View view) {
             super(view);
-            binding = DataBindingUtil.bind(view);
-            binding.setViewModel(viewModel);
+            mBinding = DataBindingUtil.bind(view);
+            mBinding.setViewModel(mViewModel);
         }
     }
 }

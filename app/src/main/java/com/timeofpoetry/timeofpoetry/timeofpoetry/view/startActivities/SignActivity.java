@@ -30,7 +30,7 @@ import javax.inject.Inject;
 
 
 public class SignActivity extends AppCompatActivity {
-    private ActivityComponent component;
+    private ActivityComponent mComponent;
     @Inject
     SignViewModel.SignViewModelFactory factory;
     SignViewModel viewModel;
@@ -44,12 +44,12 @@ public class SignActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        component = ((GlobalApplication) getApplication())
+        mComponent = ((GlobalApplication) getApplication())
                 .getComponent()
                 .plus(new ActivityModule());
 
         final ActivitySignBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_sign);
-        component.inject(this);
+        mComponent.inject(this);
         viewModel = ViewModelProviders.of(this, factory).get(SignViewModel.class);
         viewModel.setMode(getIntent().getBooleanExtra("inorup", false));
         binding.setViewModel(viewModel);
@@ -166,6 +166,6 @@ public class SignActivity extends AppCompatActivity {
     }
 
     public ActivityComponent getComponent(){
-        return component;
+        return mComponent;
     }
 }

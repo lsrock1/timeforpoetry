@@ -22,17 +22,17 @@ import javax.inject.Inject;
 
 public class NowPoetryViewModel extends SupplierPoetryViewModel {
 
-    private LiveData<PoetryClass.Banner> banner;
-    private LiveData<PoetryModelData> recommend;
+    private LiveData<PoetryClass.Banner> mBanner;
+    private LiveData<PoetryModelData> mRecommend;
 
     NowPoetryViewModel(MyPlayListModel myModel, RankModel rankModel, RecommendModel recommendModel, BannerModel bannerModel) {
         super(rankModel, myModel);
-        banner = bannerModel.getBanner();
-        recommend = recommendModel.getPoetry();
+        mBanner = bannerModel.getBanner();
+        mRecommend = recommendModel.getPoetry();
     }
 
     public LiveData<PoetryClass.Banner> getBanner(){
-        return banner;
+        return mBanner;
     }
 
     public LiveData<PoetryModelData> getRank(){
@@ -40,36 +40,36 @@ public class NowPoetryViewModel extends SupplierPoetryViewModel {
     }
 
     public LiveData<PoetryModelData> getRecommend(){
-        return recommend;
+        return mRecommend;
     }
 
     public void addPlaylistFromRecommend(int position){
-        if(recommend.getValue() != null && recommend.getValue().getPoetry().size() < 3){
+        if(mRecommend.getValue() != null && mRecommend.getValue().getPoetry().size() < 3){
             return;
         }
-        addPoemToPlayList(recommend.getValue().getPoetry().get(position));
+        addPoemToPlayList(mRecommend.getValue().getPoetry().get(position));
     }
 
     @FragScope
     public static class NowPoetryViewModelFactory implements ViewModelProvider.Factory{
 
-        private MyPlayListModel myPlayListModel;
-        private RankModel rankModel;
-        private RecommendModel recommendModel;
-        private BannerModel bannerModel;
+        private MyPlayListModel mMyPlayListModel;
+        private RankModel mRankModel;
+        private RecommendModel mRecommendModel;
+        private BannerModel mBannerModel;
 
         @Inject
         public NowPoetryViewModelFactory(MyPlayListModel myPlayListModel, RankModel rankModel, RecommendModel recommendModel, BannerModel bannerModel) {
-            this.myPlayListModel = myPlayListModel;
-            this.rankModel = rankModel;
-            this.recommendModel = recommendModel;
-            this.bannerModel = bannerModel;
+            mMyPlayListModel = myPlayListModel;
+            mRankModel = rankModel;
+            mRecommendModel = recommendModel;
+            mBannerModel = bannerModel;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new NowPoetryViewModel(myPlayListModel, rankModel, recommendModel, bannerModel);
+            return (T) new NowPoetryViewModel(mMyPlayListModel, mRankModel, mRecommendModel, mBannerModel);
         }
     }
 }

@@ -45,26 +45,26 @@ import javax.inject.Singleton;
 public class SignViewModel extends ViewModel implements LifecycleObserver{
 
     public ObservableBoolean isUp = new ObservableBoolean(false);
-    private boolean isStack = false;
-    private static int KAKAO_CODE = 0;
-    private static int FACEBOOK_CODE = 1;
-    private SessionCallback callback;
-    private CallbackManager callbackManager;
-    private SignModel model;
+    private boolean mIsStack = false;
+    private static int sKakaoCode = 0;
+    private static int sFacebookCode = 1;
+    private SessionCallback mCallback;
+    private CallbackManager mCallbackManager;
+    private SignModel mSignMdel;
 
     SignViewModel(SignModel signModel) {
-        model = signModel;
-        callback = new SessionCallback();
-        Session.getCurrentSession().addCallback(callback);
-        callbackManager = CallbackManager.Factory.create();
+        mSignMdel = signModel;
+        mCallback = new SessionCallback();
+        Session.getCurrentSession().addCallback(mCallback);
+        mCallbackManager = CallbackManager.Factory.create();
     }
 
     public LiveData<Integer> getSignInStatus(){
-        return model.getSignInData();
+        return mSignMdel.getSignInData();
     }
 
     public LiveData<Integer> getSignUpStatus(){
-        return model.getSignUpData();
+        return mSignMdel.getSignUpData();
     }
 
     public void setMode(boolean mode){
@@ -72,17 +72,17 @@ public class SignViewModel extends ViewModel implements LifecycleObserver{
     }
 
     public boolean getStack(){
-        return isStack;
+        return mIsStack;
     }
 
     public void onBackPressed(){
-        isStack = false;
+        mIsStack = false;
         changeMode();
     }
 
     public void toSignUp(){
         changeMode();
-        isStack = true;
+        mIsStack = true;
     }
 
     public void socialLogOut(){
@@ -116,7 +116,7 @@ public class SignViewModel extends ViewModel implements LifecycleObserver{
 
             @Override
             public void onSuccess(UserProfile userProfile) {
-                model.signIn(userProfile.getEmail(), Long.toString(userProfile.getId()), true, KAKAO_CODE);
+                mSignMdel.signIn(userProfile.getEmail(), Long.toString(userProfile.getId()), true, sKakaoCode);
             }
 
             @Override
@@ -156,7 +156,7 @@ public class SignViewModel extends ViewModel implements LifecycleObserver{
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         try{
-                            model.signIn(object.getString("email"), object.getString("id"), true, FACEBOOK_CODE);
+                            mSignMdel.signIn(object.getString("email"), object.getString("id"), true, sFacebookCode);
                         }
                         catch (JSONException e){
 
@@ -173,13 +173,13 @@ public class SignViewModel extends ViewModel implements LifecycleObserver{
         if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
             return;
         }
-        else if(callbackManager.onActivityResult(requestCode, resultCode, data)){
+        else if(mCallbackManager.onActivityResult(requestCode, resultCode, data)){
             return;
         }
     }
 
     public CallbackManager getFacebookCallBackManager(){
-        return callbackManager;
+        return mCallbackManager;
     }
 
     public FacebookCallback<LoginResult> getFacebookCallback(){
@@ -207,7 +207,7 @@ public class SignViewModel extends ViewModel implements LifecycleObserver{
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void onDestroy() {
-        Session.getCurrentSession().removeCallback(callback);
+        Session.getCurrentSession().removeCallback(mCallback);
     }
 
     private class SessionCallback implements ISessionCallback {
@@ -225,17 +225,17 @@ public class SignViewModel extends ViewModel implements LifecycleObserver{
     @ActivityScope
     public static class SignViewModelFactory implements ViewModelProvider.Factory{
 
-        SignModel signModel;
+        SignModel mSignModel;
 
         @Inject
         public SignViewModelFactory(SignModel signModel) {
-            this.signModel = signModel;
+            mSignModel = signModel;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new SignViewModel(signModel);
+            return (T) new SignViewModel(mSignModel);
         }
     }
 }

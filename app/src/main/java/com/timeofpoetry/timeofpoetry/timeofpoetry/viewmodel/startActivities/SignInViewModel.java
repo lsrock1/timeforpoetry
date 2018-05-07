@@ -20,32 +20,32 @@ import javax.inject.Singleton;
 
 public class SignInViewModel extends ViewModel {
 
-    private SignModel model;
+    private SignModel mModel;
     public ObservableField<String> id = new ObservableField<>("");
     public ObservableField<String> pwd = new ObservableField<>("");
 
     SignInViewModel(SignModel signModel) {
-        model = signModel;
+        mModel = signModel;
     }
 
     public void onSignInBtn(){
-        model.signIn(id.get(), pwd.get(), false, -1);
+        mModel.signIn(id.get(), pwd.get(), false, -1);
     }
 
     @FragScope
     public static class SignInViewModelFactory implements ViewModelProvider.Factory{
 
-        private SignModel signModel;
+        private SignModel mSignModel;
 
         @Inject
         public SignInViewModelFactory(SignModel signModel) {
-            this.signModel = signModel;
+            mSignModel = signModel;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new SignInViewModel(signModel);
+            return (T) new SignInViewModel(mSignModel);
         }
     }
 }

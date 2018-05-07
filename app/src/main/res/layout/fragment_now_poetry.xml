@@ -34,6 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:baselineAligned="false"
                     android:layout_marginStart="@dimen/f60"
                     android:layout_marginEnd="@dimen/f60"
                     android:layout_marginTop="@dimen/f120">

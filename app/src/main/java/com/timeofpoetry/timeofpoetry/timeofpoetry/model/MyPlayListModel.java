@@ -29,6 +29,12 @@ import javax.inject.Singleton;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
+/**
+ * 플레이 리스트를 담당하는 모델
+ * 플레이리스트에 시를 추가하는 기능을 가진 모든 viewModel에서 싱글톤으로 이 모델 사용
+ * MonthlyPoetryViewModel,
+ */
+
 @Singleton
 public class MyPlayListModel extends PoetryModel{
 

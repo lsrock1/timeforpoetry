@@ -15,50 +15,51 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MediaServiceViewMode
 
 public class RepeatAll implements RepeatState {
 
-    private static RepeatAll instance;
+    private static RepeatAll mInstance;
+    private MyPlayListModel mMyPlayListModel;
+    private boolean mIsAlert = false;
+
     public static RepeatAll getInstance(MyPlayListModel myPlayListModel){
-        if(instance == null)
-            instance = new RepeatAll(myPlayListModel);
-        instance.alertReset();
-        return instance;
+        if(mInstance == null)
+            mInstance = new RepeatAll(myPlayListModel);
+        mInstance.alertReset();
+        return mInstance;
     }
 
-    private MyPlayListModel myPlayListModel;
-    private boolean isAlert = false;
 
     public RepeatAll(MyPlayListModel myPlayListModel) {
-        this.myPlayListModel = myPlayListModel;
+        this.mMyPlayListModel = myPlayListModel;
     }
 
     @Override
     public void modeSwitch() {
-        myPlayListModel.setMode(RepeatOne.getInstance(myPlayListModel), PlaybackStateCompat.REPEAT_MODE_ONE);
+        mMyPlayListModel.setMode(RepeatOne.getInstance(mMyPlayListModel), PlaybackStateCompat.REPEAT_MODE_ONE);
     }
 
     @Override
     public String getToastString() {
-        isAlert = true;
+        mIsAlert = true;
         return "전체 시를 반복합니다";
     }
 
     @Override
     public void onComplete(MediaPlayer mediaPlayer, MediaPlaybackService service, MediaServiceViewModel viewModel) {
-        if(myPlayListModel.getPoetry().getValue().getPoetry().size() == 1){
+        if(mMyPlayListModel.getPoetry().getValue().getPoetry().size() == 1){
             mediaPlayer.seekTo(0);
         }
         else{
-            forward(myPlayListModel);
+            forward(mMyPlayListModel);
         }
     }
 
     @Override
     public void alertReset(){
-        isAlert = false;
+        mIsAlert = false;
     }
 
     @Override
     public boolean isAlert(){
-        return isAlert;
+        return mIsAlert;
     }
 
     @Override

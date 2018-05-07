@@ -8,50 +8,52 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by sangroklee on 2018. 2. 27..
+ * 시 리스트를 보여주는 뷰를 위한 뷰모델이 상속하는 클래스
+ * 클래스에서 공유하는 기능들이 구현되어 있음
+ * 시 리스트를 보여주는 뷰의 layout에서 데이터바인딩으로 메소드를 사용하고 있음
  */
 
 public class PoetryViewModel extends ViewModel {
 
-    private PoetryModel model;
-    private LiveData<PoetryModelData> data;
+    private PoetryModel mModel;
+    private LiveData<PoetryModelData> mData;
     public ObservableBoolean isEditMode = new ObservableBoolean(false);
-    private boolean toggleSelect = true;
+    private boolean mToggleSelect = true;
 
     public PoetryViewModel(PoetryModel poetryModel) {
-        this.model = poetryModel;
-        data = model.getPoetry();
+        this.mModel = poetryModel;
+        mData = mModel.getPoetry();
     }
 
     public void toggleSelectAll(){
-        if(data.getValue() == null) return;
-        if(toggleSelect){
+        if(mData.getValue() == null) return;
+        if(mToggleSelect){
             selectAll();
         }
         else{
             unSelectAll();
         }
-        toggleSelect = !toggleSelect;
+        mToggleSelect = !mToggleSelect;
     }
 
-    public void selectAll(){
-        if(data.getValue() == null) return;
-        for(PoetryClass.Poem poem : data.getValue().getPoetry()){
+    private void selectAll(){
+        if(mData.getValue() == null) return;
+        for(PoetryClass.Poem poem : mData.getValue().getPoetry()){
             poem.setIsSelect(true);
         }
     }
 
-    public void unSelectAll(){
-        if(data.getValue() == null) return;
-        for(PoetryClass.Poem poem : data.getValue().getPoetry()){
+    private void unSelectAll(){
+        if(mData.getValue() == null) return;
+        for(PoetryClass.Poem poem : mData.getValue().getPoetry()){
             poem.setIsSelect(false);
         }
     }
 
     List<PoetryClass.Poem> getSelectedPoetry(){
-        if(data.getValue() == null) return new LinkedList<>();
+        if(mData.getValue() == null) return new LinkedList<>();
         List<PoetryClass.Poem> poetry = new LinkedList<>();
-        for(PoetryClass.Poem poem : data.getValue().getPoetry()){
+        for(PoetryClass.Poem poem : mData.getValue().getPoetry()){
             if(poem.getIsSelected().get()) poetry.add(poem.clone());
         }
 
@@ -59,21 +61,21 @@ public class PoetryViewModel extends ViewModel {
     }
 
     public PoetryClass.Poem getItem(int index){
-        if(data.getValue() == null) return PoetryClass.getNullPoem();
-        return data.getValue().getPoetry().get(index);
+        if(mData.getValue() == null) return PoetryClass.getNullPoem();
+        return mData.getValue().getPoetry().get(index);
     }
 
     public int getItemCount(){
-        if(data.getValue() == null) return 0;
-        return data.getValue().getPoetry().size();
+        if(mData.getValue() == null) return 0;
+        return mData.getValue().getPoetry().size();
     }
 
     public void getReloadedPoetry(){
-        model.getPoetry();
+        mModel.getPoetry();
     }
 
     public LiveData<PoetryModelData> getPoetry(){
-        return data;
+        return mData;
     }
 
     public void toggleEditMode(){
@@ -93,6 +95,6 @@ public class PoetryViewModel extends ViewModel {
     }
 
     protected PoetryModel getModel(){
-        return model;
+        return mModel;
     }
 }

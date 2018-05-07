@@ -48,9 +48,9 @@ public class PlayerFragment extends Fragment {
     @Inject
     PlayerFragmentViewModel.PlayerFragmentViewModelFactory viewModelFactory;
     private MediaBrowserCompat.ConnectionCallback mConnectionCallbacks;
-    private final MediaControllerCompat.Callback controllerCallback = new MediaControllerCompat.Callback(){};
-    private PlayerFragmentViewModel viewModel;
-    private boolean isWide;
+    private final MediaControllerCompat.Callback mControllerCallback = new MediaControllerCompat.Callback(){};
+    private PlayerFragmentViewModel mViewModel;
+    private boolean mIsWide;
 
     private OnPlayerFragmentInteractionListener mListener;
 
@@ -64,10 +64,10 @@ public class PlayerFragment extends Fragment {
         mListener.getComponent()
                 .plus(new FragModule())
                 .inject(this);
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(PlayerFragmentViewModel.class);
+        mViewModel = ViewModelProviders.of(this, viewModelFactory).get(PlayerFragmentViewModel.class);
         FragmentPlayerBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_player, container, false);
-        viewModel.setIsWide(isWide);
-        binding.setViewModel(viewModel);
+        mViewModel.setIsWide(mIsWide);
+        binding.setViewModel(mViewModel);
 
         binding.playlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,18 +105,18 @@ public class PlayerFragment extends Fragment {
             }
         });
 
-        viewModel.getMode().observe(this, new Observer<RepeatState>() {
+        mViewModel.getMode().observe(this, new Observer<RepeatState>() {
             @Override
             public void onChanged(@Nullable RepeatState mode) {
-                if(viewModel.setMode(mode.getPreferData()) && !mode.isAlert())
+                if(mViewModel.setMode(mode.getPreferData()) && !mode.isAlert())
                     Toast.makeText(getContext(), mode.getToastString(), Toast.LENGTH_SHORT).show();
             }
         });
 
-        viewModel.getState().observe(this, new Observer<Integer>() {
+        mViewModel.getState().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer integer) {
-                viewModel.setState(integer);
+                mViewModel.setState(integer);
                 if(integer == PlayBackStateModel.PLAYING || integer == PlayBackStateModel.BUFFERING){
                     ((Activity) mListener).setVolumeControlStream(AudioManager.STREAM_MUSIC);
                 }
@@ -126,7 +126,7 @@ public class PlayerFragment extends Fragment {
             }
         });
 
-        viewModel.getCurrentMedia().observe(this, new Observer<PoetryClass.Poem>() {
+        mViewModel.getCurrentMedia().observe(this, new Observer<PoetryClass.Poem>() {
             @Override
             public void onChanged(@Nullable PoetryClass.Poem poem) {
                 if(poem == null || binding.getPoem() != null && binding.getPoem().getDatabaseId() == poem.getDatabaseId()) return;
@@ -134,7 +134,7 @@ public class PlayerFragment extends Fragment {
             }
         });
 
-        viewModel.getMyPlayList().observe(this, new Observer<PoetryModelData>() {
+        mViewModel.getMyPlayList().observe(this, new Observer<PoetryModelData>() {
             @Override
             public void onChanged(@Nullable PoetryModelData poetryModelData) {
                 if(!poetryModelData.isAlert()){
@@ -159,7 +159,7 @@ public class PlayerFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnPlayerFragmentInteractionListener) {
             mListener = (OnPlayerFragmentInteractionListener) context;
-            isWide = context instanceof PlayerActivity;
+            mIsWide = context instanceof PlayerActivity;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -173,7 +173,7 @@ public class PlayerFragment extends Fragment {
                     MediaSessionCompat.Token token = mMediaBrowser.getSessionToken();
                     MediaControllerCompat mediaController = new MediaControllerCompat(context, token);
                     MediaControllerCompat.setMediaController((Activity) context, mediaController);
-                    mediaController.registerCallback(controllerCallback);
+                    mediaController.registerCallback(mControllerCallback);
                 } catch (RemoteException e) {
                     //세션 토큰 초기화 시 발생하는 에러를 잡기 위함
                 }
@@ -218,7 +218,7 @@ public class PlayerFragment extends Fragment {
     public void onStop() {
         super.onStop();
         if (MediaControllerCompat.getMediaController((Activity) mListener) != null) {
-            MediaControllerCompat.getMediaController((Activity) mListener).unregisterCallback(controllerCallback);
+            MediaControllerCompat.getMediaController((Activity) mListener).unregisterCallback(mControllerCallback);
         }
         mMediaBrowser.disconnect();
     }

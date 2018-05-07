@@ -7,7 +7,8 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.musicPlayer.MediaPlaybackServi
 import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MediaServiceViewModel;
 
 /**
- * Created by sangroklee on 2018. 2. 28..
+ * 재생모드(반복모드 & 셔플) 전환을 strategy 패턴으로 만들기 위한 인터페이스
+ * 실제 구현은 data/RepeatMode 내에 있음
  */
 
 public interface RepeatState {

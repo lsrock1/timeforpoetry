@@ -20,12 +20,12 @@ import com.tsengvn.typekit.Typekit;
 import dagger.android.support.DaggerApplication;
 
 /**
- * Created by sangroklee on 2017. 10. 31..
+ * 카카오 로그인 및 dagger 사용을 위한 application
  */
 
 public class GlobalApplication extends Application{
 
-    private ApplicationComponent component;
+    private ApplicationComponent mComponent;
     private static GlobalApplication mInstance;
     private static volatile Activity currentActivity = null;
 
@@ -94,7 +94,8 @@ public class GlobalApplication extends Application{
     public void onCreate() {
         super.onCreate();
 
-        component = DaggerApplicationComponent.builder()
+        //application 단위에서 singleton model을 위해 context를 공급하는 컴포넌트
+        mComponent = DaggerApplicationComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
 
@@ -107,12 +108,6 @@ public class GlobalApplication extends Application{
     }
 
     public ApplicationComponent getComponent(){
-        return component;
+        return mComponent;
     }
-
-//    @Override
-//    protected void attachBaseContext(Context context) {
-//        super.attachBaseContext(context);
-//        MultiDex.install(this);
-//    }
 }

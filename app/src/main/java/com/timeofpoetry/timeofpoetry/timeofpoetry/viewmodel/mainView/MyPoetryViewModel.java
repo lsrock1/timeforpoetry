@@ -19,17 +19,17 @@ import javax.inject.Inject;
 
 public class MyPoetryViewModel extends SupplierPoetryViewModel {
 
-    private SignCheckModel signCheckModel;
-    private MyPoetryModel myPoetryModel;
+    private SignCheckModel mSignCheckModel;
+    private MyPoetryModel mMyPoetryModel;
 
-    MyPoetryViewModel(SignCheckModel mSignCheckModel, MyPoetryModel mMyPoetryModel, MyPlayListModel myPlayListModel) {
-        super(mMyPoetryModel, myPlayListModel);
-        signCheckModel = mSignCheckModel;
-        myPoetryModel = mMyPoetryModel;
+    MyPoetryViewModel(SignCheckModel signCheckModel, MyPoetryModel myPoetryModel, MyPlayListModel myPlayListModel) {
+        super(myPoetryModel, myPlayListModel);
+        mSignCheckModel = signCheckModel;
+        mMyPoetryModel = myPoetryModel;
     }
 
     public LiveData<Boolean> getIsLogin(){
-        return signCheckModel.getIsLogin();
+        return mSignCheckModel.getIsLogin();
     }
 
     @Override
@@ -39,28 +39,28 @@ public class MyPoetryViewModel extends SupplierPoetryViewModel {
     }
 
     public void selectedPoetryRemove(){
-        myPoetryModel.removePoetry();
+        mMyPoetryModel.removePoetry();
         toggleEditMode();
     }
 
     @FragScope
     public static class MyPoetryViewModelFactory implements ViewModelProvider.Factory{
 
-        private SignCheckModel signCheckModel;
-        private MyPoetryModel myPoetryModel;
-        private MyPlayListModel myPlayListModel;
+        private SignCheckModel mSignCheckModel;
+        private MyPoetryModel mMyPoetryModel;
+        private MyPlayListModel mMyPlayListModel;
 
         @Inject
         public MyPoetryViewModelFactory(SignCheckModel signCheckModel, MyPoetryModel myPoetryModel, MyPlayListModel myPlayListModel) {
-            this.signCheckModel = signCheckModel;
-            this.myPoetryModel = myPoetryModel;
-            this.myPlayListModel = myPlayListModel;
+            mSignCheckModel = signCheckModel;
+            mMyPoetryModel = myPoetryModel;
+            mMyPlayListModel = myPlayListModel;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new MyPoetryViewModel(signCheckModel, myPoetryModel, myPlayListModel);
+            return (T) new MyPoetryViewModel(mSignCheckModel, mMyPoetryModel, mMyPlayListModel);
         }
     }
 }

@@ -15,8 +15,6 @@ import com.tsengvn.typekit.TypekitContextWrapper;
 
 public class AuthorityActivity extends AppCompatActivity {
 
-    ActivityAuthorityBinding binding;
-
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
@@ -25,9 +23,9 @@ public class AuthorityActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_authority);
+        ActivityAuthorityBinding mBinding = DataBindingUtil.setContentView(this, R.layout.activity_authority);
 
-        binding.passBtn.setOnClickListener(new View.OnClickListener() {
+        mBinding.passBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "로그인하지 않습니다", Toast.LENGTH_SHORT).show();
@@ -35,7 +33,7 @@ public class AuthorityActivity extends AppCompatActivity {
             }
         });
 
-        binding.toSignInBtn.setOnClickListener(new View.OnClickListener() {
+        mBinding.toSignInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SignActivity.class);
@@ -45,7 +43,7 @@ public class AuthorityActivity extends AppCompatActivity {
             }
         });
 
-        binding.toSignUpBtn.setOnClickListener(new View.OnClickListener() {
+        mBinding.toSignUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SignActivity.class);

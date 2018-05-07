@@ -15,29 +15,30 @@ import java.util.Random;
  */
 
 public class Shuffle implements RepeatState {
-    private static Shuffle instance;
+
+    private static Shuffle mInstance;
+    private MyPlayListModel mMyPlayListModel;
+    private boolean mIsAlert = false;
+
     public static Shuffle getInstance(MyPlayListModel myPlayListModel){
-        if(instance == null)
-            instance = new Shuffle(myPlayListModel);
-        instance.alertReset();
-        return instance;
+        if(mInstance == null)
+            mInstance = new Shuffle(myPlayListModel);
+        mInstance.alertReset();
+        return mInstance;
     }
 
-    private MyPlayListModel myPlayListModel;
-    private boolean isAlert = false;
-
     public Shuffle(MyPlayListModel myPlayListModel) {
-        this.myPlayListModel = myPlayListModel;
+        this.mMyPlayListModel = myPlayListModel;
     }
 
     @Override
     public void modeSwitch() {
-        myPlayListModel.setMode(RepeatAll.getInstance(myPlayListModel), PlaybackStateCompat.REPEAT_MODE_ALL);
+        mMyPlayListModel.setMode(RepeatAll.getInstance(mMyPlayListModel), PlaybackStateCompat.REPEAT_MODE_ALL);
     }
 
     @Override
     public String getToastString() {
-        isAlert = true;
+        mIsAlert = true;
         return "랜덤으로 재생합니다";
     }
 
@@ -57,34 +58,34 @@ public class Shuffle implements RepeatState {
 
     @Override
     public void alertReset(){
-        isAlert = false;
+        mIsAlert = false;
     }
 
     @Override
     public boolean isAlert(){
-        return isAlert;
+        return mIsAlert;
     }
 
     @Override
     public void onComplete(MediaPlayer mediaPlayer, MediaPlaybackService service, MediaServiceViewModel viewModel) {
-        if(myPlayListModel.getPoetry().getValue().getPoetry().size() == 1){
+        if(mMyPlayListModel.getPoetry().getValue().getPoetry().size() == 1){
             mediaPlayer.seekTo(0);
         }
         else{
-            forward(myPlayListModel);
+            forward(mMyPlayListModel);
         }
     }
 
     private int getRand() {
         Random r = new Random();
-        int currentPosition = myPlayListModel.getPosition();
-        if (myPlayListModel.getPoetry().getValue().getPoetry().size() == 1) {
+        int currentPosition = mMyPlayListModel.getPosition();
+        if (mMyPlayListModel.getPoetry().getValue().getPoetry().size() == 1) {
             return currentPosition;
         }
         else {
             int i;
             do {
-                i = r.nextInt(myPlayListModel.getPoetry().getValue().getPoetry().size());
+                i = r.nextInt(mMyPlayListModel.getPoetry().getValue().getPoetry().size());
             } while (i == currentPosition);
 
             return i;

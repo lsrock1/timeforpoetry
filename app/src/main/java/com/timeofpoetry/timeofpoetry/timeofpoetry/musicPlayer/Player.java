@@ -21,20 +21,20 @@ import java.io.IOException;
 
 public class Player implements MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener{
 
-    private MediaServiceViewModel mediaServiceViewModel;
-    private MediaPlaybackService service;
+    private MediaServiceViewModel mViewModel;
+    private MediaPlaybackService mService;
     private MediaPlayer mMediaPlayer;
-    private boolean isPrepared = false;
-    private boolean isPlaying = false;
-    private PoetryClass.Poem poem;
-    private PrepareTask prepareTask;
-    private boolean isNew = false;
-    private boolean isTimeout = false;
-    private TimeOutTask timeOutTask;
+    private boolean mIsPrepared = false;
+    private boolean mIsPlaying = false;
+    private PoetryClass.Poem mPoem;
+    private PrepareTask mPrepareTask;
+    private boolean mIsNew = false;
+    private boolean mIsTimeout = false;
+    private TimeOutTask mTimeOutTask;
 
-    public Player(MediaPlaybackService service, MediaServiceViewModel mediaServiceViewModel) {
+    public Player(MediaPlaybackService service, MediaServiceViewModel viewModel) {
         mMediaPlayer = new MediaPlayer();
-        this.service = service;
+        this.mService = service;
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mMediaPlayer.setWakeMode(service.getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
         mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -42,13 +42,13 @@ public class Player implements MediaPlayer.OnSeekCompleteListener, MediaPlayer.O
         mMediaPlayer.setOnPreparedListener(this);
         mMediaPlayer.setOnCompletionListener(this);
         mMediaPlayer.setOnSeekCompleteListener(this);
-        prepareTask = new PrepareTask(this);
-        timeOutTask = new TimeOutTask(this);
-        this.mediaServiceViewModel = mediaServiceViewModel;
+        mPrepareTask = new PrepareTask(this);
+        mTimeOutTask = new TimeOutTask(this);
+        this.mViewModel = viewModel;
     }
 
     boolean seekTo(int pos){
-        if(isPlaying){
+        if(mIsPlaying){
             mMediaPlayer.seekTo(pos);
             return true;
         }
@@ -62,16 +62,16 @@ public class Player implements MediaPlayer.OnSeekCompleteListener, MediaPlayer.O
     }
 
     public void pause(){
-        isPlaying = false;
+        mIsPlaying = false;
         mMediaPlayer.pause();
-        mediaServiceViewModel.saveSeek();
-        mediaServiceViewModel.state_pause();
+        mViewModel.saveSeek();
+        mViewModel.state_pause();
     }
 
     void stop(){
-        isPlaying = false;
-        isPrepared = false;
-        mediaServiceViewModel.saveSeek();
+        mIsPlaying = false;
+        mIsPrepared = false;
+        mViewModel.saveSeek();
         try {
             mMediaPlayer.reset();
         }
@@ -79,10 +79,10 @@ public class Player implements MediaPlayer.OnSeekCompleteListener, MediaPlayer.O
             mMediaPlayer.release();
             mMediaPlayer = new MediaPlayer();
         }
-        if(isTimeout){
-            isTimeout = false;
+        if(mIsTimeout){
+            mIsTimeout = false;
         }//lg 폰에서 timeout이 일어났을 경우 on complete로 가지 않고 stop로 오는것으로 보임..
-        mediaServiceViewModel.state_stop();
+        mViewModel.state_stop();
     }
 
     void setDuckVolume(boolean bool){
@@ -94,56 +94,56 @@ public class Player implements MediaPlayer.OnSeekCompleteListener, MediaPlayer.O
         //로그인이 안됐을 경우 또는 최초 미디어 셋일 경우 재생하지 않고 초기화만 함
         //동일한 poem일 경우(데이터베이스 id로 구분) new 는 false고 재생중이면 놔두고 재생중이지 않을 때 (미디어가 셋만 됐을 때)는 재생
         //나머지 경우는 새 곡이 들어온 경우 seek bar를 0으로 하고 재생 요청
-        isNew = true;
-        if(!mediaServiceViewModel.getIsLogIn().getValue() || this.poem == null) {
-            this.poem = poem;
+        mIsNew = true;
+        if(!mViewModel.getIsLogIn().getValue() || this.mPoem == null) {
+            this.mPoem = poem;
         }
-        else if(this.poem.getDatabaseId() == poem.getDatabaseId()) {
+        else if(this.mPoem.getDatabaseId() == poem.getDatabaseId()) {
             if (poem.isWard()) {
                 mMediaPlayer.seekTo(0);
             } else {
-                isNew = false;
-                if (!isPlaying) service.playProcess();
+                mIsNew = false;
+                if (!mIsPlaying) mService.playProcess();
             }
         }
         else{
-            this.poem = poem;
-            mediaServiceViewModel.setSeek(0);
-            service.playProcess();
+            this.mPoem = poem;
+            mViewModel.setSeek(0);
+            mService.playProcess();
         }
-        this.poem.setWard(false);
+        this.mPoem.setWard(false);
     }
 
     void play(){
         //sound url이 없는 경우(null poem) 정지
-        if(poem.getSoundUrl() == null){
-            service.stopProcess();
+        if(mPoem.getSoundUrl() == null){
+            mService.stopProcess();
             return;
         }
 
         //새 시인 경우 미디어플레이어를 리셋해야 새로운 미디어 재생 가능
         //새 시가 아니고 pause했다 재생하는 경우는 리셋하지 않음
-        if(isNew){
+        if(mIsNew){
             refresh();
-            isNew = false;
+            mIsNew = false;
         }
 
-        isPlaying = true;
+        mIsPlaying = true;
 
-        if(isPrepared){
-            if(mediaServiceViewModel.getSeek() > 0) {
-                mMediaPlayer.seekTo(mediaServiceViewModel.getSeek());
+        if(mIsPrepared){
+            if(mViewModel.getSeek() > 0) {
+                mMediaPlayer.seekTo(mViewModel.getSeek());
             }
             else{
                 mMediaPlayer.start();
-                mediaServiceViewModel.state_play();
+                mViewModel.state_play();
             }
         }
         else {
             while(true) {
                 try {
-                    mMediaPlayer.setDataSource(poem.getSoundUrl());
-                    prepareTask.startPrepare();
+                    mMediaPlayer.setDataSource(mPoem.getSoundUrl());
+                    mPrepareTask.startPrepare();
                     break;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -153,8 +153,8 @@ public class Player implements MediaPlayer.OnSeekCompleteListener, MediaPlayer.O
                     mMediaPlayer.reset();
                 }
             }
-            mediaServiceViewModel.state_buffer();
-            isPrepared = true;
+            mViewModel.state_buffer();
+            mIsPrepared = true;
         }
     }
 
@@ -173,63 +173,60 @@ public class Player implements MediaPlayer.OnSeekCompleteListener, MediaPlayer.O
     }
 
     boolean getIsPlaying(){
-        return isPlaying;
+        return mIsPlaying;
     }
 
     void setProgress(){
-        mediaServiceViewModel.setSeek(mMediaPlayer.getCurrentPosition());
+        mViewModel.setSeek(mMediaPlayer.getCurrentPosition());
     }
 
     private void refresh(){
         mMediaPlayer.reset();
-        isPrepared = false;
-        isPlaying = false;
+        mIsPrepared = false;
+        mIsPlaying = false;
     }
 
     @Override
     public void onSeekComplete(MediaPlayer mediaPlayer) {
         mediaPlayer.start();
-        mediaServiceViewModel.state_play();
+        mViewModel.state_play();
     }
 
     @Override
     public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-        Toast.makeText(service.getApplicationContext(), "네트워크 연결이 불안정합니다", Toast.LENGTH_SHORT).show();
-        service.stopProcess();
+        Toast.makeText(mService.getApplicationContext(), "네트워크 연결이 불안정합니다", Toast.LENGTH_SHORT).show();
+        mService.stopProcess();
         return false;
     }
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        if(isTimeout){
-            service.stopProcess();
+        if(mIsTimeout){
+            mService.stopProcess();
             return;
         }
-        mediaServiceViewModel.getMode().getValue().onComplete(mediaPlayer, service, mediaServiceViewModel);
+        mViewModel.getMode().getValue().onComplete(mediaPlayer, mService, mViewModel);
     }
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
-        timeOutTask.cancel();
-        if(mediaServiceViewModel.getSeek() > 0) {
-            mediaPlayer.seekTo(mediaServiceViewModel.getSeek());
+        mTimeOutTask.cancel();
+        if(mViewModel.getSeek() > 0) {
+            mediaPlayer.seekTo(mViewModel.getSeek());
         }
         else{
             mediaPlayer.start();
-            mediaServiceViewModel.state_play();
+            mViewModel.state_play();
         }
     }
 
     void prepareStartMediaPlayer(){
         try {
-            isTimeout = false;
-            timeOutTask.startTimeout();
+            mIsTimeout = false;
+            mTimeOutTask.startTimeout();
             mMediaPlayer.prepare();
         }
         catch (IOException e){
-            e.printStackTrace();
-        }
-        catch (IllegalStateException e){
             e.printStackTrace();
         }
     }
@@ -239,9 +236,9 @@ public class Player implements MediaPlayer.OnSeekCompleteListener, MediaPlayer.O
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(service.getApplicationContext(), "네트워크 연결이 불안정합니다", Toast.LENGTH_SHORT).show();
-                isTimeout = true;
-                service.stopProcess();
+                Toast.makeText(mService.getApplicationContext(), "네트워크 연결이 불안정합니다", Toast.LENGTH_SHORT).show();
+                mIsTimeout = true;
+                mService.stopProcess();
             }
         });
     }

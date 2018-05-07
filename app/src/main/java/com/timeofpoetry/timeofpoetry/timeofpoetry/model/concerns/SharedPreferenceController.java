@@ -21,7 +21,7 @@ public class SharedPreferenceController {
 
     @Inject
     public SharedPreferenceController(Context context){
-        this.mSharedPreference = context.getSharedPreferences(context.getString(R.string.UserInfos), context.MODE_PRIVATE);
+        this.mSharedPreference = context.getSharedPreferences(context.getString(R.string.UserInfos), Context.MODE_PRIVATE);
     }
 
     public void setListener(SharedPreferences.OnSharedPreferenceChangeListener listener){

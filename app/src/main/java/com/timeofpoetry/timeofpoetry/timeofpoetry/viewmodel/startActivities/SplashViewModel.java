@@ -15,30 +15,30 @@ import javax.inject.Inject;
 
 public class SplashViewModel extends ViewModel {
 
-    private SignCheckModel signCheckModel;
+    private SignCheckModel mSignCheckModel;
 
     public SplashViewModel(SignCheckModel signCheckModel) {
-        this.signCheckModel = signCheckModel;
+        mSignCheckModel = signCheckModel;
     }
 
     public boolean isLogin(){
-        return signCheckModel.getIsLogin().getValue();
+        return mSignCheckModel.getIsLogin().getValue();
     }
 
     @ActivityScope
     public static class SplashViewModelFactory implements ViewModelProvider.Factory{
 
-        private SignCheckModel signCheckModel;
+        private SignCheckModel mSignCheckModel;
 
         @Inject
         public SplashViewModelFactory(SignCheckModel signCheckModel) {
-            this.signCheckModel = signCheckModel;
+            mSignCheckModel = signCheckModel;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new SplashViewModel(signCheckModel);
+            return (T) new SplashViewModel(mSignCheckModel);
         }
     }
 }

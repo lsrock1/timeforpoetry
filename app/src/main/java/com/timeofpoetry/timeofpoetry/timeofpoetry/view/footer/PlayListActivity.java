@@ -27,16 +27,16 @@ import javax.inject.Inject;
 
 public class PlayListActivity extends AppCompatActivity implements OnPlayerFragmentInteractionListener{
 
-    private ActivityComponent component;
+    private ActivityComponent mComponent;
     @Inject public PlayListViewModel.PlayListViewModelFactory viewModelFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        component = ((GlobalApplication) getApplication())
+        mComponent = ((GlobalApplication) getApplication())
                 .getComponent()
                 .plus(new ActivityModule());
-        component.inject(this);
+        mComponent.inject(this);
         ActivityPlayListBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_play_list);
         PlayListViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(PlayListViewModel.class);
 
@@ -80,7 +80,7 @@ public class PlayListActivity extends AppCompatActivity implements OnPlayerFragm
     }
 
     public ActivityComponent getComponent(){
-        return component;
+        return mComponent;
     }
 
     @Override

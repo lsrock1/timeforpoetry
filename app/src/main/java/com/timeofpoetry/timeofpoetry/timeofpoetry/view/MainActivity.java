@@ -37,30 +37,30 @@ import javax.inject.Inject;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnPlayerFragmentInteractionListener{
 
-    ActivityComponent component;
-    ActivityMainBinding binding;
+    private ActivityComponent mComponent;
+    private ActivityMainBinding mBinding;
     @Inject MainActivityViewModel.MainActivityViewModelFactory factory;
-    MainActivityViewModel viewModel;
+    private MainActivityViewModel mViewModel;
     private BackPressCloseHandler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        component = ((GlobalApplication) getApplication())
+        mComponent = ((GlobalApplication) getApplication())
                 .getComponent()
                 .plus(new ActivityModule());
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        component.inject(this);
-        viewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
-        binding.setViewModel(viewModel);
+        mComponent.inject(this);
+        mViewModel = ViewModelProviders.of(this, factory).get(MainActivityViewModel.class);
+        mBinding.setViewModel(mViewModel);
 
         mHandler = new BackPressCloseHandler(this);
 
-        viewModel.getIsLogin().observe(this, new Observer<Boolean>() {
+        mViewModel.getIsLogin().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
-                viewModel.setLogin(aBoolean);
+                mViewModel.setLogin(aBoolean);
             }
         });
 
@@ -70,11 +70,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = binding.drawerLayout;
+        DrawerLayout drawer = mBinding.drawerLayout;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-        else if(viewModel.onBackPressed()){
+        else if(mViewModel.onBackPressed()){
             return;
         }
         else {
@@ -104,21 +104,21 @@ public class MainActivity extends AppCompatActivity
 //
 //        }
 
-        DrawerLayout drawer = binding.drawerLayout;
+        DrawerLayout drawer = mBinding.drawerLayout;
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     private void initNav(){
-        NavHeaderMainBinding _bind = DataBindingUtil.inflate(getLayoutInflater(), R.layout.nav_header_main, binding
+        NavHeaderMainBinding _bind = DataBindingUtil.inflate(getLayoutInflater(), R.layout.nav_header_main, mBinding
                 .navView, false);
-        binding.navView.addHeaderView(_bind.getRoot());
-        _bind.setViewModel(viewModel);
+        mBinding.navView.addHeaderView(_bind.getRoot());
+        _bind.setViewModel(mViewModel);
         _bind.navLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(viewModel.getIsLogin().getValue()){
-                    viewModel.logOut();
+                if(mViewModel.getIsLogin().getValue()){
+                    mViewModel.logOut();
                 }
                 else{
                     Intent authorIntent = new Intent(MainActivity.this, AuthorityActivity.class);
@@ -126,16 +126,16 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-        binding.navView.setNavigationItemSelectedListener(this);
+        mBinding.navView.setNavigationItemSelectedListener(this);
     }
 
     private void initHeader(){
-        setSupportActionBar(binding.appBarMain.toolbar);
-        viewModel.setActionBar(getSupportActionBar());
+        setSupportActionBar(mBinding.appBarMain.toolbar);
+        mViewModel.setActionBar(getSupportActionBar());
 
-        final DrawerLayout drawer = binding.drawerLayout;
+        final DrawerLayout drawer = mBinding.drawerLayout;
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, binding.appBarMain.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, mBinding.appBarMain.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.setDrawerIndicatorEnabled(false);
         toggle.setHomeAsUpIndicator(R.drawable.ic_top_mennu);
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public ActivityComponent getComponent(){
-        return component;
+        return mComponent;
     }
 
     @Override

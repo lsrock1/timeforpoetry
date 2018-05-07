@@ -14,40 +14,40 @@ import com.timeofpoetry.timeofpoetry.timeofpoetry.viewmodel.MediaServiceViewMode
 
 public class RepeatOne implements RepeatState {
 
-    private static RepeatOne instance;
+    private static RepeatOne mInstance;
+    private MyPlayListModel mMyPlayListModel;
+    private boolean mIsAlert = false;
+
     public static RepeatOne getInstance(MyPlayListModel myPlayListModel){
-        if(instance == null)
-            instance = new RepeatOne(myPlayListModel);
-        instance.alertReset();
-        return instance;
+        if(mInstance == null)
+            mInstance = new RepeatOne(myPlayListModel);
+        mInstance.alertReset();
+        return mInstance;
     }
 
-    private MyPlayListModel myPlayListModel;
-    private boolean isAlert = false;
-
     public RepeatOne(MyPlayListModel myPlayListModel) {
-        this.myPlayListModel = myPlayListModel;
+        this.mMyPlayListModel = myPlayListModel;
     }
 
     @Override
     public void modeSwitch() {
-        myPlayListModel.setMode(RepeatNone.getInstance(myPlayListModel), PlaybackStateCompat.REPEAT_MODE_NONE);
+        mMyPlayListModel.setMode(RepeatNone.getInstance(mMyPlayListModel), PlaybackStateCompat.REPEAT_MODE_NONE);
     }
 
     @Override
     public String getToastString() {
-        isAlert = true;
+        mIsAlert = true;
         return "시 하나를 반복합니다";
     }
 
     @Override
     public void alertReset(){
-        isAlert = false;
+        mIsAlert = false;
     }
 
     @Override
     public boolean isAlert(){
-        return isAlert;
+        return mIsAlert;
     }
 
     @Override

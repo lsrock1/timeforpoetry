@@ -21,32 +21,32 @@ import javax.inject.Singleton;
 @Singleton
 public class SignCheckModel implements SharedPreferences.OnSharedPreferenceChangeListener{
 
-    private MutableLiveData<Boolean> isLogin = new MutableLiveData<>();
-    private SharedPreferenceController sharedPreferenceController;
+    private MutableLiveData<Boolean> mIsLogin = new MutableLiveData<>();
+    private SharedPreferenceController mSharedPreferenceController;
 
     @Inject
     public SignCheckModel(SharedPreferenceController sharedPreferenceController) {
-        this.sharedPreferenceController = sharedPreferenceController;
-        this.sharedPreferenceController.setListener(this);
-        this.isLogin.setValue(this.sharedPreferenceController.isLogin());
+        mSharedPreferenceController = sharedPreferenceController;
+        mSharedPreferenceController.setListener(this);
+        mIsLogin.setValue(mSharedPreferenceController.isLogin());
     }
 
     public void setLogin(boolean bool){
-        sharedPreferenceController.setLogin(bool);
+        mSharedPreferenceController.setLogin(bool);
     }
 
     public String getUserId(){
-        return sharedPreferenceController.getUserId();
+        return mSharedPreferenceController.getUserId();
     }
 
     public MutableLiveData<Boolean> getIsLogin(){
-        return isLogin;
+        return mIsLogin;
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         if(s.equals("IsLogin")){
-            if(!sharedPreferenceController.isLogin()) {
+            if(!mSharedPreferenceController.isLogin()) {
                 if (AccessToken.getCurrentAccessToken() != null)
                     LoginManager.getInstance().logOut();
                 if (Session.getCurrentSession().isOpened())
@@ -57,13 +57,13 @@ public class SignCheckModel implements SharedPreferences.OnSharedPreferenceChang
                         }
                     });
             }
-            this.isLogin.setValue(sharedPreferenceController.isLogin());
+            mIsLogin.setValue(mSharedPreferenceController.isLogin());
         }
     }
 
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        this.sharedPreferenceController.onDestroy(this);
+        mSharedPreferenceController.onDestroy(this);
     }
 }
